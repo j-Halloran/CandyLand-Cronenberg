@@ -1,3 +1,5 @@
+package org.CandyLand.view;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -5,7 +7,7 @@ public class MainFrame {
 
     private final int HEIGHT = 600;
     private final int WIDTH = 800;
-    private final String TITLE = "World Of Sweets"
+    private final String TITLE = "World Of Sweets";
 
     private JFrame frame = new JFrame(TITLE);
 
