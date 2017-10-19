@@ -1,3 +1,4 @@
+@@ -1,53 +0,0 @@
 # Exercise 1  
 # Requirements Q&A
 # Team Cronenberg
