@@ -17,7 +17,7 @@ public class MainFrame {
 
         GraphicalBoard graphicalBoard = new GraphicalBoard();
         frame.add(graphicalBoard);
-        frame.pack();
+        frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
 
         frame.setVisible(true);
     }
