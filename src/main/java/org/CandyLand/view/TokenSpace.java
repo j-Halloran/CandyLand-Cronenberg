@@ -1,12 +1,16 @@
 package org.CandyLand.view;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 
 public class TokenSpace extends JButton {
 
     public TokenSpace(Color color) {
         super();
+        this.setEnabled(false);
+        Border emptyBorder = BorderFactory.createEmptyBorder();
+        this.setBorder(emptyBorder);
         this.setBackground(color);
     }
 
