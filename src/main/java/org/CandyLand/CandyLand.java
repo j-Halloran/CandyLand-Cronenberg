@@ -4,6 +4,8 @@ import org.CandyLand.view.MainFrame;
 
 public class CandyLand {
 
-    MainFrame mainFrame = new MainFrame();
+    public static void main(String[] args) {
+        MainFrame mainFrame = new MainFrame();
+    }
 
 }

@@ -2,6 +2,7 @@ package org.CandyLand.view;
 
 import java.awt.*;
 import javax.swing.*;
+import org.CandyLand.view.GraphicalBoard;
 
 public class MainFrame {
 
@@ -13,6 +14,10 @@ public class MainFrame {
 
     public MainFrame() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        GraphicalBoard graphicalBoard = new GraphicalBoard();
+        frame.add(graphicalBoard);
+        frame.pack();
 
         frame.setVisible(true);
     }
