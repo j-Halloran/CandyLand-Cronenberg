@@ -26,9 +26,7 @@ public class GamePathSpace extends JPanel {
     public void addToken(Token token) throws NoSpaceForTokenException {
         for (TokenSpace space : tokenSpaces) {
             if (space.getToken() == null) {
-                System.out.println("woo");
                 space.setToken(token);
-                System.out.println("woo3");
                 return;
             }
         }
