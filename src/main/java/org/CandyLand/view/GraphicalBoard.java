@@ -12,6 +12,7 @@ public class GraphicalBoard extends JPanel {
     private static final Color BACKGROUND_COLOR = Color.GRAY;
     private JComponent[][] spaces = new JComponent[ROWS][COLS];
     private GamePathSpace[] path;
+    private static int[] tokenLocations; //tracker variable where player number is used as an index to retrieve current token path space
     private final Color[] COLORS = {Color.RED,
                                     Color.YELLOW,
                                     Color.BLUE,
@@ -79,6 +80,28 @@ public class GraphicalBoard extends JPanel {
                 if (space != null) {
                     this.add(space);
                 }
+            }
+        }
+    }
+
+    /**
+     * Loops for each player in the game adding their token to the starting space
+     *
+     * @param numPlayers
+     */
+    public void addInitialTokens(int numPlayers){
+        if(numPlayers > GamePathSpace.getMaxPlayerCount()){
+            numPlayers = GamePathSpace.getMaxPlayerCount();
+        }
+
+        tokenLocations = new int[numPlayers];
+        for(int i=0;i<numPlayers;i++){
+            tokenLocations[i] = 0; //initialize location tracker to position 0 so in the future we can fast update locations without needing to scan all board spaces
+            try{
+                path[1].addToken(new Token());
+            }catch(NoSpaceForTokenException e){
+                System.err.println("Error more tokens than space created. Should not be possible");
+                System.exit(10);
             }
         }
     }

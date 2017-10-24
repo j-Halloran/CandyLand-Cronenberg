@@ -6,10 +6,10 @@ import org.CandyLand.view.GraphicalBoard;
 
 public class MainFrame {
 
-    private final int HEIGHT = 600;
-    private final int WIDTH = 800;
+    private final int HEIGHT = 800;
+    private final int WIDTH = 1200;
     private final String TITLE = "World Of Sweets";
-
+    private final int NUM_PLAYERS=4; //hard coding until we get a start screen working
     private JFrame frame = new JFrame(TITLE);
 
     public MainFrame() {
@@ -19,6 +19,7 @@ public class MainFrame {
         frame.setLayout(new GridBagLayout());
 
         GraphicalBoard graphicalBoard = new GraphicalBoard();
+        graphicalBoard.addInitialTokens(NUM_PLAYERS);
         CardPanel cardPanel = new CardPanel();
 
         constraints.weightx = 3;

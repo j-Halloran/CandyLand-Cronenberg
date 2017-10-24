@@ -8,13 +8,14 @@ public class TokenSpace extends JButton {
 
     public TokenSpace(Color color) {
         super();
-        this.setEnabled(false);
+        this.setEnabled(true);
         Border emptyBorder = BorderFactory.createEmptyBorder();
         this.setBorder(emptyBorder);
         this.setBackground(color);
     }
 
     public void setToken(Token token) {
+        System.out.println("woo2");
         this.setIcon(token);
     }
 
