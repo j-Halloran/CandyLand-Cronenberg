@@ -8,5 +8,7 @@ public class Token extends ImageIcon {
     public Token() {
         super();
     }
-
+    public Token(String filePath){
+        super(filePath);
+    }
 }

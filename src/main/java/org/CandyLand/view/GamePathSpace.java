@@ -41,4 +41,8 @@ public class GamePathSpace extends JPanel {
             }
         }
     }
+
+    public static int getMaxPlayerCount(){
+        return TOKEN_SPACE_COLS * TOKEN_SPACE_ROWS;
+    }
 }

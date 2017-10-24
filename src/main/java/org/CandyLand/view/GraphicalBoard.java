@@ -2,6 +2,7 @@ package org.CandyLand.view;
 
 import java.awt.*;
 import javax.swing.*;
+import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.ArrayList;
 
@@ -12,6 +13,8 @@ public class GraphicalBoard extends JPanel {
     private static final Color BACKGROUND_COLOR = Color.GRAY;
     private JComponent[][] spaces = new JComponent[ROWS][COLS];
     private GamePathSpace[] path;
+    private static int[] tokenLocations; //tracker variable where player number is used as an index to retrieve current token path space
+    private static Token[] tokens; //Tracker that contains all of the tokens so they can be removed from a space and moved around
     private final Color[] COLORS = {Color.RED,
                                     Color.YELLOW,
                                     Color.BLUE,
@@ -25,7 +28,12 @@ public class GraphicalBoard extends JPanel {
         boolean spacerRow = false;
         ArrayList<GamePathSpace> path =
                 new ArrayList<GamePathSpace>(ROWS * COLS);
-        path.add(null); //leave a space for start
+
+        //leave a space for start
+        GamePathSpace startSpace = new GamePathSpace(Color.WHITE);
+        path.add(startSpace);
+        spaces[row][0] = startSpace;
+
         int currentColor = 0;
 
         while (!(row == 0 && col == 0)) { //row >= 0, because grandmas is at 0,0
@@ -65,9 +73,18 @@ public class GraphicalBoard extends JPanel {
             }
         }
 
-        path.add(null); //leave a space for finish
 
-        this.path = path.toArray(new GamePathSpace[0]);
+
+        //leave a space for finish
+        JLabel grandmaLabel = new JLabel("Grandma's",0);
+        GamePathSpace grandma = new GamePathSpace(Color.WHITE);
+        grandma.setLayout(new BorderLayout());
+        grandma.add(grandmaLabel);
+        path.add(grandma);
+        spaces[0][0] = grandma;
+
+        this.path = new GamePathSpace[path.size()];
+        path.toArray(this.path);
     }
 
     public GraphicalBoard() {
@@ -80,6 +97,33 @@ public class GraphicalBoard extends JPanel {
                     this.add(space);
                 }
             }
+        }
+    }
+
+    /**
+     * Loops for each player in the game adding their token to the starting space
+     *
+     * @param numPlayers
+     */
+    public void addInitialTokens(int numPlayers){
+        if(numPlayers > GamePathSpace.getMaxPlayerCount()){
+            numPlayers = GamePathSpace.getMaxPlayerCount();
+        }
+
+        tokenLocations = new int[numPlayers];
+        tokens = new Token[numPlayers];
+        for(int i=0;i<numPlayers;i++){
+            ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+            URL url = classloader.getResource("player"+(i+1)+"_small.png");
+            tokens[i] = new Token(url.getPath());
+            tokenLocations[i] = 0; //initialize location tracker to position 0 so in the future we can fast update locations without needing to scan all board spaces
+            try{
+                path[0].addToken(tokens[i]);
+            }catch(NoSpaceForTokenException e){
+                System.err.println("Error more tokens than space created. Should not be possible");
+                System.exit(10);
+            }
+            //path[1].removeToken(tokens[i]);
         }
     }
 }

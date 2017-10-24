@@ -15,6 +15,7 @@ public class TokenSpace extends JButton {
     }
 
     public void setToken(Token token) {
+       // this.setEnabled(true);
         this.setIcon(token);
     }
 
@@ -30,6 +31,7 @@ public class TokenSpace extends JButton {
 
     public void removeToken() {
         this.setIcon(null);
+        this.setEnabled(false);
     }
 
 }
