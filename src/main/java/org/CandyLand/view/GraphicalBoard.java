@@ -82,4 +82,8 @@ public class GraphicalBoard extends JPanel {
             }
         }
     }
+
+    public int getPathSize(){
+        return path.length;
+    }
 }
