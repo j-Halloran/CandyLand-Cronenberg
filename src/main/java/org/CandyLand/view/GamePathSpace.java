@@ -47,6 +47,9 @@ public class GamePathSpace extends JPanel {
 
     public Color getSpaceColor(){
         return spaceColor;
+    }
 
+    public static int getMaxPlayerCount(){
+        return TOKEN_SPACE_COLS * TOKEN_SPACE_ROWS;
     }
 }

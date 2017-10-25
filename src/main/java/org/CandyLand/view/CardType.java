@@ -6,5 +6,6 @@ public enum CardType {
     BLUE,
     GREEN,
     ORANGE,
-    UPSIDEDOWN
+    UPSIDEDOWN,
+    EMPTY_DISCARD
 }
