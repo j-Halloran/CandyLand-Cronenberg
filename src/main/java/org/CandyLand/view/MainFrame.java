@@ -21,6 +21,7 @@ public class MainFrame {
         GraphicalBoard graphicalBoard = new GraphicalBoard();
         graphicalBoard.addInitialTokens(NUM_PLAYERS);
         CardPanel cardPanel = new CardPanel();
+        //cardPanel.get
 
         constraints.weightx = 3;
         constraints.weighty = 1;
