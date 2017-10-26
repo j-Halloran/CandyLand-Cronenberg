@@ -10,7 +10,7 @@ public class GraphicalBoard extends JPanel {
 
     private static final int ROWS = 11;
     private static final int COLS = 11;
-    private static final Color BACKGROUND_COLOR = Color.GRAY;
+    private static final Color BACKGROUND_COLOR = new Color(0,0,0,0);
     private JComponent[][] spaces = new JComponent[ROWS][COLS];
     private GamePathSpace[] path;
     private static int[] tokenLocations; //tracker variable where player number is used as an index to retrieve current token path space
