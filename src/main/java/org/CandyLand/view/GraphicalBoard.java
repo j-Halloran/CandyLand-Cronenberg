@@ -26,8 +26,7 @@ public class GraphicalBoard extends JPanel {
         int col = 1;
         boolean movingRight = true;
         boolean spacerRow = false;
-        ArrayList<GamePathSpace> path =
-                new ArrayList<GamePathSpace>(ROWS * COLS);
+        ArrayList<GamePathSpace> path =  new ArrayList<>(ROWS * COLS);
 
         //leave a space for start
         GamePathSpace startSpace = new GamePathSpace(Color.WHITE);
