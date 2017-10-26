@@ -1,6 +1,8 @@
 package org.CandyLand.view;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class GraphicalCard extends JButton {
@@ -27,6 +29,9 @@ public class GraphicalCard extends JButton {
                 setBackground(Color.WHITE);
                 setText(new String(Character.toChars(0x1f0a0)));
                 setFont(new Font("TimesRoman", Font.PLAIN, 256));
+                this.addActionListener(e -> {
+                    StatusBarPanel.activateNextPlayer();
+                });
                 break;
             case EMPTY_DISCARD:
                 setBackground(Color.WHITE);
