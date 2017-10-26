@@ -99,6 +99,10 @@ public class GraphicalBoard extends JPanel {
         }
     }
 
+    public int getPathSize(){
+        return path.length;
+    }
+  
     /**
      * Loops for each player in the game adding their token to the starting space
      *
