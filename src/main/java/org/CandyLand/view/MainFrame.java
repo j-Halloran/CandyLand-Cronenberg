@@ -1,18 +1,29 @@
 package org.CandyLand.view;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import org.CandyLand.view.GraphicalBoard;
 
-public class MainFrame {
+public class MainFrame extends JComponent {
 
     private final int HEIGHT = 1000;
     private final int WIDTH = 1200;
     private final String TITLE = "World Of Sweets";
     private int numPlayers=3; //hard coding until we get a start screen working
     private JFrame frame = new JFrame(TITLE);
+    private File imageFile = new File("/home/jrodstein/IdeaProjects/CandyLand-Cronenberg/src/main/resources/images/CLbg2.jpg");
+    private BufferedImage myImage = ImageIO.read(imageFile);
 
-    public MainFrame() {
+
+
+    public MainFrame() throws IOException {
+        // set Background Image of MainFrame
+        frame.setContentPane(new ImagePanel(myImage));
+
         GridBagConstraints constraints = new GridBagConstraints();
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,7 +39,6 @@ public class MainFrame {
         GraphicalBoard graphicalBoard = new GraphicalBoard();
         graphicalBoard.addInitialTokens(numPlayers);
         CardPanel cardPanel = new CardPanel();
-        //cardPanel.get
 
         constraints.weightx = 1;
         constraints.weighty = 1;
