@@ -12,6 +12,6 @@ public class ImagePanel extends JComponent {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         // image, positioning, and dimensions
-        g.drawImage(image, 400, 300, 800, 600, this);
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
     }
 }

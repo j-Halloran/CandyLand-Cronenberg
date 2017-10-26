@@ -15,8 +15,7 @@ public class MainFrame extends JComponent {
     private final String TITLE = "World Of Sweets";
     private int numPlayers=3; //hard coding until we get a start screen working
     private JFrame frame = new JFrame(TITLE);
-    private File imageFile = new File("/home/jrodstein/IdeaProjects/CandyLand-Cronenberg/src/main" +
-            "/java/org/CandyLand/view/bgImage.jpg");
+    private File imageFile = new File("/home/jrodstein/IdeaProjects/CandyLand-Cronenberg/src/main/resources/images/CLbg2.jpg");
     private BufferedImage myImage = ImageIO.read(imageFile);
 
 
