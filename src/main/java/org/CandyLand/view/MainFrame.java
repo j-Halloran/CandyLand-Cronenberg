@@ -17,7 +17,7 @@ public class MainFrame extends JComponent {
     private JFrame frame = new JFrame(TITLE);
     private File imageFile;
     private BufferedImage myImage;
-
+    private static CardPanel cardPanel;
 
 
     public MainFrame() throws IOException {
@@ -42,7 +42,7 @@ public class MainFrame extends JComponent {
 
         GraphicalBoard graphicalBoard = new GraphicalBoard();
         graphicalBoard.addInitialTokens(numPlayers);
-        CardPanel cardPanel = new CardPanel();
+        cardPanel = new CardPanel();
 
 
         constraints.weightx = 1;
@@ -65,5 +65,9 @@ public class MainFrame extends JComponent {
         frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
         frame.setVisible(true);
         frame.pack();
+    }
+
+    public static void drawCard(){
+        cardPanel.drawCard();
     }
 }

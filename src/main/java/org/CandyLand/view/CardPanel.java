@@ -1,5 +1,7 @@
 package org.CandyLand.view;
 
+import org.CandyLand.model.CardDeck;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -9,8 +11,10 @@ public class CardPanel extends JPanel {
     private GraphicalCard drawPile =
             new GraphicalCard(CardType.UPSIDEDOWN);
     private GraphicalCard discardPile = new GraphicalCard(CardType.EMPTY_DISCARD);
+    private CardDeck deck;
 
     public CardPanel() {
+        deck = new CardDeck();
         this.setLayout(new GridLayout(2, 1));
         this.setBackground(BACKGROUND_COLOR);
         drawPile.setEnabled(true);
@@ -21,8 +25,11 @@ public class CardPanel extends JPanel {
         this.add(discardPile);
     }
 
-    public void setCurrentCard(CardType type) {
-        GraphicalCard card = new GraphicalCard(type);
+    public void drawCard(){
+        setCurrentCard(deck.drawCard());
+    }
+
+    public void setCurrentCard(GraphicalCard card) {
         if (this.discardPile == null) {
             this.add(card);
             discardPile = card;
@@ -30,5 +37,6 @@ public class CardPanel extends JPanel {
         else {
             discardPile = card;
         }
+        discardPile.repaint();
     }
 }
