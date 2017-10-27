@@ -4,24 +4,28 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import org.CandyLand.view.GraphicalBoard;
 
 public class MainFrame extends JComponent {
 
     private final int HEIGHT = 1000;
     private final int WIDTH = 1200;
     private final String TITLE = "World Of Sweets";
-    private int numPlayers=3; //hard coding until we get a start screen working
+    private int numPlayers;
     private JFrame frame = new JFrame(TITLE);
-    private File imageFile = new File("/home/jrodstein/IdeaProjects/CandyLand-Cronenberg/src/main/resources/images/CLbg2.jpg");
-    private BufferedImage myImage = ImageIO.read(imageFile);
+    private File imageFile;
+    private BufferedImage myImage;
 
 
 
     public MainFrame() throws IOException {
         // set Background Image of MainFrame
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        URL url = classloader.getResource("CLbg2.jpg");
+        imageFile = new File(url.getPath());
+        myImage = ImageIO.read(imageFile);
         frame.setContentPane(new ImagePanel(myImage));
 
         GridBagConstraints constraints = new GridBagConstraints();
@@ -39,6 +43,7 @@ public class MainFrame extends JComponent {
         GraphicalBoard graphicalBoard = new GraphicalBoard();
         graphicalBoard.addInitialTokens(numPlayers);
         CardPanel cardPanel = new CardPanel();
+
 
         constraints.weightx = 1;
         constraints.weighty = 1;

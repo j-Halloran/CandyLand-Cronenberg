@@ -7,11 +7,13 @@ import java.io.IOException;
 public class CandyLand {
 
     public static void main(String[] args) {
-        try {
+        try{
             MainFrame mainFrame = new MainFrame();
-        }catch(IOException ioe){
-            System.err.println("Background Image not found/loaded");
+        }catch(IOException e){
+            System.err.println("Background image not found.");
+            System.exit(1);
         }
+
     }
 
 }

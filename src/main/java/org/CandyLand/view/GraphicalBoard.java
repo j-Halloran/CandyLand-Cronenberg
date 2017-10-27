@@ -88,7 +88,9 @@ public class GraphicalBoard extends JPanel {
 
     public GraphicalBoard() {
         initializeBoard();
-        this.setLayout(new GridLayout(ROWS, COLS));
+        GridLayout layout = new GridLayout(ROWS,COLS);
+        layout.setVgap(0);
+        this.setLayout(layout);
         this.setBackground(BACKGROUND_COLOR);
         for (JComponent[] spaceRow : spaces) {
             for (JComponent space : spaceRow) {
