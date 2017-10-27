@@ -10,7 +10,7 @@ public class CandyLand {
         try{
             MainFrame mainFrame = new MainFrame();
         }catch(IOException e){
-            System.err.println(e);
+            System.err.println("Background image not found.");
             System.exit(1);
         }
 
