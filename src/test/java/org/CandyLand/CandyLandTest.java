@@ -6,6 +6,7 @@ import org.CandyLand.view.*;
 import org.junit.Test;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 import static org.junit.Assert.*;
 
@@ -92,6 +93,37 @@ public class CandyLandTest {
         assertEquals(gsG.getSpaceColor(), Color.GREEN);
         assertEquals(gsO.getSpaceColor(), Color.ORANGE);
     }
+
+
+    /*
+    * Turn Indicator test
+    */
+    @Test
+    public void setNumberOfPlayers(){
+        StatusBarPanel sb = new StatusBarPanel(4);
+        assertEquals(sb.getNumberOfPlayers(), 4);
+    }
+
+    @Test
+    public void cycleTurn(){
+        StatusBarPanel sb = new StatusBarPanel(4);
+
+        try {
+            assertEquals(sb.getCurrentTurn(1), 0);
+            sb.activateNextPlayer();
+            assertEquals(sb.getCurrentTurn(2), 0);
+            sb.activateNextPlayer();
+            assertEquals(sb.getCurrentTurn(3), 0);
+            sb.activateNextPlayer();
+            assertEquals(sb.getCurrentTurn(4), 0);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 
 
 
