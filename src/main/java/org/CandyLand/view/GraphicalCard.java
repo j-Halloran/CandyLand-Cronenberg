@@ -48,5 +48,9 @@ public class GraphicalCard extends JButton {
                 break;
         }
         this.isDouble = isDouble;
+        if(isDouble){
+            setText("Double");
+            setFont(new Font("TimesRoman", Font.PLAIN, 24));
+        }
     }
 }

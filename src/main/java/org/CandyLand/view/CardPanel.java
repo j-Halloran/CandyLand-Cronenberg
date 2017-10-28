@@ -26,17 +26,23 @@ public class CardPanel extends JPanel {
     }
 
     public void drawCard(){
-        setCurrentCard(deck.drawCard());
+        setCurrentCard(deck.isDeckEmpty(),deck.drawCard());
     }
 
-    public void setCurrentCard(GraphicalCard card) {
+    public void setCurrentCard(boolean isDeckEmpty, GraphicalCard card) {
+        this.remove(discardPile);
         if (this.discardPile == null) {
             this.add(card);
             discardPile = card;
         }
-        else {
+        else if(!isDeckEmpty){
             discardPile = card;
         }
-        discardPile.repaint();
+        else{
+            discardPile = new GraphicalCard(CardType.EMPTY_DISCARD);
+        }
+        this.add(discardPile);
+        this.revalidate();
+        this.repaint();
     }
 }
