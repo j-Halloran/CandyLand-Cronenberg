@@ -125,13 +125,73 @@ public class CandyLandTest {
         }
 
     }
+    /*
+    *US Game Window Test
+    */
+    @Test
+    public void windowExists(){
+
+        try {
+            MainFrame mainFrame = new MainFrame();
+            assertEquals(mainFrame.getFrame().isVisible(), true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public void cardExists(){
 
 
 
+        try {
+//            Robot r = new Robot();
+//            r.keyPress(java.awt.event.KeyEvent.VK_ENTER);
+            MainFrame mainFrame = new MainFrame();
+//            r.keyRelease(java.awt.event.KeyEvent.VK_ENTER);
+            assertEquals(mainFrame.getPanel().isVisible(), true);
+        } catch (IOException e) {
+            e.printStackTrace();
+//        } catch (AWTException e) {
+//            e.printStackTrace();
+       }
 
+    }
 
+    /*
+    *US Board Colors
+    */
 
+    @Test
+    public void boardBackgroundColor(){
+        GraphicalBoard b = new GraphicalBoard();
+        assertEquals(b.getBackgroundColor(), new Color(0,0,0,0));
+    }
 
+    @Test
+    public void grandmaColor(){
+        GraphicalBoard b = new GraphicalBoard();
+        assertEquals(b.getPath()[0].getSpaceColor(), Color.WHITE);
+
+    }
+
+    /*
+    *US Past Card
+    */
+
+    @Test
+    public void discardCardAreaExists(){
+        CardPanel c = new CardPanel();
+        assertNotNull(c.getDiscardPile());
+    }
+
+    @Test
+    public void discardCard(){
+        CardPanel c = new CardPanel();
+        c.drawCard();
+        assertNotEquals(c.getDiscardPile().size(), 0);
+    }
 
 
 

@@ -70,4 +70,14 @@ public class MainFrame extends JComponent {
     public static void drawCard(){
         cardPanel.drawCard();
     }
+
+    public JFrame getFrame(){
+        return frame;
+    }
+    public CardPanel getPanel(){
+        return cardPanel;
+    }
+    public int getNumPlayers(){
+        return numPlayers;
+    }
 }
