@@ -17,8 +17,11 @@ public class CandyLandTest {
     * */
     @Test
     public void cardTypeTest(){
-        GraphicalCard gc = new GraphicalCard(CardType.BLUE);
+        GraphicalCard gc = new GraphicalCard(CardType.BLUE, false);
         assertEquals(gc.getBackground(), Color.BLUE);
+
+        GraphicalCard gc2 = new GraphicalCard(CardType.RED, true);
+        assertEquals(gc2.getBackground(), Color.RED);
     }
 
     @Test
@@ -71,7 +74,7 @@ public class CandyLandTest {
     }
 
     /*
-    * Board Exists Unit Tests
+    * US Board Exists Unit Tests
     */
     @Test
     public void numberOfSpaces71(){
@@ -96,7 +99,7 @@ public class CandyLandTest {
 
 
     /*
-    * Turn Indicator test
+    * US Turn Indicator test
     */
     @Test
     public void setNumberOfPlayers(){
