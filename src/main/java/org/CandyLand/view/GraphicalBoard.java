@@ -3,7 +3,6 @@ package org.CandyLand.view;
 import java.awt.*;
 import javax.swing.*;
 import java.net.URL;
-import java.util.LinkedHashMap;
 import java.util.ArrayList;
 
 public class GraphicalBoard extends JPanel {
@@ -131,4 +130,13 @@ public class GraphicalBoard extends JPanel {
             //path[1].removeToken(tokens[i]);
         }
     }
+
+    public Color getBackgroundColor(){
+        return BACKGROUND_COLOR;
+    }
+
+    public GamePathSpace[] getPath(){
+        return path;
+    }
+
 }
