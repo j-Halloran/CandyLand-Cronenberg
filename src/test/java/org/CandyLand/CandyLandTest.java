@@ -3,6 +3,7 @@ package org.CandyLand;
 
 
 import org.CandyLand.view.*;
+import org.CandyLand.model.*;
 import org.junit.Test;
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +15,9 @@ public class CandyLandTest {
 
     /*
     * US: Deck of cards
+    *
+    * cardTypeTest() - test ability to set card to a certian color/type
+    * deckExists() - test generation of card deck of size 60
     * */
     @Test
     public void cardTypeTest(){
@@ -26,13 +30,18 @@ public class CandyLandTest {
 
     @Test
     public void deckExists(){
-        //wait for desk generation class implementation
+        CardDeck cd = new CardDeck();
+        assertEquals(cd.getDeckSize(), 60);
     }
 
 
     /*
     * US: Visible Avatar
-     */
+    *
+    * placeAvatar() - test creation of avatar, and palcement onto space
+    * removeAvatar() - test ability to remove avatar from a space
+    * spaceLimit() - test capacity and overflow of 4 avatars per space
+    */
     @Test
     public void placeAvatar(){
 
@@ -74,7 +83,10 @@ public class CandyLandTest {
     }
 
     /*
-    * US Board Exists Unit Tests
+    * US: Board Exists Unit Tests
+    *
+    * numberOfSpaces71() - confirm 71 spaces generated for board
+    * colorOfSpaces5() - confirm abilty to set spaces to 5 specified colors
     */
     @Test
     public void numberOfSpaces71(){
@@ -99,7 +111,11 @@ public class CandyLandTest {
 
 
     /*
-    * US Turn Indicator test
+    * US: Turn Indicator test
+    *
+    * setNumberOfPLayers() - test ability to choose # of players, 2-4
+    * cycelTurn() - confirm turn cycles from player to player (looping)
+    *               upon clicking of card deck
     */
     @Test
     public void setNumberOfPlayers(){
@@ -126,7 +142,10 @@ public class CandyLandTest {
 
     }
     /*
-    *US Game Window Test
+    *US: Game Window Test
+    *
+    * windowExists() - confirm generation of game window
+    * cardExists() - confirm visibility of card pile
     */
     @Test
     public void windowExists(){
@@ -160,7 +179,11 @@ public class CandyLandTest {
     }
 
     /*
-    *US Board Colors
+    *US: Board Colors
+    *
+    * boardBackgroundColor() - verify that board background set to opaque
+    * grandmaColor - verify grandmas house space set to a compliment of the
+    *                5 game path space colors
     */
 
     @Test
@@ -177,7 +200,10 @@ public class CandyLandTest {
     }
 
     /*
-    *US Past Card
+    *US: Past Card
+    *
+    * discardCardAreaExists() - verify creation and visibility fo discard area
+    * discardCard() - confirm that past cards are placed in the discard pile
     */
 
     @Test
