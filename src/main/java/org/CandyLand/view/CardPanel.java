@@ -46,4 +46,8 @@ public class CardPanel extends JPanel {
         this.revalidate();
         this.repaint();
     }
+
+    public GraphicalCard getDiscardPile(){
+        return discardPile;
+    }
 }

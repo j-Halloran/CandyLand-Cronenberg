@@ -1,6 +1,7 @@
 package org.CandyLand.view;
 
 import java.awt.*;
+import java.io.IOException;
 import javax.swing.*;
 
 public class StatusBarPanel extends JPanel{
@@ -25,5 +26,23 @@ public class StatusBarPanel extends JPanel{
                 break;
             }
         }
+    }
+
+    public static int getNumberOfPlayers(){
+        return players.length;
+    }
+
+    public static int getCurrentTurn(int player) throws IOException{
+        if(player >= players.length){
+            throw new IOException("Invalid player");
+        }
+
+        if(players[player-1].isActive()) {
+            // it is this players turn
+            return 0;
+        }
+
+        // it is ot currently this players turn
+        else return 1;
     }
 }
