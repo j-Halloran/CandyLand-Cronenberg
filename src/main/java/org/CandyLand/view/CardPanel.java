@@ -4,6 +4,7 @@ import org.CandyLand.model.CardDeck;
 
 import java.awt.*;
 import javax.swing.*;
+import org.CandyLand.CardType;
 
 public class CardPanel extends JPanel {
 
@@ -26,7 +27,7 @@ public class CardPanel extends JPanel {
     }
 
     public void drawCard(){
-        setCurrentCard(deck.isDeckEmpty(),deck.drawCard());
+        setCurrentCard(deck.isDeckEmpty(), new GraphicalCard(deck.drawCard()));
     }
 
     public void setCurrentCard(boolean isDeckEmpty, GraphicalCard card) {

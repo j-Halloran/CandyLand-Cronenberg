@@ -12,21 +12,6 @@ import static org.junit.Assert.*;
 public class CandyLandTest {
 
     /*
-    * US: Deck of cards
-    * */
-    @Test
-    public void cardTypeTest(){
-        GraphicalCard gc = new GraphicalCard(CardType.BLUE);
-        assertEquals(gc.getBackground(), Color.BLUE);
-    }
-
-    @Test
-    public void deckExists(){
-        //wait for desk generation class implementation
-    }
-
-
-    /*
     * US: Visible Avatar
      */
     @Test
