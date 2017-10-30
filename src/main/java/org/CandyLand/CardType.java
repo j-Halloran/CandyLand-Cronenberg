@@ -1,0 +1,16 @@
+package org.CandyLand;
+
+public enum CardType {
+    SINGLE_RED,
+    SINGLE_YELLOW,
+    SINGLE_BLUE,
+    SINGLE_GREEN,
+    SINGLE_ORANGE,
+    DOUBLE_RED,
+    DOUBLE_YELLOW,
+    DOUBLE_BLUE,
+    DOUBLE_GREEN,
+    DOUBLE_ORANGE,
+    UPSIDEDOWN,
+    EMPTY_DISCARD
+}

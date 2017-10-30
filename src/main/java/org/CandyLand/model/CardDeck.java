@@ -1,7 +1,6 @@
 package org.CandyLand.model;
 
-import org.CandyLand.view.CardType;
-import org.CandyLand.view.GraphicalCard;
+import org.CandyLand.CardType;
 import java.util.ArrayList;
 
 
@@ -9,9 +8,19 @@ import java.util.ArrayList;
 public class CardDeck {
     private static final int NUM_SINGLE_PER_COLOR = 10;
     private static final int NUM_DOUBLE_PER_COLOR = 2;
-    private static final CardType[] CARD_COLORS = {CardType.RED,CardType.YELLOW,CardType.BLUE,CardType.GREEN,CardType.ORANGE};
+    private static final CardType[] SINGLE_CARDS = {CardType.SINGLE_RED,
+                                                    CardType.SINGLE_YELLOW,
+                                                    CardType.SINGLE_BLUE,
+                                                    CardType.SINGLE_GREEN,
+                                                    CardType.SINGLE_ORANGE};
+    private static final CardType[] DOUBLE_CARDS = {CardType.DOUBLE_RED,
+                                                    CardType.DOUBLE_YELLOW,
+                                                    CardType.DOUBLE_BLUE,
+                                                    CardType.DOUBLE_GREEN,
+                                                    CardType.DOUBLE_ORANGE};
 
-    private static ArrayList<GraphicalCard> currentDeck;
+    private static ArrayList<CardType> currentDeck;
+    static {shuffleDeck();}
 
     public CardDeck(){
         shuffleDeck();
@@ -22,7 +31,7 @@ public class CardDeck {
      * and then fast mapped into a single array list which is then shuffled using the java
      * collections framework shuffle for lists.     *
      */
-    public void shuffleDeck(){
+    public static void shuffleDeck(){
         currentDeck = new ArrayList<>();
         System.out.println("Shuffling");
         currentDeck.addAll(generateSingleColorCards());
@@ -31,21 +40,21 @@ public class CardDeck {
         java.util.Collections.shuffle(currentDeck);
     }
 
-    private ArrayList<GraphicalCard> generateSingleColorCards(){
-        ArrayList<GraphicalCard> generatedSingleCards = new ArrayList<>();
+    private static ArrayList<CardType> generateSingleColorCards(){
+        ArrayList<CardType> generatedSingleCards = new ArrayList<>();
         for(int i=0;i<NUM_SINGLE_PER_COLOR;i++){
-            for(CardType type: CARD_COLORS){
-                generatedSingleCards.add(new GraphicalCard(type,false));
+            for(CardType type: SINGLE_CARDS){
+                generatedSingleCards.add(type);
             }
         }
         return generatedSingleCards;
     }
 
-    private ArrayList<GraphicalCard> generateDoubleColorCards(){
-        ArrayList<GraphicalCard> generatedDoubleCards = new ArrayList<>();
+    private static ArrayList<CardType> generateDoubleColorCards(){
+        ArrayList<CardType> generatedDoubleCards = new ArrayList<>();
         for(int i=0;i<NUM_DOUBLE_PER_COLOR;i++){
-            for(CardType type: CARD_COLORS){
-                generatedDoubleCards.add(new GraphicalCard(type,true));
+            for(CardType type: DOUBLE_CARDS){
+                generatedDoubleCards.add(type);
             }
         }
         return generatedDoubleCards;
@@ -56,7 +65,7 @@ public class CardDeck {
      *
      * @return An Array List containing all necessary special cards
      */
-    private ArrayList<GraphicalCard> generateSpecialCards(){
+    private static ArrayList<CardType> generateSpecialCards(){
         return null;
     }
 
@@ -68,14 +77,14 @@ public class CardDeck {
      *
      * @return Returns the last card in the deck object as the next card drawn
      */
-    public GraphicalCard drawCard(){
+    public static CardType drawCard(){
         if(currentDeck.isEmpty()){
             shuffleDeck();
         }
         return currentDeck.remove(currentDeck.size()-1);
     }
 
-    public boolean isDeckEmpty(){
+    public static boolean isDeckEmpty(){
         return currentDeck.isEmpty();
     }
 
@@ -84,7 +93,7 @@ public class CardDeck {
      *
      * @return The current size of the deck as an int
      */
-    public int getDeckSize(){
+    public static int getDeckSize(){
         return currentDeck.size();
     }
 }

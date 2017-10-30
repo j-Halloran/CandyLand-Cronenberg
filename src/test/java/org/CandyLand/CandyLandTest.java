@@ -14,28 +14,6 @@ import static org.junit.Assert.*;
 public class CandyLandTest {
 
     /*
-    * US: Deck of cards
-    *
-    * cardTypeTest() - test ability to set card to a certian color/type
-    * deckExists() - test generation of card deck of size 60
-    * */
-    @Test
-    public void cardTypeTest(){
-        GraphicalCard gc = new GraphicalCard(CardType.BLUE, false);
-        assertEquals(gc.getBackground(), Color.BLUE);
-
-        GraphicalCard gc2 = new GraphicalCard(CardType.RED, true);
-        assertEquals(gc2.getBackground(), Color.RED);
-    }
-
-    @Test
-    public void deckExists(){
-        CardDeck cd = new CardDeck();
-        assertEquals(cd.getDeckSize(), 60);
-    }
-
-
-    /*
     * US: Visible Avatar
     *
     * placeAvatar() - test creation of avatar, and palcement onto space
