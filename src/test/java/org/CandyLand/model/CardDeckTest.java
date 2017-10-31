@@ -8,9 +8,10 @@ import org.CandyLand.CardType;
 
 public class CardDeckTest {
 
-    static final int NUMBER_OF_CARDS = 60;
+    static final int NUMBER_OF_CARDS = 65;
     static final int NUMBER_OF_SINGLES = 10;
     static final int NUMBER_OF_DOUBLES = 2;
+    static final int NUMBER_OF_SKIP_TURN_CARDS = 5;
     static final int MAX_CARDS_EVER_EXPECTED_TO_BE_DRAWN = 1000;
 
     @Before
@@ -30,6 +31,7 @@ public class CardDeckTest {
         int doubleBlueCount = 0;
         int doubleGreenCount = 0;
         int doubleOrangeCount = 0;
+        int skipTurnCount = 0;
         for (int i = 0; i < NUMBER_OF_CARDS; i++) {
             switch (CardDeck.drawCard()) {
                 case SINGLE_RED:
@@ -62,6 +64,9 @@ public class CardDeckTest {
                 case DOUBLE_ORANGE:
                     doubleOrangeCount++;
                     break;
+                case SKIP_TURN:
+                    skipTurnCount++;
+                    break;
             }
         }
         assertEquals(NUMBER_OF_SINGLES, singleRedCount);
@@ -74,6 +79,7 @@ public class CardDeckTest {
         assertEquals(NUMBER_OF_DOUBLES, doubleBlueCount);
         assertEquals(NUMBER_OF_DOUBLES, doubleGreenCount);
         assertEquals(NUMBER_OF_DOUBLES, doubleOrangeCount);
+        assertEquals(NUMBER_OF_SKIP_TURN_CARDS, skipTurnCount);
     }
 
     @Test

@@ -134,6 +134,10 @@ public class GraphicalBoard extends JPanel {
     }
 
     public void moveAvatar(int playerNumber, GraphicalCard card){
+        if (card.getCardType() == CardType.SKIP_TURN) {
+            // we aint goin nowhere
+            return;
+        }
         int getNextSpace = getNextSpace(card,tokenLocations[playerNumber]);
         if(card.getCardType().equals(CardType.DOUBLE_BLUE) || card.getCardType().equals(CardType.DOUBLE_GREEN) || card.getCardType().equals(CardType.DOUBLE_RED) ||
                 card.getCardType().equals(CardType.DOUBLE_YELLOW) || card.getCardType().equals(CardType.DOUBLE_ORANGE)){

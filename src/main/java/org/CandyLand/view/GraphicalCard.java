@@ -69,6 +69,13 @@ public class GraphicalCard extends JButton {
                 setBackground(Color.ORANGE);
                 this.isDouble = true;
                 break;
+            case SKIP_TURN:
+                setBackground(Color.BLACK);
+                setForeground(Color.WHITE);
+                setText("Skip  Turn");
+                setFont(new Font("TimesRoman", Font.PLAIN, 24));
+                this.isDouble = false;
+                break;
         }
         if(isDouble){
             setText("Double");

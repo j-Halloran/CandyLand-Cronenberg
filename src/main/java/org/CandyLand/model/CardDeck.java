@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class CardDeck {
     private static final int NUM_SINGLE_PER_COLOR = 10;
     private static final int NUM_DOUBLE_PER_COLOR = 2;
+    private static final int NUM_SKIP_TURN_CARDS = 5;
     private static final CardType[] SINGLE_CARDS = {CardType.SINGLE_RED,
                                                     CardType.SINGLE_YELLOW,
                                                     CardType.SINGLE_BLUE,
@@ -36,7 +37,7 @@ public class CardDeck {
         System.out.println("Shuffling");
         currentDeck.addAll(generateSingleColorCards());
         currentDeck.addAll(generateDoubleColorCards());
-      //  currentDeck.addAll(generateSpecialCards());
+        currentDeck.addAll(generateSpecialCards());
         java.util.Collections.shuffle(currentDeck);
     }
 
@@ -61,12 +62,15 @@ public class CardDeck {
     }
 
     /**
-     * Currently there are no special cards sos this is null, just future proofing
      *
      * @return An Array List containing all necessary special cards
      */
     private static ArrayList<CardType> generateSpecialCards(){
-        return null;
+        ArrayList<CardType> generatedSpecialCards = new ArrayList<>();
+        for (int i = 0;i < NUM_SKIP_TURN_CARDS; i++){
+            generatedSpecialCards.add(CardType.SKIP_TURN);
+        }
+        return generatedSpecialCards;
     }
 
     /**
