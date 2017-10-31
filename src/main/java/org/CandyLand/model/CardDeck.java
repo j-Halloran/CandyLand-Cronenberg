@@ -85,6 +85,9 @@ public class CardDeck {
     }
 
     public static boolean isDeckEmpty(){
+        if(currentDeck == null){
+            return true;
+        }
         return currentDeck.isEmpty();
     }
 
@@ -94,6 +97,9 @@ public class CardDeck {
      * @return The current size of the deck as an int
      */
     public static int getDeckSize(){
-        return currentDeck.size();
+        if(currentDeck==null) {
+            return 0;
+        }
+        return  currentDeck.size();
     }
 }
