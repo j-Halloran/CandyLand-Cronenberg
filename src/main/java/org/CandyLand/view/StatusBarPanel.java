@@ -32,6 +32,15 @@ public class StatusBarPanel extends JPanel{
         return players.length;
     }
 
+    public static int getCurrentPlayer(){
+        for(int i=0;i<players.length;i++){
+            if(players[i].isActive()){
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public static int getCurrentTurn(int player) throws IOException{
         if(player >= players.length){
             throw new IOException("Invalid player");

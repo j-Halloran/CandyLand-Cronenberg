@@ -1,6 +1,9 @@
 package org.CandyLand.view;
 
+import org.CandyLand.CardType;
+
 import java.awt.*;
+import javax.smartcardio.Card;
 import javax.swing.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -129,6 +132,32 @@ public class GraphicalBoard extends JPanel {
             }
             //path[1].removeToken(tokens[i]);
         }
+    }
+
+    public void moveAvatar(int playerNumber, GraphicalCard card){
+        int getNextSpace = getNextSpace(card,tokenLocations[playerNumber]);
+        path[tokenLocations[playerNumber]].removeToken(tokens[playerNumber]);
+        try{
+            path[getNextSpace].addToken(tokens[playerNumber]);
+        }
+        catch (NoSpaceForTokenException e){
+            System.err.println("Error more tokens than players. Exiting");
+            System.exit(1);
+        }
+        tokenLocations[playerNumber] = getNextSpace;
+    }
+
+    private int getNextSpace(GraphicalCard card, int curLoc){
+        //Another sanity check
+        if(card.getCardType() == CardType.EMPTY_DISCARD || card.getCardType() == CardType.UPSIDEDOWN){
+            return 0;
+        }
+        for(int i=curLoc+1;i<path.length-1;i++){
+            if(path[i].getSpaceColor().equals(card.getBackground())){
+                return i;
+            }
+        }
+        return path.length-2;
     }
 
     public Color getBackgroundColor(){

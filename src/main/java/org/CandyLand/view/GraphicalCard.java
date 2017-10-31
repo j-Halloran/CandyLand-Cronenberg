@@ -8,6 +8,7 @@ import org.CandyLand.CardType;
 
 public class GraphicalCard extends JButton {
     private boolean isDouble;
+    private CardType cardType;
 
     public GraphicalCard(CardType type) {
         setEnabled(false);
@@ -73,5 +74,14 @@ public class GraphicalCard extends JButton {
             setText("Double");
             setFont(new Font("TimesRoman", Font.PLAIN, 24));
         }
+        cardType = type;
+    }
+
+    public boolean isDouble(){
+        return isDouble;
+    }
+
+    public CardType getCardType() {
+        return cardType;
     }
 }
