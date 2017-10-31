@@ -134,10 +134,6 @@ public class GraphicalBoard extends JPanel {
     }
 
     public void moveAvatar(int playerNumber, GraphicalCard card){
-        if (card.getCardType() == CardType.SKIP_TURN) {
-            // we aint goin nowhere
-            return;
-        }
         int getNextSpace = getNextSpace(card,tokenLocations[playerNumber]);
         if(card.getCardType().equals(CardType.DOUBLE_BLUE) || card.getCardType().equals(CardType.DOUBLE_GREEN) || card.getCardType().equals(CardType.DOUBLE_RED) ||
                 card.getCardType().equals(CardType.DOUBLE_YELLOW) || card.getCardType().equals(CardType.DOUBLE_ORANGE)){
@@ -155,10 +151,14 @@ public class GraphicalBoard extends JPanel {
         tokenLocations[playerNumber] = getNextSpace;
     }
 
-    private int getNextSpace(GraphicalCard card, int curLoc){
+    protected int getNextSpace(GraphicalCard card, int curLoc){
         //Another sanity check
         if(card.getCardType() == CardType.EMPTY_DISCARD || card.getCardType() == CardType.UPSIDEDOWN){
             return 0;
+        }
+        else if (card.getCardType() == CardType.SKIP_TURN) {
+            // we aint goin nowhere
+            return curLoc;
         }
         for(int i=curLoc+1;i<path.length-1;i++){
             if(path[i].getSpaceColor().equals(card.getBackground())){
