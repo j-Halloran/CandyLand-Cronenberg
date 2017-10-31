@@ -26,8 +26,11 @@ public class CardPanel extends JPanel {
         this.add(discardPile);
     }
 
-    public void drawCard(){
-        setCurrentCard(deck.isDeckEmpty(), new GraphicalCard(deck.drawCard()));
+    public GraphicalCard drawCard(){
+        boolean isDeckEmpty = deck.isDeckEmpty();
+        GraphicalCard card = new GraphicalCard(deck.drawCard());
+        setCurrentCard(isDeckEmpty, card);
+        return card;
     }
 
     public void setCurrentCard(boolean isDeckEmpty, GraphicalCard card) {

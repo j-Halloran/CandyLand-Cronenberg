@@ -1,5 +1,7 @@
 package org.CandyLand.view;
 
+import org.CandyLand.CardType;
+
 import java.awt.*;
 import javax.swing.*;
 import java.net.URL;
@@ -129,6 +131,37 @@ public class GraphicalBoard extends JPanel {
             }
             //path[1].removeToken(tokens[i]);
         }
+    }
+
+    public void moveAvatar(int playerNumber, GraphicalCard card){
+        int getNextSpace = getNextSpace(card,tokenLocations[playerNumber]);
+        if(card.getCardType().equals(CardType.DOUBLE_BLUE) || card.getCardType().equals(CardType.DOUBLE_GREEN) || card.getCardType().equals(CardType.DOUBLE_RED) ||
+                card.getCardType().equals(CardType.DOUBLE_YELLOW) || card.getCardType().equals(CardType.DOUBLE_ORANGE)){
+            getNextSpace = getNextSpace(card,getNextSpace);
+        }
+
+        path[tokenLocations[playerNumber]].removeToken(tokens[playerNumber]);
+        try{
+            path[getNextSpace].addToken(tokens[playerNumber]);
+        }
+        catch (NoSpaceForTokenException e){
+            System.err.println("Error more tokens than players. Exiting");
+            System.exit(1);
+        }
+        tokenLocations[playerNumber] = getNextSpace;
+    }
+
+    private int getNextSpace(GraphicalCard card, int curLoc){
+        //Another sanity check
+        if(card.getCardType() == CardType.EMPTY_DISCARD || card.getCardType() == CardType.UPSIDEDOWN){
+            return 0;
+        }
+        for(int i=curLoc+1;i<path.length-1;i++){
+            if(path[i].getSpaceColor().equals(card.getBackground())){
+                return i;
+            }
+        }
+        return path.length-2;
     }
 
     public Color getBackgroundColor(){

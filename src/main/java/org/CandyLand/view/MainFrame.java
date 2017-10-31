@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import org.CandyLand.CardType;
 
 public class MainFrame extends JComponent {
 
@@ -18,7 +19,7 @@ public class MainFrame extends JComponent {
     private File imageFile;
     private BufferedImage myImage;
     private static CardPanel cardPanel;
-
+    private static GraphicalBoard graphicalBoard;
 
     public MainFrame() throws IOException {
         // set Background Image of MainFrame
@@ -40,7 +41,7 @@ public class MainFrame extends JComponent {
         }
         numPlayers = Integer.parseInt(userNumberPlayersResponse);
 
-        GraphicalBoard graphicalBoard = new GraphicalBoard();
+        graphicalBoard = new GraphicalBoard();
         graphicalBoard.addInitialTokens(numPlayers);
         cardPanel = new CardPanel();
 
@@ -68,7 +69,8 @@ public class MainFrame extends JComponent {
     }
 
     public static void drawCard(){
-        cardPanel.drawCard();
+        GraphicalCard nextCard = cardPanel.drawCard();
+        graphicalBoard.moveAvatar(StatusBarPanel.getCurrentPlayer(),nextCard);
     }
 
     public JFrame getFrame(){
