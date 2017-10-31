@@ -136,6 +136,11 @@ public class GraphicalBoard extends JPanel {
 
     public void moveAvatar(int playerNumber, GraphicalCard card){
         int getNextSpace = getNextSpace(card,tokenLocations[playerNumber]);
+        if(card.getCardType().equals(CardType.DOUBLE_BLUE) || card.getCardType().equals(CardType.DOUBLE_GREEN) || card.getCardType().equals(CardType.DOUBLE_RED) ||
+                card.getCardType().equals(CardType.DOUBLE_YELLOW) || card.getCardType().equals(CardType.DOUBLE_ORANGE)){
+            getNextSpace = getNextSpace(card,getNextSpace);
+        }
+
         path[tokenLocations[playerNumber]].removeToken(tokens[playerNumber]);
         try{
             path[getNextSpace].addToken(tokens[playerNumber]);
