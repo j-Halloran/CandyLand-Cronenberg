@@ -1,6 +1,8 @@
 package org.CandyLand.model;
 
 import org.junit.Test;
+import org.junit.Before;
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.*;
 import org.CandyLand.CardType;
 
@@ -9,6 +11,12 @@ public class CardDeckTest {
     static final int NUMBER_OF_CARDS = 60;
     static final int NUMBER_OF_SINGLES = 10;
     static final int NUMBER_OF_DOUBLES = 2;
+    static final int MAX_CARDS_EVER_EXPECTED_TO_BE_DRAWN = 1000;
+
+    @Before
+    public void shuffle() {
+        CardDeck.shuffleDeck();
+    }
 
     @Test
     public void cardCountTest() {
@@ -56,7 +64,6 @@ public class CardDeckTest {
                     break;
             }
         }
-
         assertEquals(NUMBER_OF_SINGLES, singleRedCount);
         assertEquals(NUMBER_OF_SINGLES, singleYellowCount);
         assertEquals(NUMBER_OF_SINGLES, singleBlueCount);
@@ -67,5 +74,32 @@ public class CardDeckTest {
         assertEquals(NUMBER_OF_DOUBLES, doubleBlueCount);
         assertEquals(NUMBER_OF_DOUBLES, doubleGreenCount);
         assertEquals(NUMBER_OF_DOUBLES, doubleOrangeCount);
+    }
+
+    @Test
+    public void deckNeverEmptyTest() {
+        for (int i = 0; i < MAX_CARDS_EVER_EXPECTED_TO_BE_DRAWN; i++) {
+            assertThat(CardDeck.drawCard(), instanceOf(CardType.class));
+        }
+    }
+
+    @Test
+    public void shuffleTest() {
+        for (int i = 0; i < NUMBER_OF_CARDS/2; i++) {
+            CardDeck.drawCard();
+        }
+        assertEquals(NUMBER_OF_CARDS - NUMBER_OF_CARDS/2, CardDeck.getDeckSize());
+        CardDeck.shuffleDeck();
+        assertEquals(NUMBER_OF_CARDS, CardDeck.getDeckSize());
+    }
+
+    @Test
+    public void isDeckEmptyTest() {
+        for (int i = 0; i < NUMBER_OF_CARDS; i++) {
+            CardDeck.drawCard();
+        }
+        assertTrue(CardDeck.isDeckEmpty());
+        CardDeck.drawCard();
+        assertFalse(CardDeck.isDeckEmpty());
     }
 }
