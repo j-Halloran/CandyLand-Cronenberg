@@ -3,7 +3,6 @@ package org.CandyLand.view;
 import org.CandyLand.CardType;
 
 import java.awt.*;
-import javax.smartcardio.Card;
 import javax.swing.*;
 import java.net.URL;
 import java.util.ArrayList;
