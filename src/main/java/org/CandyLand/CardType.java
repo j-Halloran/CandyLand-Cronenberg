@@ -11,6 +11,7 @@ public enum CardType {
     DOUBLE_BLUE,
     DOUBLE_GREEN,
     DOUBLE_ORANGE,
+    SKIP_TURN,
     UPSIDEDOWN,
     EMPTY_DISCARD
 }

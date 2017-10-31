@@ -151,10 +151,14 @@ public class GraphicalBoard extends JPanel {
         tokenLocations[playerNumber] = getNextSpace;
     }
 
-    private int getNextSpace(GraphicalCard card, int curLoc){
+    protected int getNextSpace(GraphicalCard card, int curLoc){
         //Another sanity check
         if(card.getCardType() == CardType.EMPTY_DISCARD || card.getCardType() == CardType.UPSIDEDOWN){
             return 0;
+        }
+        else if (card.getCardType() == CardType.SKIP_TURN) {
+            // we aint goin nowhere
+            return curLoc;
         }
         for(int i=curLoc+1;i<path.length-1;i++){
             if(path[i].getSpaceColor().equals(card.getBackground())){
