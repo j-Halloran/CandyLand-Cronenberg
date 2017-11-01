@@ -3,7 +3,11 @@ package org.CandyLand.view;
 import org.CandyLand.CardType;
 
 import java.awt.*;
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -77,10 +81,22 @@ public class GraphicalBoard extends JPanel {
 
 
         //leave a space for finish
-        JLabel grandmaLabel = new JLabel("Grandma's",0);
+      //  JLabel grandmaLabel = new JLabel("Grandma's",0);
         GamePathSpace grandma = new GamePathSpace(Color.WHITE);
-        grandma.setLayout(new BorderLayout());
-        grandma.add(grandmaLabel);
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        URL url = classloader.getResource("rainbowSpaceBG.png");
+        File imageFile = new File(url.getPath());
+        BufferedImage myImage;
+        try{
+            myImage = ImageIO.read(imageFile);
+        }
+        catch(IOException e){
+            System.out.println("Cannot find grandma space background image.");
+            System.exit(1);
+        }
+       // grandma.setContentPane(new ImagePanel(myImage));
+        //grandma.setLayout(new BorderLayout());
+        //grandma.add(grandmaLabel);
         path.add(grandma);
         spaces[0][0] = grandma;
 
@@ -173,7 +189,7 @@ public class GraphicalBoard extends JPanel {
                 return i;
             }
         }
-        return path.length-2;
+        return path.length-1;
     }
 
     // check if token has reached grandmas house
