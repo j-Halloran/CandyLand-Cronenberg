@@ -77,7 +77,7 @@ public class MainFrame extends JComponent {
     }
 
     public static void reInitGame(){
-        graphicalBoard
+        //graphicalBoard
     }
 
     public JFrame getFrame(){

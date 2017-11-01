@@ -174,7 +174,8 @@ public class GraphicalBoard extends JPanel {
 
     // check if token has reached grandmas house
     public boolean atGrandmas(int playerNumber){
-        if(tokenLocations[playerNumber] == path.length-1){
+        //end of board currently set to path.length-2, until bug fix by Jake
+        if(tokenLocations[playerNumber] == path.length-2){
             return true;
         }
         return false;
