@@ -35,7 +35,7 @@ public class MainFrame extends JComponent {
         frame.setLayout(new GridBagLayout());
 
         Object[] options = {"2","3","4"};
-        String userNumberPlayersResponse = (String) JOptionPane.showInputDialog(new JFrame(), "How Many Players (2-4): ","Enter Players",JOptionPane.QUESTION_MESSAGE,null,options,"2");
+        String userNumberPlayersResponse = (String) JOptionPane.showInputDialog(new JFrame(), "How Many Players (2-4): ","Enter Players",JOptionPane.YES_NO_CANCEL_OPTION,null,options,"2");
         if(userNumberPlayersResponse==null){
             System.exit(0);
         }
@@ -73,6 +73,19 @@ public class MainFrame extends JComponent {
         graphicalBoard.moveAvatar(StatusBarPanel.getCurrentPlayer(),nextCard);
         if(graphicalBoard.atGrandmas(StatusBarPanel.getCurrentPlayer()) == true){
             // reinitialize and/or rematch
+            Object[] endOptions = {"Rematch", "New Game", "Quit"};
+            int gameEndOption = JOptionPane.showOptionDialog(new JFrame(),
+                    "PLayer " + StatusBarPanel.getCurrentPlayer() + " Wins!!!",
+                    "End of Game Options", 0, JOptionPane.YES_NO_CANCEL_OPTION,
+                    null, endOptions, "PHP");
+
+            if (gameEndOption == JOptionPane.YES_OPTION){
+
+            } else if (gameEndOption == JOptionPane.NO_OPTION) {
+
+            } else {
+                System.exit(0);
+            }
         }
     }
 

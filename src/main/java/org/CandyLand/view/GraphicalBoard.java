@@ -172,6 +172,19 @@ public class GraphicalBoard extends JPanel {
         return path.length-2;
     }
 
+    public void resetTokens(){
+        for(int i = 0; i < tokens.length; i++) {
+            path[tokenLocations[i]].removeToken(tokens[i]);
+            tokenLocations[i] = 0; //initialize location tracker to position 0 so in the future we can fast update locations without needing to scan all board spaces
+            try {
+                path[0].addToken(tokens[i]);
+            } catch (NoSpaceForTokenException e) {
+                System.err.println("Error more tokens than space created. Should not be possible");
+                System.exit(10);
+            }
+        }
+    }
+
     // check if token has reached grandmas house
     public boolean atGrandmas(int playerNumber){
         //end of board currently set to path.length-2, until bug fix by Jake
