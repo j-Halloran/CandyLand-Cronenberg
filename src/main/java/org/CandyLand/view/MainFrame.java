@@ -72,10 +72,7 @@ public class MainFrame extends JComponent {
         GraphicalCard nextCard = cardPanel.drawCard();
         graphicalBoard.moveAvatar(StatusBarPanel.getCurrentPlayer(),nextCard);
         if(graphicalBoard.atGrandmas(StatusBarPanel.getCurrentPlayer()) == true){
-            // reinitialize
-            // or
-            // rematch
-
+            // reinitialize and/or rematch
         }
     }
 
