@@ -11,6 +11,7 @@ public class GraphicalBoard extends JPanel {
 
     private static final int ROWS = 11;
     private static final int COLS = 11;
+    private static final int MIDDLE_SPACE = 36;
     private static final Color BACKGROUND_COLOR = new Color(0,0,0,0);
     private JComponent[][] spaces = new JComponent[ROWS][COLS];
     private GamePathSpace[] path;
@@ -163,6 +164,9 @@ public class GraphicalBoard extends JPanel {
         else if (card.getCardType() == CardType.SKIP_TURN) {
             // we aint goin nowhere
             return curLoc;
+        }
+        else if (card.getCardType() == CardType.GO_TO_MIDDLE) {
+            return MIDDLE_SPACE;
         }
         for(int i=curLoc+1;i<path.length-1;i++){
             if(path[i].getSpaceColor().equals(card.getBackground())){

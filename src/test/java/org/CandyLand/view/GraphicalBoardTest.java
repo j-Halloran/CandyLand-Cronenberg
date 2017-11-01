@@ -7,6 +7,8 @@ import static org.mockito.Mockito.*;
 import org.CandyLand.CardType;
 
 public class GraphicalBoardTest {
+
+    static final int MIDDLE_SPACE = 36;
     GraphicalBoard board;
 
     @Before
@@ -22,6 +24,16 @@ public class GraphicalBoardTest {
         assertEquals(15, board.getNextSpace(skipCard, 15));
         assertEquals(90, board.getNextSpace(skipCard, 90));
         assertEquals(0xffff, board.getNextSpace(skipCard, 0xffff));
+    }
+
+    @Test
+    public void goToMiddleNextSpaceTest() {
+        GraphicalCard middleCard = mock(GraphicalCard.class);
+        when(middleCard.getCardType()).thenReturn(CardType.GO_TO_MIDDLE);
+        assertEquals(MIDDLE_SPACE, board.getNextSpace(middleCard, 0));
+        assertEquals(MIDDLE_SPACE, board.getNextSpace(middleCard, 11));
+        assertEquals(MIDDLE_SPACE, board.getNextSpace(middleCard, 73));
+        assertEquals(MIDDLE_SPACE, board.getNextSpace(middleCard, 0xffff));
     }
 
     @Test

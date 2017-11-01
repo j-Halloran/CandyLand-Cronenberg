@@ -9,6 +9,7 @@ public class CardDeck {
     private static final int NUM_SINGLE_PER_COLOR = 10;
     private static final int NUM_DOUBLE_PER_COLOR = 2;
     private static final int NUM_SKIP_TURN_CARDS = 5;
+    private static final int NUM_GO_TO_MIDDLE_CARDS = 3;
     private static final CardType[] SINGLE_CARDS = {CardType.SINGLE_RED,
                                                     CardType.SINGLE_YELLOW,
                                                     CardType.SINGLE_BLUE,
@@ -67,8 +68,11 @@ public class CardDeck {
      */
     private static ArrayList<CardType> generateSpecialCards(){
         ArrayList<CardType> generatedSpecialCards = new ArrayList<>();
-        for (int i = 0;i < NUM_SKIP_TURN_CARDS; i++){
+        for (int i = 0; i < NUM_SKIP_TURN_CARDS; i++){
             generatedSpecialCards.add(CardType.SKIP_TURN);
+        }
+        for (int i = 0; i < NUM_GO_TO_MIDDLE_CARDS; i++) {
+            generatedSpecialCards.add(CardType.GO_TO_MIDDLE);
         }
         return generatedSpecialCards;
     }
