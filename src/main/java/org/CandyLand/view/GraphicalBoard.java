@@ -81,12 +81,10 @@ public class GraphicalBoard extends JPanel {
 
 
         //leave a space for finish
-      //  JLabel grandmaLabel = new JLabel("Grandma's",0);
-        GamePathSpace grandma = new GamePathSpace(Color.WHITE);
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         URL url = classloader.getResource("rainbowSpaceBG.png");
         File imageFile = new File(url.getPath());
-        BufferedImage myImage;
+        BufferedImage myImage = null;
         try{
             myImage = ImageIO.read(imageFile);
         }
@@ -94,9 +92,7 @@ public class GraphicalBoard extends JPanel {
             System.out.println("Cannot find grandma space background image.");
             System.exit(1);
         }
-       // grandma.setContentPane(new ImagePanel(myImage));
-        //grandma.setLayout(new BorderLayout());
-        //grandma.add(grandmaLabel);
+        GamePathSpace grandma = new GamePathSpace(Color.WHITE, myImage);
         path.add(grandma);
         spaces[0][0] = grandma;
 
@@ -158,18 +154,23 @@ public class GraphicalBoard extends JPanel {
             getNextSpace = getNextSpace(card,getNextSpace);
         }
 
-        path[tokenLocations[playerNumber]].removeToken(tokens[playerNumber]);
-        try{
-            path[getNextSpace].addToken(tokens[playerNumber]);
-        }
-        catch (NoSpaceForTokenException e){
-            System.err.println("Error more tokens than players. Exiting");
-            System.exit(1);
+        //This if is only ever false in testing conditions, not in actual game play.
+        if(tokenLocations[playerNumber] < path.length-1){
+            path[tokenLocations[playerNumber]].removeToken(tokens[playerNumber]);
+            try{
+                path[getNextSpace].addToken(tokens[playerNumber]);
+            }
+            catch (NoSpaceForTokenException e){
+                System.err.println("Error more tokens than players. Exiting");
+                System.exit(1);
+            }
         }
         tokenLocations[playerNumber] = getNextSpace;
 
         if(atGrandmas(playerNumber) == true){
+            try{path[path.length-1].addToken(tokens[playerNumber]);}catch(Exception e){}
             // doVictoryStuff, end game
+            System.out.println("Winner");
         }
     }
 
@@ -195,8 +196,7 @@ public class GraphicalBoard extends JPanel {
 
     // check if token has reached grandmas house
     public boolean atGrandmas(int playerNumber){
-        //end of board currently set to path.length-2, until bug fix by Jake
-        if(tokenLocations[playerNumber] == path.length-2){
+        if(tokenLocations[playerNumber] == path.length-1){
             return true;
         }
         return false;

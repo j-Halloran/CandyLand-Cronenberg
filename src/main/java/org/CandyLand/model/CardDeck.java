@@ -35,7 +35,6 @@ public class CardDeck {
      */
     public static void shuffleDeck(){
         currentDeck = new ArrayList<>();
-        System.out.println("Shuffling");
         currentDeck.addAll(generateSingleColorCards());
         currentDeck.addAll(generateDoubleColorCards());
         currentDeck.addAll(generateSpecialCards());
