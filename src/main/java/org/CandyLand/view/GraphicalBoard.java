@@ -149,6 +149,10 @@ public class GraphicalBoard extends JPanel {
             System.exit(1);
         }
         tokenLocations[playerNumber] = getNextSpace;
+
+        if(atGrandmas(playerNumber) == true){
+            // doVictoryStuff, end game
+        }
     }
 
     protected int getNextSpace(GraphicalCard card, int curLoc){
@@ -166,6 +170,15 @@ public class GraphicalBoard extends JPanel {
             }
         }
         return path.length-2;
+    }
+
+    // check if token has reached grandmas house
+    public boolean atGrandmas(int playerNumber){
+        //end of board currently set to path.length-2, until bug fix by Jake
+        if(tokenLocations[playerNumber] == path.length-2){
+            return true;
+        }
+        return false;
     }
 
     public Color getBackgroundColor(){
