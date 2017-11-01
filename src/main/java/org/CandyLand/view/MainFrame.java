@@ -71,6 +71,16 @@ public class MainFrame extends JComponent {
     public static void drawCard(){
         GraphicalCard nextCard = cardPanel.drawCard();
         graphicalBoard.moveAvatar(StatusBarPanel.getCurrentPlayer(),nextCard);
+        if(graphicalBoard.atGrandmas(StatusBarPanel.getCurrentPlayer()) == true){
+            // reinitialize
+            // or
+            // rematch
+
+        }
+    }
+
+    public static void reInitGame(){
+        graphicalBoard
     }
 
     public JFrame getFrame(){
