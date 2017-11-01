@@ -8,6 +8,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import org.CandyLand.CardType;
+import org.CandyLand.model.CardDeck;
 
 public class MainFrame extends JComponent {
 
@@ -80,9 +81,11 @@ public class MainFrame extends JComponent {
                     null, endOptions, "PHP");
 
             if (gameEndOption == JOptionPane.YES_OPTION){
-
+                graphicalBoard.resetTokens();
+                CardDeck.shuffleDeck();
+                cardPanel.setCurrentCard(true, null);
             } else if (gameEndOption == JOptionPane.NO_OPTION) {
-
+                // re-init StatusBarPanel param: numeOfPLayers
             } else {
                 System.exit(0);
             }
