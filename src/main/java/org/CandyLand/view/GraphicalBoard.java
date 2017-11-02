@@ -3,7 +3,11 @@ package org.CandyLand.view;
 import org.CandyLand.CardType;
 
 import java.awt.*;
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -11,6 +15,7 @@ public class GraphicalBoard extends JPanel {
 
     private static final int ROWS = 11;
     private static final int COLS = 11;
+    private static int middle_space;
     private static final Color BACKGROUND_COLOR = new Color(0,0,0,0);
     private JComponent[][] spaces = new JComponent[ROWS][COLS];
     private GamePathSpace[] path;
@@ -76,15 +81,24 @@ public class GraphicalBoard extends JPanel {
 
 
         //leave a space for finish
-        JLabel grandmaLabel = new JLabel("Grandma's",0);
-        GamePathSpace grandma = new GamePathSpace(Color.WHITE);
-        grandma.setLayout(new BorderLayout());
-        grandma.add(grandmaLabel);
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        URL url = classloader.getResource("rainbowSpaceBG.png");
+        File imageFile = new File(url.getPath());
+        BufferedImage myImage = null;
+        try{
+            myImage = ImageIO.read(imageFile);
+        }
+        catch(IOException e){
+            System.out.println("Cannot find grandma space background image.");
+            System.exit(1);
+        }
+        GamePathSpace grandma = new GamePathSpace(Color.WHITE, myImage);
         path.add(grandma);
         spaces[0][0] = grandma;
 
         this.path = new GamePathSpace[path.size()];
         path.toArray(this.path);
+        middle_space = (int)Math.ceil(this.path.length / 2.0);
     }
 
     public GraphicalBoard() {
@@ -140,15 +154,24 @@ public class GraphicalBoard extends JPanel {
             getNextSpace = getNextSpace(card,getNextSpace);
         }
 
-        path[tokenLocations[playerNumber]].removeToken(tokens[playerNumber]);
-        try{
-            path[getNextSpace].addToken(tokens[playerNumber]);
-        }
-        catch (NoSpaceForTokenException e){
-            System.err.println("Error more tokens than players. Exiting");
-            System.exit(1);
+        //This if is only ever false in testing conditions, not in actual game play.
+        if(tokenLocations[playerNumber] < path.length-1){
+            path[tokenLocations[playerNumber]].removeToken(tokens[playerNumber]);
+            try{
+                path[getNextSpace].addToken(tokens[playerNumber]);
+            }
+            catch (NoSpaceForTokenException e){
+                System.err.println("Error more tokens than players. Exiting");
+                System.exit(1);
+            }
         }
         tokenLocations[playerNumber] = getNextSpace;
+
+        if(atGrandmas(playerNumber) == true){
+            try{path[path.length-1].addToken(tokens[playerNumber]);}catch(Exception e){}
+            // doVictoryStuff, end game
+            System.out.println("Winner");
+        }
 
     }
 
@@ -161,12 +184,15 @@ public class GraphicalBoard extends JPanel {
             // we aint goin nowhere
             return curLoc;
         }
+        else if (card.getCardType() == CardType.GO_TO_MIDDLE) {
+            return middle_space;
+        }
         for(int i=curLoc+1;i<path.length-1;i++){
             if(path[i].getSpaceColor().equals(card.getBackground())){
                 return i;
             }
         }
-        return path.length-2;
+        return path.length-1;
     }
 
     public void resetTokens(){
@@ -193,8 +219,7 @@ public class GraphicalBoard extends JPanel {
 
     // check if token has reached grandmas house
     public boolean atGrandmas(int playerNumber){
-        //end of board currently set to path.length-2, until bug fix by Jake
-        if(tokenLocations[playerNumber] == path.length-2){
+        if(tokenLocations[playerNumber] == path.length-1){
             return true;
         }
         return false;

@@ -10,6 +10,7 @@ public class GamePathSpace extends JPanel {
     private TokenSpace[] tokenSpaces =
             new TokenSpace[TOKEN_SPACE_ROWS * TOKEN_SPACE_COLS];
     private Color spaceColor;
+    private Image image = null;
 
     public GamePathSpace(Color color) {
         super();
@@ -24,6 +25,14 @@ public class GamePathSpace extends JPanel {
         }
 
         spaceColor = color;
+    }
+    public GamePathSpace(Color color, Image image) {
+        super();
+        this.setLayout(new GridLayout(1, 1));
+        tokenSpaces[0] = new TokenSpace(color);
+        //this.add(tokenSpaces[0]);
+        spaceColor = color;
+        this.image = image;
     }
 
     public void addToken(Token token) throws NoSpaceForTokenException {
@@ -51,5 +60,14 @@ public class GamePathSpace extends JPanel {
 
     public static int getMaxPlayerCount(){
         return TOKEN_SPACE_COLS * TOKEN_SPACE_ROWS;
+    }
+
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+        if (image != null)
+        {
+            g.drawImage(image,0,0, getWidth(), getHeight(),this);
+        }
     }
 }
