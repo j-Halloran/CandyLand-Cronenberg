@@ -29,6 +29,12 @@ public class GraphicalCard extends JButton {
                 setFont(new Font("TimesRoman", Font.PLAIN, 24));
                 this.isDouble = false;
                 break;
+            case EMPTY_DRAW:
+                setBackground(Color.WHITE);
+                setText("Draw Deck Empty");
+                setFont(new Font("TimesRoman", Font.PLAIN, 24));
+                this.isDouble = false;
+                break;
             case SINGLE_RED:
                 setBackground(Color.RED);
                 this.isDouble = false;
@@ -97,5 +103,12 @@ public class GraphicalCard extends JButton {
 
     public CardType getCardType() {
         return cardType;
+    }
+
+    public void addShuffleListener(CardPanel panel) {
+        this.setEnabled(true);
+        this.addActionListener(e -> {
+            panel.shuffleDeck();
+        });
     }
 }
