@@ -28,9 +28,15 @@ public class GamePathSpace extends JPanel {
     }
     public GamePathSpace(Color color, Image image) {
         super();
-        this.setLayout(new GridLayout(1, 1));
-        tokenSpaces[0] = new TokenSpace(color);
+        /*this.setLayout(new GridLayout(1, 1));
+        tokenSpaces = new TokenSpace[1];
+        tokenSpaces[0] = new TokenSpace(color);*/
         //this.add(tokenSpaces[0]);
+        this.setLayout(new GridLayout(TOKEN_SPACE_ROWS, TOKEN_SPACE_COLS));
+
+        for (int i = 0; i < tokenSpaces.length; i++) {
+            tokenSpaces[i] = new TokenSpace(color);
+        }
         spaceColor = color;
         this.image = image;
     }
