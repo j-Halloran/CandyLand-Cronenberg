@@ -1,11 +1,7 @@
 package org.CandyLand.view;
 
 import org.junit.Test;
-import org.junit.Before;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-import org.CandyLand.CardType;
-
 import java.io.IOException;
 
 public class MainFrameTest {
