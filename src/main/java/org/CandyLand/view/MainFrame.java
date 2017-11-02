@@ -98,7 +98,7 @@ public class MainFrame extends JComponent {
 
     public static void reInitBoard(boolean newGame){
         CardDeck.shuffleDeck();
-        cardPanel.setCurrentCard(true, null);
+        cardPanel.shuffleDeck();
         graphicalBoard.resetTokens();
         if(newGame == true) {
             graphicalBoard.clearTokens();

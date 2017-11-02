@@ -27,24 +27,39 @@ public class CardPanel extends JPanel {
     }
 
     public GraphicalCard drawCard(){
-        boolean isDeckEmpty = deck.isDeckEmpty();
         GraphicalCard card = new GraphicalCard(deck.drawCard());
-        setCurrentCard(isDeckEmpty, card);
+        if (deck.isDeckEmpty()) {
+            this.remove(drawPile);
+            this.drawPile = new GraphicalCard(CardType.EMPTY_DRAW);
+            this.add(drawPile);
+            this.revalidate();
+            this.repaint();
+            card.addShuffleListener(this);
+        }
+        setCurrentCard(card);
         return card;
     }
 
-    public void setCurrentCard(boolean isDeckEmpty, GraphicalCard card) {
+    public void setCurrentCard(GraphicalCard card) {
         this.remove(discardPile);
         if (this.discardPile == null) {
             this.add(card);
             discardPile = card;
         }
-        else if(!isDeckEmpty){
+        else {
             discardPile = card;
         }
-        else{
-            discardPile = new GraphicalCard(CardType.EMPTY_DISCARD);
-        }
+        this.add(discardPile);
+        this.revalidate();
+        this.repaint();
+    }
+
+    public void shuffleDeck() {
+        this.remove(drawPile);
+        this.remove(discardPile);
+        drawPile = new GraphicalCard(CardType.UPSIDEDOWN);
+        discardPile = new GraphicalCard(CardType.EMPTY_DISCARD);
+        this.add(drawPile);
         this.add(discardPile);
         this.revalidate();
         this.repaint();
