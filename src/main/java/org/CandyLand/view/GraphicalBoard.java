@@ -150,9 +150,6 @@ public class GraphicalBoard extends JPanel {
         }
         tokenLocations[playerNumber] = getNextSpace;
 
-        if(atGrandmas(playerNumber) == true){
-            // doVictoryStuff, end game
-        }
     }
 
     protected int getNextSpace(GraphicalCard card, int curLoc){
@@ -172,6 +169,28 @@ public class GraphicalBoard extends JPanel {
         return path.length-2;
     }
 
+    public void resetTokens(){
+        for(int i = 0; i < tokens.length; i++) {
+            path[tokenLocations[i]].removeToken(tokens[i]);
+            tokenLocations[i] = 0; //initialize location tracker to position 0 so in the future we can fast update locations without needing to scan all board spaces
+            try {
+                path[0].addToken(tokens[i]);
+            } catch (NoSpaceForTokenException e) {
+                System.err.println("Error more tokens than space created. Should not be possible");
+                System.exit(10);
+            }
+        }
+    }
+
+    public void clearTokens(){
+        for(int i = 0; i < tokens.length; i++) {
+            path[tokenLocations[i]].removeToken(tokens[i]);
+        }
+        tokenLocations = new int[0];
+        tokens = new Token[0];
+
+    }
+
     // check if token has reached grandmas house
     public boolean atGrandmas(int playerNumber){
         //end of board currently set to path.length-2, until bug fix by Jake
@@ -188,5 +207,8 @@ public class GraphicalBoard extends JPanel {
     public GamePathSpace[] getPath(){
         return path;
     }
+
+    // temporary for Testing purposes only
+    public int getPlayerLocation(int playerNumber){ return tokenLocations[playerNumber]; }
 
 }

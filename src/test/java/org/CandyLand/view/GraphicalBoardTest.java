@@ -6,6 +6,8 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import org.CandyLand.CardType;
 
+import java.io.IOException;
+
 public class GraphicalBoardTest {
     GraphicalBoard board;
 
@@ -33,6 +35,10 @@ public class GraphicalBoardTest {
         }
         assertEquals(board.atGrandmas(0), true);
     }
+
+
+
+
 
 
 }
