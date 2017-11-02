@@ -106,6 +106,7 @@ public class GraphicalCard extends JButton {
     }
 
     public void addShuffleListener(CardPanel panel) {
+        this.setEnabled(true);
         this.addActionListener(e -> {
             panel.shuffleDeck();
         });

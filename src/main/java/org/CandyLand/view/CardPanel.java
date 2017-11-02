@@ -31,6 +31,7 @@ public class CardPanel extends JPanel {
         if (deck.isDeckEmpty()) {
             this.remove(drawPile);
             this.drawPile = new GraphicalCard(CardType.EMPTY_DRAW);
+            this.drawPile.setEnabled(false);
             this.add(drawPile);
             this.revalidate();
             this.repaint();
@@ -59,6 +60,10 @@ public class CardPanel extends JPanel {
         this.remove(discardPile);
         drawPile = new GraphicalCard(CardType.UPSIDEDOWN);
         discardPile = new GraphicalCard(CardType.EMPTY_DISCARD);
+        drawPile.setEnabled(true);
+        drawPile.setFocusPainted(false);
+        discardPile.setEnabled(false);
+        discardPile.setFocusPainted(false);
         this.add(drawPile);
         this.add(discardPile);
         this.revalidate();
