@@ -6,6 +6,8 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import org.CandyLand.CardType;
 
+import java.io.IOException;
+
 public class GraphicalBoardTest {
 
     static final int MIDDLE_SPACE = 36;
@@ -45,6 +47,10 @@ public class GraphicalBoardTest {
         }
         assertEquals(board.atGrandmas(0), true);
     }
+
+
+
+
 
 
 }
