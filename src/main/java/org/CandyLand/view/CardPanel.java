@@ -9,9 +9,9 @@ import org.CandyLand.CardType;
 public class CardPanel extends JPanel {
 
     private static final Color BACKGROUND_COLOR = Color.GRAY;
-    private GraphicalCard drawPile =
+    protected GraphicalCard drawPile =
             new GraphicalCard(CardType.UPSIDEDOWN);
-    private GraphicalCard discardPile = new GraphicalCard(CardType.EMPTY_DISCARD);
+    protected GraphicalCard discardPile = new GraphicalCard(CardType.EMPTY_DISCARD);
     private CardDeck deck;
 
     public CardPanel() {
