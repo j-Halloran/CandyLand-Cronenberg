@@ -154,21 +154,17 @@ public class GraphicalBoard extends JPanel {
             getNextSpace = getNextSpace(card,getNextSpace);
         }
 
-        //This if is only ever false in testing conditions, not in actual game play.
-        if(tokenLocations[playerNumber] < path.length-1){
-            path[tokenLocations[playerNumber]].removeToken(tokens[playerNumber]);
-            try{
-                path[getNextSpace].addToken(tokens[playerNumber]);
-            }
-            catch (NoSpaceForTokenException e){
-                System.err.println("Error more tokens than players. Exiting");
-                System.exit(1);
-            }
+        path[tokenLocations[playerNumber]].removeToken(tokens[playerNumber]);
+        try{
+            path[getNextSpace].addToken(tokens[playerNumber]);
+        }
+        catch (NoSpaceForTokenException e){
+            System.err.println("Error more tokens than players. Exiting");
+            System.exit(1);
         }
         tokenLocations[playerNumber] = getNextSpace;
 
         if(atGrandmas(playerNumber) == true){
-            try{path[path.length-1].addToken(tokens[playerNumber]);}catch(Exception e){}
             // doVictoryStuff, end game
             System.out.println("Winner");
         }
