@@ -101,8 +101,9 @@ public class MainFrame extends JComponent {
         cardPanel.shuffleDeck();
         graphicalBoard.resetTokens();
         if(newGame == true) {
+            int newNumPlayers = setNumOfPlayers();
             graphicalBoard.clearTokens();
-            graphicalBoard.addInitialTokens(setNumOfPlayers());
+            graphicalBoard.addInitialTokens(newNumPlayers);
             stats.setNumberOfPLayers(numPlayers);
         }
     }
