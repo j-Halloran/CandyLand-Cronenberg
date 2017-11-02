@@ -54,4 +54,15 @@ public class StatusBarPanel extends JPanel{
         // it is ot currently this players turn
         else return 1;
     }
+
+    public void setNumberOfPLayers(int numberOfPLayers){
+        this.removeAll();
+        this.setLayout(new GridLayout(1, numberOfPLayers));
+        this.setBackground(BACKGROUND_COLOR);
+        players = new PlayerPanel[numberOfPLayers];
+        for(int i=0;i<numberOfPLayers;i++){
+            players[i] = new PlayerPanel(i);
+            this.add(players[i]); //add a panel for each player (1st is auto-selected as active)
+        }
+    }
 }

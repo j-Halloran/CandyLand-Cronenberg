@@ -194,7 +194,7 @@ public class CandyLandTest {
     public void discardCard(){
         CardPanel c = new CardPanel();
         c.drawCard();
-        assertNotEquals(c.getDiscardPile().size(), 0);
+        assertNotEquals(c.getDiscardPile().getCardType(), CardType.EMPTY_DISCARD);
     }
 
 

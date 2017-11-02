@@ -3,7 +3,11 @@ package org.CandyLand.view;
 import org.CandyLand.CardType;
 
 import java.awt.*;
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -11,6 +15,7 @@ public class GraphicalBoard extends JPanel {
 
     private static final int ROWS = 11;
     private static final int COLS = 11;
+    private static int middle_space;
     private static final Color BACKGROUND_COLOR = new Color(0,0,0,0);
     private JComponent[][] spaces = new JComponent[ROWS][COLS];
     private GamePathSpace[] path;
@@ -76,15 +81,24 @@ public class GraphicalBoard extends JPanel {
 
 
         //leave a space for finish
-        JLabel grandmaLabel = new JLabel("Grandma's",0);
-        GamePathSpace grandma = new GamePathSpace(Color.WHITE);
-        grandma.setLayout(new BorderLayout());
-        grandma.add(grandmaLabel);
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        URL url = classloader.getResource("rainbowSpaceBG.png");
+        File imageFile = new File(url.getPath());
+        BufferedImage myImage = null;
+        try{
+            myImage = ImageIO.read(imageFile);
+        }
+        catch(IOException e){
+            System.out.println("Cannot find grandma space background image.");
+            System.exit(1);
+        }
+        GamePathSpace grandma = new GamePathSpace(Color.WHITE, myImage);
         path.add(grandma);
         spaces[0][0] = grandma;
 
         this.path = new GamePathSpace[path.size()];
         path.toArray(this.path);
+        middle_space = (int)Math.ceil(this.path.length / 2.0);
     }
 
     public GraphicalBoard() {
@@ -149,19 +163,62 @@ public class GraphicalBoard extends JPanel {
             System.exit(1);
         }
         tokenLocations[playerNumber] = getNextSpace;
+
+        if(atGrandmas(playerNumber) == true){
+            // doVictoryStuff, end game
+            System.out.println("Winner");
+        }
+
     }
 
-    private int getNextSpace(GraphicalCard card, int curLoc){
+    protected int getNextSpace(GraphicalCard card, int curLoc){
         //Another sanity check
         if(card.getCardType() == CardType.EMPTY_DISCARD || card.getCardType() == CardType.UPSIDEDOWN){
             return 0;
+        }
+        else if (card.getCardType() == CardType.SKIP_TURN) {
+            // we aint goin nowhere
+            return curLoc;
+        }
+        else if (card.getCardType() == CardType.GO_TO_MIDDLE) {
+            return middle_space;
         }
         for(int i=curLoc+1;i<path.length-1;i++){
             if(path[i].getSpaceColor().equals(card.getBackground())){
                 return i;
             }
         }
-        return path.length-2;
+        return path.length-1;
+    }
+
+    public void resetTokens(){
+        for(int i = 0; i < tokens.length; i++) {
+            path[tokenLocations[i]].removeToken(tokens[i]);
+            tokenLocations[i] = 0; //initialize location tracker to position 0 so in the future we can fast update locations without needing to scan all board spaces
+            try {
+                path[0].addToken(tokens[i]);
+            } catch (NoSpaceForTokenException e) {
+                System.err.println("Error more tokens than space created. Should not be possible");
+                System.exit(10);
+            }
+        }
+    }
+
+    public void clearTokens(){
+        for(int i = 0; i < tokens.length; i++) {
+            path[tokenLocations[i]].removeToken(tokens[i]);
+        }
+        tokenLocations = new int[0];
+        tokens = new Token[0];
+
+    }
+
+    // check if token has reached grandmas house
+    public boolean atGrandmas(int playerNumber){
+        if(tokenLocations[playerNumber] == path.length-1){
+            return true;
+        }
+        return false;
     }
 
     public Color getBackgroundColor(){
@@ -171,5 +228,8 @@ public class GraphicalBoard extends JPanel {
     public GamePathSpace[] getPath(){
         return path;
     }
+
+    // temporary for Testing purposes only
+    public int getPlayerLocation(int playerNumber){ return tokenLocations[playerNumber]; }
 
 }
