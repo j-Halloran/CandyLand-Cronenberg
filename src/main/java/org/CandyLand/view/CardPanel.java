@@ -9,9 +9,9 @@ import org.CandyLand.CardType;
 public class CardPanel extends JPanel {
 
     private static final Color BACKGROUND_COLOR = Color.GRAY;
-    private GraphicalCard drawPile =
+    protected GraphicalCard drawPile =
             new GraphicalCard(CardType.UPSIDEDOWN);
-    private GraphicalCard discardPile = new GraphicalCard(CardType.EMPTY_DISCARD);
+    protected GraphicalCard discardPile = new GraphicalCard(CardType.EMPTY_DISCARD);
     private CardDeck deck;
 
     public CardPanel() {
@@ -27,24 +27,44 @@ public class CardPanel extends JPanel {
     }
 
     public GraphicalCard drawCard(){
-        boolean isDeckEmpty = deck.isDeckEmpty();
         GraphicalCard card = new GraphicalCard(deck.drawCard());
-        setCurrentCard(isDeckEmpty, card);
+        if (deck.isDeckEmpty()) {
+            this.remove(drawPile);
+            this.drawPile = new GraphicalCard(CardType.EMPTY_DRAW);
+            this.drawPile.setEnabled(false);
+            this.add(drawPile);
+            this.revalidate();
+            this.repaint();
+            card.addShuffleListener(this);
+        }
+        setCurrentCard(card);
         return card;
     }
 
-    public void setCurrentCard(boolean isDeckEmpty, GraphicalCard card) {
+    public void setCurrentCard(GraphicalCard card) {
         this.remove(discardPile);
         if (this.discardPile == null) {
             this.add(card);
             discardPile = card;
         }
-        else if(!isDeckEmpty){
+        else {
             discardPile = card;
         }
-        else{
-            discardPile = new GraphicalCard(CardType.EMPTY_DISCARD);
-        }
+        this.add(discardPile);
+        this.revalidate();
+        this.repaint();
+    }
+
+    public void shuffleDeck() {
+        this.remove(drawPile);
+        this.remove(discardPile);
+        drawPile = new GraphicalCard(CardType.UPSIDEDOWN);
+        discardPile = new GraphicalCard(CardType.EMPTY_DISCARD);
+        drawPile.setEnabled(true);
+        drawPile.setFocusPainted(false);
+        discardPile.setEnabled(false);
+        discardPile.setFocusPainted(false);
+        this.add(drawPile);
         this.add(discardPile);
         this.revalidate();
         this.repaint();

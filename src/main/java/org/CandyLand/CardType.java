@@ -14,5 +14,6 @@ public enum CardType {
     SKIP_TURN,
     GO_TO_MIDDLE,
     UPSIDEDOWN,
-    EMPTY_DISCARD
+    EMPTY_DISCARD,
+    EMPTY_DRAW
 }
