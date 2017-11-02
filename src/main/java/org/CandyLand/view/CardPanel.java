@@ -53,5 +53,4 @@ public class CardPanel extends JPanel {
     public GraphicalCard getDiscardPile(){
         return discardPile;
     }
-    //public void shuffleDeck(){deck.shuffleDeck();}
 }
