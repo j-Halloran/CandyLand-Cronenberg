@@ -15,12 +15,13 @@ public class MainFrame extends JComponent {
     private final int HEIGHT = 1000;
     private final int WIDTH = 1200;
     private final String TITLE = "World Of Sweets";
-    private int numPlayers;
+    private static int numPlayers;
     private JFrame frame = new JFrame(TITLE);
     private File imageFile;
     private BufferedImage myImage;
     private static CardPanel cardPanel;
     private static GraphicalBoard graphicalBoard;
+    private static StatusBarPanel stats;
 
     public MainFrame() throws IOException {
         // set Background Image of MainFrame
@@ -35,17 +36,12 @@ public class MainFrame extends JComponent {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridBagLayout());
 
-        Object[] options = {"2","3","4"};
-        String userNumberPlayersResponse = (String) JOptionPane.showInputDialog(new JFrame(), "How Many Players (2-4): ","Enter Players",JOptionPane.YES_NO_CANCEL_OPTION,null,options,"2");
-        if(userNumberPlayersResponse==null){
-            System.exit(0);
-        }
-        numPlayers = Integer.parseInt(userNumberPlayersResponse);
+        numPlayers = setNumOfPlayers();
 
         graphicalBoard = new GraphicalBoard();
         graphicalBoard.addInitialTokens(numPlayers);
         cardPanel = new CardPanel();
-
+        stats = new StatusBarPanel(numPlayers);
 
         constraints.weightx = 1;
         constraints.weighty = 1;
@@ -53,7 +49,7 @@ public class MainFrame extends JComponent {
         constraints.gridx = 1;
         constraints.gridy = 1;
         constraints.fill = constraints.BOTH;
-        frame.add(new StatusBarPanel(numPlayers), constraints);
+        frame.add(stats, constraints);
         constraints.gridwidth = 1;
         constraints.gridx = 1;
         constraints.gridy = 2;
@@ -81,19 +77,34 @@ public class MainFrame extends JComponent {
                     null, endOptions, "PHP");
 
             if (gameEndOption == JOptionPane.YES_OPTION){
-                graphicalBoard.resetTokens();
-                CardDeck.shuffleDeck();
-                cardPanel.setCurrentCard(true, null);
+                reInitBoard(false);
             } else if (gameEndOption == JOptionPane.NO_OPTION) {
-                // re-init StatusBarPanel param: numeOfPLayers
+                reInitBoard(true);
             } else {
                 System.exit(0);
             }
         }
     }
 
-    public static void reInitGame(){
-        //graphicalBoard
+    public static int setNumOfPlayers(){
+        Object[] options = {"2","3","4"};
+        String userNumberPlayersResponse = (String) JOptionPane.showInputDialog(new JFrame(), "How Many Players (2-4): ","Enter Players",JOptionPane.YES_NO_CANCEL_OPTION,null,options,"2");
+        if(userNumberPlayersResponse==null){
+            System.exit(0);
+        }
+        numPlayers = Integer.parseInt(userNumberPlayersResponse);
+        return numPlayers;
+    }
+
+    public static void reInitBoard(boolean newGame){
+        CardDeck.shuffleDeck();
+        cardPanel.setCurrentCard(true, null);
+        graphicalBoard.resetTokens();
+        if(newGame == true) {
+            graphicalBoard.clearTokens();
+            graphicalBoard.addInitialTokens(setNumOfPlayers());
+            stats.setNumberOfPLayers(numPlayers);
+        }
     }
 
     public JFrame getFrame(){
@@ -102,7 +113,8 @@ public class MainFrame extends JComponent {
     public CardPanel getPanel(){
         return cardPanel;
     }
-    public int getNumPlayers(){
-        return numPlayers;
+    //for UNit testing purposes
+    public int getPlayerPosition(int playerNumber){
+        return graphicalBoard.getPlayerLocation(playerNumber);
     }
 }
