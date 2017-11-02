@@ -72,7 +72,7 @@ public class MainFrame extends JComponent {
             // reinitialize and/or rematch
             Object[] endOptions = {"Rematch", "New Game", "Quit"};
             int gameEndOption = JOptionPane.showOptionDialog(new JFrame(),
-                    "PLayer " + StatusBarPanel.getCurrentPlayer() + " Wins!!!",
+                    "Player " + (StatusBarPanel.getCurrentPlayer()+1) + " Wins!!!",
                     "End of Game Options", 0, JOptionPane.YES_NO_CANCEL_OPTION,
                     null, endOptions, "PHP");
 
