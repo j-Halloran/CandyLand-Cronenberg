@@ -16,7 +16,6 @@ public class MainFrameTest {
         try {
             MainFrame mf = new MainFrame();
             MainFrame.reInitBoard(true);
-            // StatusBarPanel needs to be updated/reconstructed
             assertEquals(StatusBarPanel.getNumberOfPlayers(), 3);
         } catch (IOException e) {
             //System.out.print("");
@@ -39,18 +38,5 @@ public class MainFrameTest {
             e.printStackTrace();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
