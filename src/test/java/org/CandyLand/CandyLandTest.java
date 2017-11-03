@@ -171,7 +171,7 @@ public class CandyLandTest {
     }
 
     @Test
-    public void grandmaColor(){
+    public void startColor(){
         GraphicalBoard b = new GraphicalBoard();
         assertEquals(b.getPath()[0].getSpaceColor(), Color.WHITE);
 

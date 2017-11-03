@@ -69,7 +69,20 @@ public class GraphicalBoardTest {
         assertEquals(board.getPlayerLocation(0), 6);
     }
 
+    @Test
+    public void grandmaBackgroundTest(){
+        GamePathSpace[] path = board.getPath();
+        assertEquals(Color.WHITE,path[path.length-1].getSpaceColor());
+    }
 
+    @Test
+    public void grandmaImageTest(){
+        GamePathSpace[] path = board.getPath();
+        TokenSpace[] spaces = path[path.length-1].getTokenSpaces();
+        for(TokenSpace space:spaces){
+            assertNotNull(space.getIcon());
+        }
+    }
 
 
 }
