@@ -1,6 +1,11 @@
 package org.CandyLand.view;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class GamePathSpace extends JPanel {
@@ -26,19 +31,26 @@ public class GamePathSpace extends JPanel {
 
         spaceColor = color;
     }
-    public GamePathSpace(Color color, Image image) {
+    public GamePathSpace(Color color, String filePath) {
         super();
-        /*this.setLayout(new GridLayout(1, 1));
-        tokenSpaces = new TokenSpace[1];
-        tokenSpaces[0] = new TokenSpace(color);*/
-        //this.add(tokenSpaces[0]);
         this.setLayout(new GridLayout(TOKEN_SPACE_ROWS, TOKEN_SPACE_COLS));
 
         for (int i = 0; i < tokenSpaces.length; i++) {
-            tokenSpaces[i] = new TokenSpace(color);
+            ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+            URL url = classloader.getResource(filePath+"Q"+(i+1)+".png");
+            File imageFile = new File(url.getPath());
+            BufferedImage quadrantImage = null;
+            try{
+                quadrantImage = ImageIO.read(imageFile);
+            }
+            catch(IOException e){
+                System.out.println("Cannot find grandma space background image.");
+                System.exit(1);
+            }
+            tokenSpaces[i] = new TokenSpace(color, quadrantImage);
+            this.add(tokenSpaces[i]);
         }
         spaceColor = color;
-        this.image = image;
     }
 
     public void addToken(Token token) throws NoSpaceForTokenException {
@@ -75,5 +87,13 @@ public class GamePathSpace extends JPanel {
         {
             g.drawImage(image,0,0, getWidth(), getHeight(),this);
         }
+    }
+
+    /**
+     * Used to test that each space has a image properly applied upon startup
+     * @return the array of tokenspaes
+     */
+    public TokenSpace[] getTokenSpaces() {
+        return tokenSpaces;
     }
 }

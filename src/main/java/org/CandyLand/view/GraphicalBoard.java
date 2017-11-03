@@ -81,18 +81,7 @@ public class GraphicalBoard extends JPanel {
 
 
         //leave a space for finish
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        URL url = classloader.getResource("rainbowSpaceBG.png");
-        File imageFile = new File(url.getPath());
-        BufferedImage myImage = null;
-        try{
-            myImage = ImageIO.read(imageFile);
-        }
-        catch(IOException e){
-            System.out.println("Cannot find grandma space background image.");
-            System.exit(1);
-        }
-        GamePathSpace grandma = new GamePathSpace(Color.WHITE, myImage);
+        GamePathSpace grandma = new GamePathSpace(Color.WHITE, "rainbowSpaceBG");
         path.add(grandma);
         spaces[0][0] = grandma;
 
@@ -163,12 +152,6 @@ public class GraphicalBoard extends JPanel {
             System.exit(1);
         }
         tokenLocations[playerNumber] = getNextSpace;
-
-        if(atGrandmas(playerNumber) == true){
-            // doVictoryStuff, end game
-            System.out.println("Winner");
-        }
-
     }
 
     protected int getNextSpace(GraphicalCard card, int curLoc){

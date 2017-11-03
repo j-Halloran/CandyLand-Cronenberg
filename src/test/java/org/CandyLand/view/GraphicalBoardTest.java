@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import org.CandyLand.CardType;
 
+import java.awt.*;
 import java.io.IOException;
 
 public class GraphicalBoardTest {
@@ -48,9 +49,40 @@ public class GraphicalBoardTest {
         assertEquals(board.atGrandmas(0), true);
     }
 
+    @Test
+    public void avatarMovementSingleTest() {
+        GraphicalCard redCard = mock(GraphicalCard.class);
+        when(redCard.getCardType()).thenReturn(CardType.SINGLE_RED);
+        when(redCard.getBackground()).thenReturn(Color.RED);
+        board.addInitialTokens(1);
+        board.moveAvatar(0,redCard);
+        assertEquals(board.getPlayerLocation(0), 1);
+    }
 
+    @Test
+    public void avatarMovementDoubleTest() {
+        GraphicalCard redDoubleCard = mock(GraphicalCard.class);
+        when(redDoubleCard.getCardType()).thenReturn(CardType.DOUBLE_RED);
+        when(redDoubleCard.getBackground()).thenReturn(Color.RED);
+        board.addInitialTokens(1);
+        board.moveAvatar(0,redDoubleCard);
+        assertEquals(board.getPlayerLocation(0), 6);
+    }
 
+    @Test
+    public void grandmaBackgroundTest(){
+        GamePathSpace[] path = board.getPath();
+        assertEquals(Color.WHITE,path[path.length-1].getSpaceColor());
+    }
 
+    @Test
+    public void grandmaImageTest(){
+        GamePathSpace[] path = board.getPath();
+        TokenSpace[] spaces = path[path.length-1].getTokenSpaces();
+        for(TokenSpace space:spaces){
+            assertNotNull(space.getIcon());
+        }
+    }
 
 
 }
