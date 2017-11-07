@@ -84,5 +84,20 @@ public class GraphicalBoardTest {
         }
     }
 
+    @Test
+    public void middleBackgroundTest(){
+        GamePathSpace[] path = board.getPath();
+        assertEquals(Color.RED,path[MIDDLE_SPACE].getSpaceColor());
+    }
+
+    @Test
+    public void middleImageTest(){
+        GamePathSpace[] path = board.getPath();
+        TokenSpace[] spaces = path[MIDDLE_SPACE].getTokenSpaces();
+        for(TokenSpace space: spaces){
+            assertNotNull(space.getIcon());
+        }
+    }
+
 
 }

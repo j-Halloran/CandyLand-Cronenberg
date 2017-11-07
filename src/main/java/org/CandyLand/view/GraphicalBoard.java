@@ -85,9 +85,12 @@ public class GraphicalBoard extends JPanel {
         path.add(grandma);
         spaces[0][0] = grandma;
 
+        middle_space = (int)Math.ceil(path.size() / 2.0);
+        GamePathSpace middleSpace = new GamePathSpace(COLORS[(middle_space-1)%COLORS.length],"middleSpaceBG");
+        path.set(middle_space,middleSpace);
+        spaces[4][10] = middleSpace; //hard coded for now, WILL FIX
         this.path = new GamePathSpace[path.size()];
         path.toArray(this.path);
-        middle_space = (int)Math.ceil(this.path.length / 2.0);
     }
 
     public GraphicalBoard() {
