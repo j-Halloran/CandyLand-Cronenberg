@@ -99,5 +99,26 @@ public class GraphicalBoardTest {
         }
     }
 
+        /*
+    *US: Board Colors
+    *
+    * boardBackgroundColor() - verify that board background set to opaque
+    * grandmaColor - verify grandmas house space set to a compliment of the
+    *                5 game path space colors
+    */
+
+    @Test
+    public void boardBackgroundColor(){
+        GraphicalBoard b = new GraphicalBoard();
+        assertEquals(b.getBackgroundColor(), new Color(0,0,0,0));
+    }
+
+    @Test
+    public void startColor(){
+        GraphicalBoard b = new GraphicalBoard();
+        assertEquals(b.getPath()[0].getSpaceColor(), Color.WHITE);
+
+    }
+
 
 }

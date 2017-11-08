@@ -23,7 +23,7 @@ public class MainFrame extends JComponent {
     private static GraphicalBoard graphicalBoard;
     private static StatusBarPanel stats;
 
-    public MainFrame() throws IOException {
+    public MainFrame(int defaultValue) throws IOException {
         // set Background Image of MainFrame
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         URL url = classloader.getResource("CLbg2.jpg");
@@ -36,12 +36,19 @@ public class MainFrame extends JComponent {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridBagLayout());
 
-        numPlayers = setNumOfPlayers();
+        if(defaultValue ==0) {
+            numPlayers = setNumOfPlayers();
 
-        graphicalBoard = new GraphicalBoard();
-        graphicalBoard.addInitialTokens(numPlayers);
-        cardPanel = new CardPanel();
-        stats = new StatusBarPanel(numPlayers);
+            graphicalBoard = new GraphicalBoard();
+            graphicalBoard.addInitialTokens(numPlayers);
+            cardPanel = new CardPanel();
+            stats = new StatusBarPanel(numPlayers);
+        }else{
+            graphicalBoard = new GraphicalBoard();
+            graphicalBoard.addInitialTokens(defaultValue);
+            cardPanel = new CardPanel();
+            stats = new StatusBarPanel(defaultValue);
+        }
 
         constraints.weightx = 1;
         constraints.weighty = 1;

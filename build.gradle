@@ -11,7 +11,46 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName = 'org.CandyLand.CandyLand';
+mainClassName = 'org.CandyLand.view.CardPanelTest';
+
+
+
+task GamePathSpaceTest << {
+    println 'Running GamePathSpaceTest'
+    mainClassName = 'org.CandyLand.view.GamePathSpaceTest';
+}
+
+task GraphicalBoardTest << {
+    println 'Running GraphicalBoardTest'
+    mainClassName = 'org.CandyLand.view.GraphicalBoardTest';
+}
+
+task MainFrameTest << {
+    println 'Running MainFrameTest'
+    mainClassName = 'org.CandyLand.view.MainFrameTest';
+}
+
+task CardPanelTest << {
+    println 'Running CardPanelTest'
+    mainClassName = 'org.CandyLand.view.CardPanelTest';
+}
+
+task GraphicalCardTest << {
+    println 'Running GraphicalCardTest'
+    mainClassName = 'org.CandyLand.view.GraphicalCardTest';
+}
+
+task StatusBarPanel << {
+    println 'Running StatusBarPanel'
+    mainClassName = 'org.CandyLand.view.StatusBarPanel';
+}
+
+task TokenSpaceTest << {
+    println 'Running TokenSpaceTest'
+    mainClassName = 'org.CandyLand.view.TokenSpaceTest';
+}
+
+
 
 // In this section you declare where to find the dependencies of your project
 repositories {
