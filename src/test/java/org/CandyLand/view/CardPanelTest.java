@@ -38,4 +38,25 @@ public class CardPanelTest {
         assertEquals(CardType.EMPTY_DISCARD, cardPanel.discardPile.getCardType());
         assertEquals(CardType.UPSIDEDOWN, cardPanel.drawPile.getCardType());
     }
+
+        /*
+    *US: Past Card
+    *
+    * discardCardAreaExists() - verify creation and visibility fo discard area
+    * discardCard() - confirm that past cards are placed in the discard pile
+    */
+
+    @Test
+    public void discardCardAreaExists(){
+        CardPanel c = new CardPanel();
+        assertNotNull(c.getDiscardPile());
+    }
+
+    @Test
+    public void discardCard(){
+        CardPanel c = new CardPanel();
+        c.drawCard();
+        assertNotEquals(c.getDiscardPile().getCardType(), CardType.EMPTY_DISCARD);
+    }
+
 }
