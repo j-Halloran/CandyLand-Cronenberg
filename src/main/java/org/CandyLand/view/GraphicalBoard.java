@@ -1,7 +1,8 @@
 package org.CandyLand.view;
 
 import org.CandyLand.CardType;
-
+import org.CandyLand.SpaceType;
+import org.CandyLand.model.GameBoard;
 import java.awt.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -15,38 +16,21 @@ public class GraphicalBoard extends JPanel {
 
     private static final int ROWS = 11;
     private static final int COLS = 11;
-    private static int middle_space;
     private static final Color BACKGROUND_COLOR = new Color(0,0,0,0);
     private JComponent[][] spaces = new JComponent[ROWS][COLS];
-    private GamePathSpace[] path;
-    private static int[] tokenLocations; //tracker variable where player number is used as an index to retrieve current token path space
+    private GamePathSpace[] path = new GamePathSpace[GameBoard.NUMBER_OF_SPACES];
     private static Token[] tokens; //Tracker that contains all of the tokens so they can be removed from a space and moved around
-    private final Color[] COLORS = {Color.RED,
-                                    Color.YELLOW,
-                                    Color.BLUE,
-                                    Color.GREEN,
-                                    Color.ORANGE};
+    private static int[] tokenLocations;
 
-    private void initializeBoard() {
+    private void initializePath() {
         int row = ROWS - 1;
-        int col = 1;
+        int col = 0;
         boolean movingRight = true;
         boolean spacerRow = false;
-        ArrayList<GamePathSpace> path =  new ArrayList<>(ROWS * COLS);
+        int currentSpace = 0;
 
-        //leave a space for start
-        GamePathSpace startSpace = new GamePathSpace(Color.WHITE);
-        path.add(startSpace);
-        spaces[row][0] = startSpace;
-
-        int currentColor = 0;
-
-        while (!(row == 0 && col == 0)) { //row >= 0, because grandmas is at 0,0
-            GamePathSpace space = new GamePathSpace(COLORS[currentColor]);
-            currentColor = (currentColor + 1) % COLORS.length;
-
-            spaces[row][col] = space;
-            path.add(space);
+        while (row >= 0 && col >= 0) {
+            spaces[row][col] = path[currentSpace++];
 
            if(col == COLS - 1 && movingRight) {
                 row--;
@@ -77,24 +61,46 @@ public class GraphicalBoard extends JPanel {
                 }
             }
         }
-
-
-
-        //leave a space for finish
-        GamePathSpace grandma = new GamePathSpace(Color.WHITE, "rainbowSpaceBG");
-        path.add(grandma);
-        spaces[0][0] = grandma;
-
-        middle_space = (int)Math.ceil(path.size() / 2.0);
-        GamePathSpace middleSpace = new GamePathSpace(COLORS[(middle_space-1)%COLORS.length],"middleSpaceBG");
-        path.set(middle_space,middleSpace);
-        spaces[4][10] = middleSpace; //hard coded for now, WILL FIX
-        this.path = new GamePathSpace[path.size()];
-        path.toArray(this.path);
     }
 
-    public GraphicalBoard() {
-        initializeBoard();
+    private void setSpaceTypes(SpaceType[] types) {
+        for (int i = 0; i < types.length; i++) {
+            path[i] = generateSpaceFromType(types[i]);
+        }
+    }
+
+    private GamePathSpace generateSpaceFromType(SpaceType type) {
+        GamePathSpace space = null;
+        switch (type) {
+            case RED:
+                space = new GamePathSpace(Color.RED);
+                break;
+            case YELLOW:
+                space = new GamePathSpace(Color.YELLOW);
+                break;
+            case BLUE:
+                space = new GamePathSpace(Color.BLUE);
+                break;
+            case GREEN:
+                space = new GamePathSpace(Color.GREEN);
+                break;
+            case ORANGE:
+                space = new GamePathSpace(Color.ORANGE);
+                break;
+            case START:
+                space = new GamePathSpace(Color.WHITE);
+                break;
+            case GRANDMAS:
+                space = new GamePathSpace(Color.WHITE, "rainbowSpaceBG");
+                break;
+        }
+        return space;
+    }
+
+    public GraphicalBoard(GameBoard board) {
+        setSpaceTypes(board.getSpaceTypes());
+        initializePath();
+        intitializeTokens(board.getNumPlayers());
         GridLayout layout = new GridLayout(ROWS,COLS);
         layout.setVgap(0);
         this.setLayout(layout);
@@ -108,103 +114,30 @@ public class GraphicalBoard extends JPanel {
         }
     }
 
-    public int getPathSize(){
-        return path.length;
-    }
-  
-    /**
-     * Loops for each player in the game adding their token to the starting space
-     *
-     * @param numPlayers
-     */
-    public void addInitialTokens(int numPlayers){
-        if(numPlayers > GamePathSpace.getMaxPlayerCount()){
-            numPlayers = GamePathSpace.getMaxPlayerCount();
-        }
-
-        tokenLocations = new int[numPlayers];
+    public void intitializeTokens(int numPlayers) {
         tokens = new Token[numPlayers];
-        for(int i=0;i<numPlayers;i++){
+        tokenLocations = new int[numPlayers];
+        for (int i = 0; i < numPlayers; i++) {
             ClassLoader classloader = Thread.currentThread().getContextClassLoader();
             URL url = classloader.getResource("player"+(i+1)+"_small.png");
             tokens[i] = new Token(url.getPath());
-            tokenLocations[i] = 0; //initialize location tracker to position 0 so in the future we can fast update locations without needing to scan all board spaces
-            try{
-                path[0].addToken(tokens[i]);
-            }catch(NoSpaceForTokenException e){
-                System.err.println("Error more tokens than space created. Should not be possible");
-                System.exit(10);
-            }
-            //path[1].removeToken(tokens[i]);
         }
     }
 
-    public void moveAvatar(int playerNumber, GraphicalCard card){
-        int getNextSpace = getNextSpace(card,tokenLocations[playerNumber]);
-        if(card.getCardType().equals(CardType.DOUBLE_BLUE) || card.getCardType().equals(CardType.DOUBLE_GREEN) || card.getCardType().equals(CardType.DOUBLE_RED) ||
-                card.getCardType().equals(CardType.DOUBLE_YELLOW) || card.getCardType().equals(CardType.DOUBLE_ORANGE)){
-            getNextSpace = getNextSpace(card,getNextSpace);
-        }
-
-        path[tokenLocations[playerNumber]].removeToken(tokens[playerNumber]);
-        try{
-            path[getNextSpace].addToken(tokens[playerNumber]);
-        }
-        catch (NoSpaceForTokenException e){
-            System.err.println("Error more tokens than players. Exiting");
-            System.exit(1);
-        }
-        tokenLocations[playerNumber] = getNextSpace;
-    }
-
-    protected int getNextSpace(GraphicalCard card, int curLoc){
-        //Another sanity check
-        if(card.getCardType() == CardType.EMPTY_DISCARD || card.getCardType() == CardType.UPSIDEDOWN){
-            return 0;
-        }
-        else if (card.getCardType() == CardType.SKIP_TURN) {
-            // we aint goin nowhere
-            return curLoc;
-        }
-        else if (card.getCardType() == CardType.GO_TO_MIDDLE) {
-            return middle_space;
-        }
-        for(int i=curLoc+1;i<path.length-1;i++){
-            if(path[i].getSpaceColor().equals(card.getBackground())){
-                return i;
-            }
-        }
-        return path.length-1;
-    }
-
-    public void resetTokens(){
-        for(int i = 0; i < tokens.length; i++) {
-            path[tokenLocations[i]].removeToken(tokens[i]);
-            tokenLocations[i] = 0; //initialize location tracker to position 0 so in the future we can fast update locations without needing to scan all board spaces
-            try {
-                path[0].addToken(tokens[i]);
-            } catch (NoSpaceForTokenException e) {
-                System.err.println("Error more tokens than space created. Should not be possible");
-                System.exit(10);
-            }
+    public void setTokenLocations(int[] tokenLocations) {
+        for (int i = 0; i < tokenLocations.length; i++) {
+            updateTokenLocation(i, tokenLocations[i]);
+            this.tokenLocations[i] = tokenLocations[i];
         }
     }
 
-    public void clearTokens(){
-        for(int i = 0; i < tokens.length; i++) {
-            path[tokenLocations[i]].removeToken(tokens[i]);
-        }
-        tokenLocations = new int[0];
-        tokens = new Token[0];
-
+    private void updateTokenLocation(int playerNum, int spaceToMoveTo) {
+        path[tokenLocations[playerNum]].removeToken(tokens[playerNum]);
+        path[spaceToMoveTo].addToken(tokens[playerNum]);
     }
 
-    // check if token has reached grandmas house
-    public boolean atGrandmas(int playerNumber){
-        if(tokenLocations[playerNumber] == path.length-1){
-            return true;
-        }
-        return false;
+    public int getPathSize(){
+        return path.length;
     }
 
     public Color getBackgroundColor(){

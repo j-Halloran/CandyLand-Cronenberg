@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import org.CandyLand.CardType;
 import org.CandyLand.model.CardDeck;
+import org.CandyLand.model.GameBoard;
 
 public class MainFrame extends JComponent {
 
@@ -19,16 +20,22 @@ public class MainFrame extends JComponent {
     private JFrame frame = new JFrame(TITLE);
     private File imageFile;
     private BufferedImage myImage;
-    private static CardPanel cardPanel;
-    private static GraphicalBoard graphicalBoard;
-    private static StatusBarPanel stats;
+    public CardPanel cardPanel;
+    public GraphicalBoard graphicalBoard;
+    private StatusBarPanel stats;
 
-    public MainFrame(int defaultValue) throws IOException {
+    public MainFrame(GameBoard board) {
         // set Background Image of MainFrame
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         URL url = classloader.getResource("CLbg2.jpg");
         imageFile = new File(url.getPath());
-        myImage = ImageIO.read(imageFile);
+        try
+        {
+            myImage = ImageIO.read(imageFile);
+        }
+        catch (IOException e) {
+            System.err.println("unable to load background image.");
+        }
         frame.setContentPane(new ImagePanel(myImage));
 
         GridBagConstraints constraints = new GridBagConstraints();
@@ -36,19 +43,9 @@ public class MainFrame extends JComponent {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridBagLayout());
 
-        if(defaultValue ==0) {
-            numPlayers = setNumOfPlayers();
-
-            graphicalBoard = new GraphicalBoard();
-            graphicalBoard.addInitialTokens(numPlayers);
-            cardPanel = new CardPanel();
-            stats = new StatusBarPanel(numPlayers);
-        }else{
-            graphicalBoard = new GraphicalBoard();
-            graphicalBoard.addInitialTokens(defaultValue);
-            cardPanel = new CardPanel();
-            stats = new StatusBarPanel(defaultValue);
-        }
+        graphicalBoard = new GraphicalBoard(board);
+        cardPanel = new CardPanel();
+        stats = new StatusBarPanel(board.getNumPlayers());
 
         constraints.weightx = 1;
         constraints.weighty = 1;
@@ -72,47 +69,9 @@ public class MainFrame extends JComponent {
         frame.pack();
     }
 
-    public static void drawCard(){
-        GraphicalCard nextCard = cardPanel.drawCard();
-        graphicalBoard.moveAvatar(StatusBarPanel.getCurrentPlayer(),nextCard);
-        if(graphicalBoard.atGrandmas(StatusBarPanel.getCurrentPlayer()) == true){
-            // reinitialize and/or rematch
-            Object[] endOptions = {"Rematch", "New Game", "Quit"};
-            int gameEndOption = JOptionPane.showOptionDialog(new JFrame(),
-                    "Player " + (StatusBarPanel.getCurrentPlayer()+1) + " Wins!!!",
-                    "End of Game Options", 0, JOptionPane.YES_NO_CANCEL_OPTION,
-                    null, endOptions, "PHP");
-
-            if (gameEndOption == JOptionPane.YES_OPTION){
-                reInitBoard(false);
-            } else if (gameEndOption == JOptionPane.NO_OPTION) {
-                reInitBoard(true);
-            } else {
-                System.exit(0);
-            }
-        }
-    }
-
-    public static int setNumOfPlayers(){
-        Object[] options = {"2","3","4"};
-        String userNumberPlayersResponse = (String) JOptionPane.showInputDialog(new JFrame(), "How Many Players (2-4): ","Enter Players",JOptionPane.YES_NO_CANCEL_OPTION,null,options,"2");
-        if(userNumberPlayersResponse==null){
-            System.exit(0);
-        }
-        numPlayers = Integer.parseInt(userNumberPlayersResponse);
-        return numPlayers;
-    }
-
-    public static void reInitBoard(boolean newGame){
-        CardDeck.shuffleDeck();
-        cardPanel.shuffleDeck();
-        graphicalBoard.resetTokens();
-        if(newGame == true) {
-            int newNumPlayers = setNumOfPlayers();
-            graphicalBoard.clearTokens();
-            graphicalBoard.addInitialTokens(newNumPlayers);
-            stats.setNumberOfPLayers(numPlayers);
-        }
+    public void exit() {
+        frame.setVisible(false);
+        frame.dispose();
     }
 
     public JFrame getFrame(){
