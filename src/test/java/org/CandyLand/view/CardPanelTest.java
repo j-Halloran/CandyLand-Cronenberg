@@ -17,9 +17,7 @@ public class CardPanelTest {
 
     @Test
     public void testShuffleEnableDisableCards() {
-        for (int i = 0; i < NUMBER_OF_CARDS_IN_DECK; i++) {
-            cardPanel.drawCard();
-        }
+        cardPanel.setDeckEmpty();
         assertFalse(cardPanel.drawPile.isEnabled());
         assertTrue(cardPanel.discardPile.isEnabled());
         cardPanel.shuffleDeck();
@@ -29,11 +27,8 @@ public class CardPanelTest {
 
     @Test
     public void shuffleCardTypeTest() {
-        for (int i = 0; i < NUMBER_OF_CARDS_IN_DECK; i++) {
-            cardPanel.drawCard();
-        }
+        cardPanel.setDeckEmpty();
         assertEquals(CardType.EMPTY_DRAW, cardPanel.drawPile.getCardType());
-        assertNotEquals(CardType.EMPTY_DISCARD, cardPanel.discardPile.getCardType());
         cardPanel.shuffleDeck();
         assertEquals(CardType.EMPTY_DISCARD, cardPanel.discardPile.getCardType());
         assertEquals(CardType.UPSIDEDOWN, cardPanel.drawPile.getCardType());
@@ -55,8 +50,8 @@ public class CardPanelTest {
     @Test
     public void discardCard(){
         CardPanel c = new CardPanel();
-        c.drawCard();
-        assertNotEquals(c.getDiscardPile().getCardType(), CardType.EMPTY_DISCARD);
+        c.setCurrentCard(new GraphicalCard(CardType.SINGLE_RED));
+        assertEquals(c.getDiscardPile().getCardType(), CardType.SINGLE_RED);
     }
 
 }

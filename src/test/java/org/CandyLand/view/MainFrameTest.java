@@ -3,6 +3,7 @@ package org.CandyLand.view;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.io.IOException;
+import org.CandyLand.model.GameBoard;
 
 public class MainFrameTest {
 
@@ -45,34 +46,14 @@ public class MainFrameTest {
     */
     @Test
     public void windowExists(){
-
-        try {
-            MainFrame mainFrame = new MainFrame(2);
-
-            assertEquals(mainFrame.getFrame().isVisible(), true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        MainFrame mainFrame = new MainFrame(new GameBoard(2));
+        assertEquals(mainFrame.getFrame().isVisible(), true);
     }
 
     @Test
     public void cardExists(){
-
-
-
-        try {
-//            Robot r = new Robot();
-//            r.keyPress(java.awt.event.KeyEvent.VK_ENTER);
-            MainFrame mainFrame = new MainFrame(2);
-//            r.keyRelease(java.awt.event.KeyEvent.VK_ENTER);
-            assertEquals(mainFrame.getPanel().isVisible(), true);
-        } catch (IOException e) {
-            e.printStackTrace();
-//        } catch (AWTException e) {
-//            e.printStackTrace();
-       }
-
+        MainFrame mainFrame = new MainFrame(new GameBoard(2));
+        assertEquals(mainFrame.getPanel().isVisible(), true);
     }
 
 
