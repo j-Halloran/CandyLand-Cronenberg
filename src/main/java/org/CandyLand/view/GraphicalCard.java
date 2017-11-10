@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import org.CandyLand.CardType;
+import org.CandyLand.CandyLand;
 
 public class GraphicalCard extends JButton {
     private boolean isDouble;
@@ -19,7 +20,7 @@ public class GraphicalCard extends JButton {
                 setFont(new Font("TimesRoman", Font.PLAIN, 256));
                 this.addActionListener(e -> {
                     StatusBarPanel.activateNextPlayer();
-                    MainFrame.drawCard();
+                    CandyLand.drawCard();
                 });
                 this.isDouble = false;
                 break;
@@ -79,13 +80,6 @@ public class GraphicalCard extends JButton {
                 setBackground(Color.BLACK);
                 setForeground(Color.WHITE);
                 setText("Skip Turn");
-                setFont(new Font("TimesRoman", Font.PLAIN, 24));
-                this.isDouble = false;
-                break;
-            case GO_TO_MIDDLE:
-                setBackground(Color.BLACK);
-                setForeground(Color.WHITE);
-                setText("Go To Middle");
                 setFont(new Font("TimesRoman", Font.PLAIN, 24));
                 this.isDouble = false;
                 break;

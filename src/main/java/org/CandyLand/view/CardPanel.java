@@ -5,6 +5,7 @@ import org.CandyLand.model.CardDeck;
 import java.awt.*;
 import javax.swing.*;
 import org.CandyLand.CardType;
+import org.CandyLand.CandyLand;
 
 public class CardPanel extends JPanel {
 
@@ -12,10 +13,8 @@ public class CardPanel extends JPanel {
     protected GraphicalCard drawPile =
             new GraphicalCard(CardType.UPSIDEDOWN);
     protected GraphicalCard discardPile = new GraphicalCard(CardType.EMPTY_DISCARD);
-    private CardDeck deck;
 
     public CardPanel() {
-        deck = new CardDeck();
         this.setLayout(new GridLayout(2, 1));
         this.setBackground(BACKGROUND_COLOR);
         drawPile.setEnabled(true);
@@ -26,19 +25,16 @@ public class CardPanel extends JPanel {
         this.add(discardPile);
     }
 
-    public GraphicalCard drawCard(){
-        GraphicalCard card = new GraphicalCard(deck.drawCard());
-        if (deck.isDeckEmpty()) {
-            this.remove(drawPile);
-            this.drawPile = new GraphicalCard(CardType.EMPTY_DRAW);
-            this.drawPile.setEnabled(false);
-            this.add(drawPile);
-            this.revalidate();
-            this.repaint();
-            card.addShuffleListener(this);
-        }
-        setCurrentCard(card);
-        return card;
+    public void setDeckEmpty () {
+        this.remove(drawPile);
+        this.remove(discardPile);
+        this.drawPile = new GraphicalCard(CardType.EMPTY_DRAW);
+        this.drawPile.setEnabled(false);
+        this.add(drawPile);
+        this.add(discardPile);
+        this.revalidate();
+        this.repaint();
+        discardPile.addShuffleListener(this);
     }
 
     public void setCurrentCard(GraphicalCard card) {
