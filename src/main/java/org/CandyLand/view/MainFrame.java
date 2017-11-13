@@ -23,6 +23,7 @@ public class MainFrame extends JComponent {
     public CardPanel cardPanel;
     public GraphicalBoard graphicalBoard;
     private StatusBarPanel stats;
+    public TimePanel timePanel;
 
     public MainFrame(GameBoard board) {
         // set Background Image of MainFrame
@@ -46,11 +47,19 @@ public class MainFrame extends JComponent {
         graphicalBoard = new GraphicalBoard(board);
         cardPanel = new CardPanel();
         stats = new StatusBarPanel(board.getNumPlayers());
+        timePanel = new TimePanel();
 
         constraints.weightx = 1;
         constraints.weighty = 1;
-        constraints.gridwidth = 4;
+        constraints.gridwidth = 1;
         constraints.gridx = 1;
+        constraints.gridy = 1;
+        constraints.fill = constraints.BOTH;
+        frame.add(timePanel, constraints);
+        constraints.weightx = 1;
+        constraints.weighty = 1;
+        constraints.gridwidth = 3;
+        constraints.gridx = 2;
         constraints.gridy = 1;
         constraints.fill = constraints.BOTH;
         frame.add(stats, constraints);

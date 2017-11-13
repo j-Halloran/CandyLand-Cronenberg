@@ -5,6 +5,7 @@ import org.CandyLand.view.Prompter;
 import org.CandyLand.view.GraphicalCard;
 import org.CandyLand.model.CardDeck;
 import org.CandyLand.model.GameBoard;
+import org.CandyLand.model.Timer;
 
 import java.io.IOException;
 
@@ -20,6 +21,8 @@ public class CandyLand {
         board = new GameBoard(numPlayers);
         mainFrame = new MainFrame(board);
         mainFrame.graphicalBoard.setTokenLocations(board.getPlayerPositions());
+        Timer.start();
+        spawnTimerUpdateThread();
     }
 
     public static void drawCard() {
@@ -28,18 +31,21 @@ public class CandyLand {
         mainFrame.graphicalBoard.setTokenLocations(board.getPlayerPositions());
         mainFrame.cardPanel.setCurrentCard(new GraphicalCard(card));
         if (board.isGameOver()) {
-            Prompter.ContinueOption option = Prompter.promptRematch(playerNum);
+            Prompter.ContinueOption option = Prompter.promptRematch(playerNum + 1);
+            Timer.reset();
             switch (option) {
                 case REMATCH:
                     board.resetPlayersToStart();
                     CardDeck.shuffleDeck();
                     mainFrame.graphicalBoard.setTokenLocations(board.getPlayerPositions());
+                    Timer.start();
                     break;
                 case NEWGAME:
                     numPlayers = Prompter.promptNumOfPlayers();
                     mainFrame.exit();
                     board = new GameBoard(numPlayers);
                     mainFrame = new MainFrame(board);
+                    Timer.start();
                     break;
                 case EXIT:
                     System.exit(0);
@@ -57,4 +63,20 @@ public class CandyLand {
         mainFrame.cardPanel.shuffleDeck();
     }
 
+    private static void spawnTimerUpdateThread() {
+        Thread timerUpdateThread = new Thread() {
+            public void run() {
+                while (true) {
+                    mainFrame.timePanel.setTime(Timer.getSeconds());
+                    try {
+                        Thread.sleep(1000); // snooze for a second
+                    }
+                    catch (InterruptedException e) {
+                        // do nothing
+                    }
+                }
+            }
+        };
+        timerUpdateThread.start();
+    }
 }
