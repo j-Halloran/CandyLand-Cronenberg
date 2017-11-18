@@ -5,16 +5,16 @@ import org.CandyLand.CardType;
 import org.CandyLand.IllegalNumberOfPlayersException;
 import org.CandyLand.IllegalPlayerNumberException;
 
-public class GameBoard {
+public class GameBoard implements java.io.Serializable {
 
     public static final int NUMBER_OF_SPACES = 71;
-    private static SpaceType[] spaceTypes = new SpaceType[NUMBER_OF_SPACES];
+    private SpaceType[] spaceTypes = new SpaceType[NUMBER_OF_SPACES];
     private static final SpaceType[] COLORED_SPACES = {SpaceType.RED,
                                                        SpaceType.YELLOW,
                                                        SpaceType.BLUE,
                                                        SpaceType.GREEN,
                                                        SpaceType.ORANGE};
-    private int numPlayers;
+    public int numPlayers;
     private int[] playerPostions;
 
     public GameBoard(int numPlayers) {

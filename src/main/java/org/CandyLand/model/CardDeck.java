@@ -3,9 +3,7 @@ package org.CandyLand.model;
 import org.CandyLand.CardType;
 import java.util.ArrayList;
 
-
-
-public class CardDeck {
+public class CardDeck implements java.io.Serializable {
     private static final int NUM_SINGLE_PER_COLOR = 10;
     private static final int NUM_DOUBLE_PER_COLOR = 2;
     private static final int NUM_SKIP_TURN_CARDS = 5;
@@ -19,9 +17,8 @@ public class CardDeck {
                                                     CardType.DOUBLE_BLUE,
                                                     CardType.DOUBLE_GREEN,
                                                     CardType.DOUBLE_ORANGE};
-
-    private static ArrayList<CardType> currentDeck;
-    static {shuffleDeck();}
+    private ArrayList<CardType> currentDeck;
+    private CardType lastDrawn;
 
     public CardDeck(){
         shuffleDeck();
@@ -32,12 +29,13 @@ public class CardDeck {
      * and then fast mapped into a single array list which is then shuffled using the java
      * collections framework shuffle for lists.     *
      */
-    public static void shuffleDeck(){
+    public void shuffleDeck(){
         currentDeck = new ArrayList<>();
         currentDeck.addAll(generateSingleColorCards());
         currentDeck.addAll(generateDoubleColorCards());
         currentDeck.addAll(generateSpecialCards());
         java.util.Collections.shuffle(currentDeck);
+        lastDrawn = null;
     }
 
     private static ArrayList<CardType> generateSingleColorCards(){
@@ -80,14 +78,15 @@ public class CardDeck {
      *
      * @return Returns the last card in the deck object as the next card drawn
      */
-    public static CardType drawCard(){
+    public CardType drawCard(){
         if(currentDeck.isEmpty()){
             shuffleDeck();
         }
-        return currentDeck.remove(currentDeck.size()-1);
+        lastDrawn = currentDeck.remove(currentDeck.size()-1);
+        return lastDrawn;
     }
 
-    public static boolean isDeckEmpty(){
+    public boolean isDeckEmpty(){
         if(currentDeck == null){
             return true;
         }
@@ -99,10 +98,14 @@ public class CardDeck {
      *
      * @return The current size of the deck as an int
      */
-    public static int getDeckSize(){
+    public int getDeckSize(){
         if(currentDeck==null) {
             return 0;
         }
         return  currentDeck.size();
+    }
+
+    public CardType getLastDrawn() {
+      return lastDrawn;
     }
 }

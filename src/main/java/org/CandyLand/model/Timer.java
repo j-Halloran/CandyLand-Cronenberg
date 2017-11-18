@@ -1,34 +1,36 @@
 package org.CandyLand.model;
 
-import java.time.Duration;
+public class Timer implements java.io.Serializable {
 
-public class Timer {
+    private long time = 0;
+    private boolean running = false;
+    private long lastMillisIncremented;
 
-    private static long time = 0;
-    private static boolean running = false;
-    private static long lastMillisIncremented;
-
-    public static void start() {
+    public void start() {
         lastMillisIncremented = System.currentTimeMillis();
         running = true;
     }
 
-    public static void stop() {
+    public void stop() {
         running = false;
         time += System.currentTimeMillis() - lastMillisIncremented;
     }
 
-    public static void reset() {
+    public void reset() {
         stop();
         time = 0;
     }
 
-    public static long getSeconds() {
+    public long getSeconds() {
         if (running) {
             long tempTime = System.currentTimeMillis();
             time += tempTime - lastMillisIncremented;
             lastMillisIncremented = tempTime;
         }
         return time / 1000;
+    }
+
+    public boolean isRunning() {
+        return running;
     }
 }

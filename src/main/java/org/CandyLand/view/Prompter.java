@@ -2,6 +2,8 @@ package org.CandyLand.view;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
 
 public class Prompter {
 
@@ -28,6 +30,61 @@ public class Prompter {
         } else {
             return ContinueOption.EXIT;
         }
+    }
+
+    public static NewGameOption promptNewGame() {
+        Object[] options = {"New Game", "Load Game"};
+        int option = JOptionPane.showOptionDialog(
+            null,
+            null,
+            null,
+            0,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            options,
+            null
+        );
+        if (option == JOptionPane.YES_OPTION) {
+          return NewGameOption.NEWGAME;
+        }
+        else {
+          return NewGameOption.LOADGAME;
+        }
+    }
+
+    public static String getFileOpenLocation() {
+        JFileChooser picker = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("World of Sweets games", "wos");
+        picker.setFileFilter(filter);
+        int returnValue = picker.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            return picker.getCurrentDirectory().toString() + File.separator + picker.getSelectedFile().getName();
+        }
+        else {
+          return null;
+        }
+    }
+
+    public static String getFileSaveLocation() {
+        JFileChooser picker = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("World of Sweets games", "wos");
+        picker.setFileFilter(filter);
+        int returnValue = picker.showSaveDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            String fileName = picker.getCurrentDirectory().toString() + File.separator + picker.getSelectedFile().getName();
+            if (!fileName.endsWith(".wos")) {
+              fileName += ".wos";
+            }
+            return fileName;
+        }
+        else {
+          return null;
+        }
+    }
+
+    public enum NewGameOption {
+        NEWGAME,
+        LOADGAME
     }
 
     public enum ContinueOption {
