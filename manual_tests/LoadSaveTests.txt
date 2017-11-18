@@ -1,0 +1,35 @@
+TEST 1
+1. Start a 2 player game.
+2. Save the game after drawing enough cards to get all players off start.
+3. Record the positions of all players, the state of the deck, and the state of the timer.
+4. Exit the game.
+5. Load the game.
+6. Verify that everything noted in 3 is the same.
+7. Play the game to completion.
+
+TEST 2
+1. Start a 3 player game.
+2. Save the game after drawing enough cards to empty the deck.
+3. Record the positions of all players, the state of the deck, and the state of the timer.
+4. Exit the game.
+5. Load the game.
+6. Verify that everything noted in 3 is the same. Make sure that the deck needs shuffled.
+7. Play the game to completion.
+
+TEST 3
+1. Start a 4 player game.
+2. Save the game after drawing enough cards to get all players off start.
+3. Record the positions of all players, the state of the deck, and the state of the timer.
+4. Play the game to completion.
+5. Load the game.
+6. Verify that everything noted in 3 is the same.
+7. Play the game to completion.
+
+TEST 4
+1. Start a 4 player game.
+2. Save the game without drawing any cards.
+3. Record the positions of all players, the state of the deck, and the state of the timer.
+4. Exit the game.
+5. Load the game.
+6. Verify that everything noted in 3 is the same.
+7. Play the game to completion.
