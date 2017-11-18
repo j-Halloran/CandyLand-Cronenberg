@@ -6,61 +6,62 @@ import static org.junit.Assert.*;
 
 public class TimerTest {
 
-    // make sure the timer is fresh for each test
+    Timer timer;
+
     @Before
-    public void resetTimer() {
-        Timer.reset();
+    public void createTimer() {
+        timer = new Timer();
     }
 
     @Test
     public void timerStartTest() {
-        Timer.start();
+        timer.start();
         try {
             Thread.sleep(2000); // 2 seconds oughta do it.
         }
         catch (InterruptedException e) {
             fail("thread was interrupted");
         }
-        assertTrue(Timer.getSeconds() > 0);
+        assertTrue(timer.getSeconds() > 0);
     }
 
     @Test
     public void timerStopTest() {
-        Timer.start();
+        timer.start();
         try {
             Thread.sleep(2000); // 2 seconds oughta do it.
         }
         catch (InterruptedException e) {
             fail("thread was interrupted");
         }
-        Timer.stop();
-        long seconds = Timer.getSeconds();
+        timer.stop();
+        long seconds = timer.getSeconds();
         try {
             Thread.sleep(2000); // 2 seconds oughta do it.
         }
         catch (InterruptedException e) {
             fail("thread was interrupted");
         }
-        assertEquals(seconds, Timer.getSeconds());
+        assertEquals(seconds, timer.getSeconds());
     }
 
     @Test
     public void resetTest() {
-        Timer.start();
+        timer.start();
         try {
             Thread.sleep(2000); // 2 seconds oughta do it.
         }
         catch (InterruptedException e) {
             fail("thread was interrupted");
         }
-        Timer.reset();
-        assertEquals(0, Timer.getSeconds());
+        timer.reset();
+        assertEquals(0, timer.getSeconds());
         try {
             Thread.sleep(2000); // 2 seconds oughta do it.
         }
         catch (InterruptedException e) {
             fail("thread was interrupted");
         }
-        assertEquals(0, Timer.getSeconds());
+        assertEquals(0, timer.getSeconds());
     }
 }

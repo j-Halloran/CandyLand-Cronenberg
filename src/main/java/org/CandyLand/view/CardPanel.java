@@ -69,4 +69,14 @@ public class CardPanel extends JPanel {
     public GraphicalCard getDiscardPile(){
         return discardPile;
     }
-}
+
+    public void paintFromDeck(CardDeck deck) {
+        CardType lastDrawn = deck.getLastDrawn();
+        if (lastDrawn != null) {
+              setCurrentCard(new GraphicalCard(lastDrawn));
+          }
+          if (deck.isDeckEmpty()) {
+              setDeckEmpty();
+          }
+      }
+  }

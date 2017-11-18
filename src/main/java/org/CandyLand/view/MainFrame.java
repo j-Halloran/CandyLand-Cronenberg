@@ -48,6 +48,7 @@ public class MainFrame extends JComponent {
         cardPanel = new CardPanel();
         stats = new StatusBarPanel(board.getNumPlayers());
         timePanel = new TimePanel();
+        SaveButton saveButton = new SaveButton();
 
         constraints.weightx = 1;
         constraints.weighty = 1;
@@ -58,11 +59,18 @@ public class MainFrame extends JComponent {
         frame.add(timePanel, constraints);
         constraints.weightx = 1;
         constraints.weighty = 1;
-        constraints.gridwidth = 3;
+        constraints.gridwidth = 2;
         constraints.gridx = 2;
         constraints.gridy = 1;
         constraints.fill = constraints.BOTH;
         frame.add(stats, constraints);
+        constraints.weightx = .5;
+        constraints.weighty = 1;
+        constraints.gridwidth = 1;
+        constraints.gridx = 4;
+        constraints.gridy = 1;
+        constraints.fill = constraints.BOTH;
+        frame.add(saveButton, constraints);
         constraints.gridwidth = 1;
         constraints.gridx = 1;
         constraints.gridy = 2;
