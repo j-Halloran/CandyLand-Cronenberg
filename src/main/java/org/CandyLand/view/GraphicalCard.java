@@ -83,6 +83,41 @@ public class GraphicalCard extends JButton {
                 setFont(new Font("TimesRoman", Font.PLAIN, 24));
                 this.isDouble = false;
                 break;
+            case ICE_CREAM:
+                setBackground(Color.BLACK);
+                setForeground(Color.WHITE);
+                setText("Go To Ice Cream");
+                setFont(new Font("TimesRoman", Font.PLAIN, 24));
+                this.isDouble = false;
+                break;
+            case LICORICE:
+                setBackground(Color.BLACK);
+                setForeground(Color.WHITE);
+                setText("Go To Licorice");
+                setFont(new Font("TimesRoman", Font.PLAIN, 24));
+                this.isDouble = false;
+                break;
+            case CAKE:
+                setBackground(Color.BLACK);
+                setForeground(Color.WHITE);
+                setText("Go To Cake");
+                setFont(new Font("TimesRoman", Font.PLAIN, 24));
+                this.isDouble = false;
+                break;
+            case CANDY_CORN:
+                setBackground(Color.BLACK);
+                setForeground(Color.WHITE);
+                setText("Go To Candy Corn");
+                setFont(new Font("TimesRoman", Font.PLAIN, 24));
+                this.isDouble = false;
+                break;
+            case CHOCOLATE:
+                setBackground(Color.BLACK);
+                setForeground(Color.WHITE);
+                setText("Go To Chocolate");
+                setFont(new Font("TimesRoman", Font.PLAIN, 24));
+                this.isDouble = false;
+                break;
         }
         if(isDouble){
             setText("Double");

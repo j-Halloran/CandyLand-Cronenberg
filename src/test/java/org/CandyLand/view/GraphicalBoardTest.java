@@ -13,6 +13,7 @@ import java.io.IOException;
 public class GraphicalBoardTest {
 
     GraphicalBoard board;
+    private static final int FIRST_SPECIAL_SPACE = 12;
 
     @Before
     public void preactions() {
@@ -85,6 +86,14 @@ public class GraphicalBoardTest {
         }
     }
 
+    @Test
+    public void specialImageTest(){
+        GamePathSpace[] path = board.getPath();
+        TokenSpace[] spaces = path[FIRST_SPECIAL_SPACE].getTokenSpaces();
+        for(TokenSpace space:spaces){
+            assertNotNull(space.getIcon());
+        }
+    }
         /*
     *US: Board Colors
     *

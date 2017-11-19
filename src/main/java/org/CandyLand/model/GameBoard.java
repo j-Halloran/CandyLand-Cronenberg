@@ -5,6 +5,10 @@ import org.CandyLand.CardType;
 import org.CandyLand.IllegalNumberOfPlayersException;
 import org.CandyLand.IllegalPlayerNumberException;
 
+import javax.smartcardio.Card;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class GameBoard implements java.io.Serializable {
 
     public static final int NUMBER_OF_SPACES = 71;
@@ -14,6 +18,9 @@ public class GameBoard implements java.io.Serializable {
                                                        SpaceType.BLUE,
                                                        SpaceType.GREEN,
                                                        SpaceType.ORANGE};
+    private static HashMap<CardType, Integer> specialLocations;
+    private static HashMap<Integer, SpaceType> specialSpaceTypes;
+
     public int numPlayers;
     private int[] playerPostions;
 
@@ -21,6 +28,7 @@ public class GameBoard implements java.io.Serializable {
         if (numPlayers < 2 || numPlayers > 4) {
             throw new IllegalNumberOfPlayersException();
         }
+        fillSpecialLocations();
         initializeBoard();
         this.numPlayers = numPlayers;
         playerPostions = new int[numPlayers];
@@ -31,10 +39,34 @@ public class GameBoard implements java.io.Serializable {
         spaceTypes[NUMBER_OF_SPACES - 1] = SpaceType.GRANDMAS;
 
         int currentSpace = 1;
+        int specialSpacesAdded = 0;
+        ArrayList<Integer> specialSpaces = new ArrayList<>(specialLocations.values());
         while (currentSpace < NUMBER_OF_SPACES - 1) {
-            spaceTypes[currentSpace] = COLORED_SPACES[(currentSpace - 1) % COLORED_SPACES.length];
+            //Additional terrible code to add special spaces
+            if(specialSpaces.contains(currentSpace)){
+                spaceTypes[currentSpace] = specialSpaceTypes.get(currentSpace);
+                specialSpacesAdded++;
+            }
+            else{
+                spaceTypes[currentSpace] = COLORED_SPACES[(currentSpace - (1+specialSpacesAdded)) % COLORED_SPACES.length];
+            }
             currentSpace++;
         }
+    }
+
+    private void fillSpecialLocations() {
+        specialLocations = new HashMap<>();
+        specialSpaceTypes = new HashMap<>();
+        specialLocations.put(CardType.ICE_CREAM, 12);
+        specialSpaceTypes.put(12,SpaceType.ICE_CREAM);
+        specialLocations.put(CardType.LICORICE, 24);
+        specialSpaceTypes.put(24,SpaceType.LICORICE);
+        specialLocations.put(CardType.CANDY_CORN, 36);
+        specialSpaceTypes.put(36,SpaceType.CANDY_CORN);
+        specialLocations.put(CardType.CAKE, 48);
+        specialSpaceTypes.put(48,SpaceType.CAKE);
+        specialLocations.put(CardType.CHOCOLATE, 60);
+        specialSpaceTypes.put(60,SpaceType.CHOCOLATE);
     }
 
     public void movePlayer(int playerNum, CardType card) {
@@ -57,6 +89,12 @@ public class GameBoard implements java.io.Serializable {
             case SINGLE_ORANGE:
                 movePlayerToNextColoredSpace(playerNum, card);
                 break;
+            case CAKE:
+            case LICORICE:
+            case CANDY_CORN:
+            case CHOCOLATE:
+            case ICE_CREAM:
+                movePlayerToSpecialSpace(playerNum, card);
         }
     }
 
@@ -81,6 +119,16 @@ public class GameBoard implements java.io.Serializable {
             || (space == SpaceType.GREEN && (card == CardType.SINGLE_GREEN || card == CardType.DOUBLE_GREEN))
             || (space == SpaceType.ORANGE && (card == CardType.SINGLE_ORANGE || card == CardType.DOUBLE_ORANGE))
         );
+    }
+
+    private void movePlayerToSpecialSpace(int playerNum, CardType card){
+        if (playerNum < 0 || playerNum >= numPlayers) {
+            throw new IllegalPlayerNumberException();
+        }
+        if (playerPostions[playerNum] >= NUMBER_OF_SPACES - 1) {
+            return;
+        }
+        playerPostions[playerNum] = specialLocations.get(card);
     }
 
     public int[] getPlayerPositions() {

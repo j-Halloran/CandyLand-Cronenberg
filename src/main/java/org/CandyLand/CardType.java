@@ -14,5 +14,10 @@ public enum CardType {
     SKIP_TURN,
     UPSIDEDOWN,
     EMPTY_DISCARD,
-    EMPTY_DRAW
+    EMPTY_DRAW,
+    ICE_CREAM,
+    LICORICE,
+    CANDY_CORN,
+    CAKE,
+    CHOCOLATE
 }

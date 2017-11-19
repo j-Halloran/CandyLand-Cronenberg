@@ -7,5 +7,10 @@ public enum SpaceType {
     GREEN,
     ORANGE,
     START,
-    GRANDMAS
+    GRANDMAS,
+    ICE_CREAM,
+    LICORICE,
+    CANDY_CORN,
+    CAKE,
+    CHOCOLATE
 }

@@ -93,6 +93,21 @@ public class GraphicalBoard extends JPanel {
             case GRANDMAS:
                 space = new GamePathSpace(Color.WHITE, "rainbowSpaceBG");
                 break;
+            case ICE_CREAM:
+                space = new GamePathSpace(Color.WHITE, "iceCreamBG");
+                break;
+            case LICORICE:
+                space = new GamePathSpace(Color.WHITE, "licoriceBG");
+                break;
+            case CANDY_CORN:
+                space = new GamePathSpace(Color.WHITE, "candyCornBG");
+                break;
+            case CAKE:
+                space = new GamePathSpace(Color.WHITE, "cakeBG");
+                break;
+            case CHOCOLATE:
+                space = new GamePathSpace(Color.WHITE, "chocolateBG");
+                break;
         }
         return space;
     }
