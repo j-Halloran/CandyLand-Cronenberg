@@ -67,6 +67,12 @@ public class CardDeck implements java.io.Serializable {
         for (int i = 0; i < NUM_SKIP_TURN_CARDS; i++){
             generatedSpecialCards.add(CardType.SKIP_TURN);
         }
+        //Add individual Special cards
+        generatedSpecialCards.add(CardType.ICE_CREAM);
+        generatedSpecialCards.add(CardType.LICORICE);
+        generatedSpecialCards.add(CardType.CAKE);
+        generatedSpecialCards.add(CardType.CANDY_CORN);
+        generatedSpecialCards.add(CardType.CHOCOLATE);
         return generatedSpecialCards;
     }
 

@@ -8,7 +8,7 @@ import org.CandyLand.CardType;
 
 public class CardDeckTest {
 
-    static final int NUMBER_OF_CARDS = 65;
+    static final int NUMBER_OF_CARDS = 70;
     static final int NUMBER_OF_SINGLES = 10;
     static final int NUMBER_OF_DOUBLES = 2;
     static final int NUMBER_OF_SKIP_TURN_CARDS = 5;
