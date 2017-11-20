@@ -7,6 +7,8 @@ import org.CandyLand.model.CardDeck;
 import org.CandyLand.model.GameBoard;
 import org.CandyLand.model.Timer;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -123,8 +125,16 @@ public class CandyLand {
 
                 if(!timer.isRunning()){
                     timer.start();
+                    Component[] c = mainFrame.cardPanel.getComponents();
+                    for (Component x: c) {
+                        x.setEnabled(true);
+                    }
                 }else {
                     timer.stop();
+                    Component[] c = mainFrame.cardPanel.getComponents();
+                    for (Component x: c) {
+                        x.setEnabled(false);
+                    }
                 }
             } catch (Exception e1) {
                 e1.printStackTrace();
