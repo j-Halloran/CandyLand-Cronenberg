@@ -7,6 +7,8 @@ import org.CandyLand.model.CardDeck;
 import org.CandyLand.model.GameBoard;
 import org.CandyLand.model.Timer;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -85,12 +87,19 @@ public class CandyLand {
         deck.shuffleDeck();
         mainFrame.cardPanel.shuffleDeck();
     }
+    static Thread timerUpdateThread;
 
     private static void spawnTimerUpdateThread() {
-        Thread timerUpdateThread = new Thread() {
+
+
+
+         timerUpdateThread = new Thread() {
             public void run() {
                 while (true) {
                     mainFrame.timePanel.setTime(timer.getSeconds());
+
+                    mainFrame.timePanel.getTimeButton().addActionListener(new TimerButtonListener());
+
                     try {
                         Thread.sleep(1000); // snooze for a second
                     }
@@ -101,7 +110,28 @@ public class CandyLand {
             }
         };
         timerUpdateThread.start();
+
+
     }
+
+
+    static class TimerButtonListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+
+                if(!timer.isRunning()){
+                    timer.start();
+                }else {
+                    timer.stop();
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+
 
     public static boolean saveGame(String fileName) {
         boolean success;
