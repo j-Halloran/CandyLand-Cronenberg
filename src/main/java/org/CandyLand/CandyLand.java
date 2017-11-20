@@ -52,6 +52,7 @@ public class CandyLand {
     }
 
     public static void drawCard() {
+        timer.start();
         CardType card = deck.drawCard();
         board.movePlayer(playerNum, card);
         mainFrame.graphicalBoard.setTokenLocations(board.getPlayerPositions());
@@ -86,6 +87,7 @@ public class CandyLand {
     }
 
     public static void shuffleDeck() {
+        timer.start();
         deck.shuffleDeck();
         mainFrame.cardPanel.shuffleDeck();
     }
@@ -103,7 +105,7 @@ public class CandyLand {
                     mainFrame.timePanel.getTimeButton().addActionListener(new TimerButtonListener());
 
                     try {
-                        Thread.sleep(1000); // snooze for a second
+                        Thread.sleep(500); // snooze for a second
                     }
                     catch (InterruptedException e) {
                         // do nothing
@@ -125,16 +127,8 @@ public class CandyLand {
 
                 if(!timer.isRunning()){
                     timer.start();
-                    Component[] c = mainFrame.cardPanel.getComponents();
-                    for (Component x: c) {
-                        x.setEnabled(true);
-                    }
                 }else {
                     timer.stop();
-                    Component[] c = mainFrame.cardPanel.getComponents();
-                    for (Component x: c) {
-                        x.setEnabled(false);
-                    }
                 }
             } catch (Exception e1) {
                 e1.printStackTrace();
