@@ -1,6 +1,8 @@
 package org.CandyLand.view;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class TimePanel extends JPanel {
@@ -21,6 +23,10 @@ public class TimePanel extends JPanel {
         timeButton.setText(time);
     }
 
+    public JButton getTimeButton(){
+        return timeButton;
+    }
+
     public void enable() {
         timeButton.setForeground(ACTIVE_COLOR);
     }
@@ -28,4 +34,13 @@ public class TimePanel extends JPanel {
     public void disable() {
         timeButton.setForeground(INACTIVE_COLOR);
     }
+
+//    private class TimerButtonListener implements ActionListener{
+//
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//
+//        }
+//    }
+
 }
