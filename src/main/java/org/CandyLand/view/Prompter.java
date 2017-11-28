@@ -7,9 +7,19 @@ import java.io.File;
 
 public class Prompter {
 
+    public static int promptGameMode(){
+        Object[] gameModes = {"Classic", "Strategic"};
+        int gameModeOption = JOptionPane.showOptionDialog(new JFrame(),
+                "Please select desired game mode",
+                "Select Game Mode", 0, JOptionPane.YES_NO_CANCEL_OPTION,
+                null, gameModes, "PHP");
+        return gameModeOption;
+    }
+
     public static int promptNumOfPlayers(){
         Object[] options = {"2","3","4"};
-        String userNumberPlayersResponse = (String) JOptionPane.showInputDialog(new JFrame(), "How Many Players (2-4): ","Enter Players",JOptionPane.YES_NO_CANCEL_OPTION,null,options,"2");
+        String userNumberPlayersResponse = (String) JOptionPane.showInputDialog(new JFrame(), "How Many Players (2-4): ",
+                "Enter Players",JOptionPane.YES_NO_CANCEL_OPTION,null,options,"2");
         if(userNumberPlayersResponse==null){
             System.exit(0);
         }
