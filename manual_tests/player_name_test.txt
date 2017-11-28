@@ -1,0 +1,13 @@
+TEST 1
+1. Start a 4 player game
+2. Enter the names 'snap', 'crackle', 'pop', and 'Laboon'
+3. Verify that the names are displayed on the stats panel
+
+TEST 2
+1. Start a 3 player game
+2. Delete the default name and attempt to continue without a name
+3. verify that you cannot continue without entering a name
+
+TEST 3
+1. Start a 2 player game
+2. Verify that the default names 'Player 1' and 'Player 2' are prefilled
