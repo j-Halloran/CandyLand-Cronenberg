@@ -1,0 +1,15 @@
+TEST 1
+1. start a game
+2. draw 3 cards
+3. save the game
+4. load the game, verify that the file is not corrupt
+
+TEST 2
+1. start a game A
+2. draw 3 cards
+3. save the game A
+4. start another game B
+5. draw 3 cards
+6. save the game B
+7. switch the save files, but not the hash files
+8. attempt to load each game, verify that you are notified that the file was corrupt and that the game does not load.
