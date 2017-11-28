@@ -46,7 +46,7 @@ public class MainFrame extends JComponent {
 
         graphicalBoard = new GraphicalBoard(board);
         cardPanel = new CardPanel();
-        stats = new StatusBarPanel(board.getNumPlayers());
+        stats = new StatusBarPanel(board.getPlayerNames());
         timePanel = new TimePanel();
         SaveButton saveButton = new SaveButton();
 

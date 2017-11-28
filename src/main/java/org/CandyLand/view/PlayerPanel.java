@@ -9,12 +9,12 @@ public class PlayerPanel extends JPanel {
     private static final Color INACTIVE_BACKGROUND = Color.GRAY;
     private static boolean isActive;
 
-    public PlayerPanel(int playerNumber){
+    public PlayerPanel(String playerName, boolean active){
         //leave a space for finish
-        JLabel playerNameLabel = new JLabel("Player: "+(playerNumber+1),0);
+        JLabel playerNameLabel = new JLabel(playerName, 0);
         this.setLayout(new BorderLayout());
         this.add(playerNameLabel);
-        if(playerNumber == 0){
+        if(active){
             this.setBackground(ACTIVE_BACKGROUND);
             this.isActive = true;
         }
