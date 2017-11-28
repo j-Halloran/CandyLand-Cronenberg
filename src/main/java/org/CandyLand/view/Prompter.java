@@ -82,6 +82,13 @@ public class Prompter {
         }
     }
 
+    public static void notifyCorruptFile() {
+        JOptionPane.showMessageDialog(null,
+                                      "GAME FILE CORRUPT",
+                                      "Warning",
+                                       JOptionPane.WARNING_MESSAGE);
+    }
+
     public enum NewGameOption {
         NEWGAME,
         LOADGAME

@@ -16,6 +16,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.io.FileNotFoundException;
+import java.security.MessageDigest;
+import java.security.DigestInputStream;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 public class CandyLand {
 
@@ -24,6 +30,8 @@ public class CandyLand {
     private static MainFrame mainFrame;
     private static Timer timer = new Timer();
     private static CardDeck deck = new CardDeck();
+    private static final String HASH_EXTENSION = ".hash";
+    private static final String SALT = "MSG";
 
     public static void main(String[] args) {
         promptNewGame();
@@ -47,7 +55,9 @@ public class CandyLand {
             if (fileName == null) {
                 System.exit(0);
             }
-            loadGame(fileName);
+            if (!loadGame(fileName)) {
+                promptNewGame();
+            }
         }
     }
 
@@ -155,7 +165,63 @@ public class CandyLand {
             success = false;
             e.printStackTrace();
         }
+        success &= saveFileHash(fileName);
         return success;
+    }
+
+    public static boolean saveFileHash(String filename) {
+        byte[] hash = getFileHash(filename);
+        try (FileOutputStream hashOut = new FileOutputStream(filename + HASH_EXTENSION)) {
+            hashOut.write(hash);
+        }
+        catch (IOException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public static byte[] getFileHash(String filename) {
+        MessageDigest sha256;
+        try {
+            sha256 = MessageDigest.getInstance("SHA-256");
+        }
+        catch (NoSuchAlgorithmException e) {
+            System.err.println("algorithm not supported");
+            return null;
+        }
+        try (FileInputStream fileIn = new FileInputStream(filename)) {
+            DigestInputStream sha256In = new DigestInputStream(fileIn, sha256);
+            while (sha256In.available() > 0)
+            {
+                sha256In.read();
+            }
+        }
+        catch (IOException e) {
+            return null;
+        }
+        try {
+            sha256.update(SALT.getBytes("UTF-8"));
+        }
+        catch (UnsupportedEncodingException e) {
+            System.err.println("encoding not supported");
+            return null;
+        }
+        return sha256.digest();
+    }
+
+    public static boolean checkFileHash(String filename) {
+        byte[] expectedHash = getFileHash(filename);
+        if (expectedHash == null) {
+            return false;
+        }
+        byte[] hashGot = new byte[expectedHash.length];
+        try (FileInputStream hashIn = new FileInputStream(filename + HASH_EXTENSION)) {
+            hashIn.read(hashGot);
+        }
+        catch (IOException e) {
+            return false;
+        }
+        return Arrays.equals(expectedHash, hashGot);
     }
 
     public static boolean loadGame(String fileName) {
@@ -169,6 +235,11 @@ public class CandyLand {
         } catch (IOException | ClassNotFoundException e) {
             success = false;
             e.printStackTrace();
+        }
+        boolean corrupt = !checkFileHash(fileName);
+        success &= !corrupt;
+        if (corrupt) {
+            Prompter.notifyCorruptFile();
         }
         return success;
     }
