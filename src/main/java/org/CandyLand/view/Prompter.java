@@ -7,13 +7,24 @@ import java.io.File;
 
 public class Prompter {
 
-    public static int promptGameMode(){
-        Object[] gameModes = {"Classic", "Strategic"};
-        int gameModeOption = JOptionPane.showOptionDialog(new JFrame(),
-                "Please select desired game mode",
-                "Select Game Mode", 0, JOptionPane.YES_NO_CANCEL_OPTION,
-                null, gameModes, "PHP");
-        return gameModeOption;
+    public static GameModeOption promptGameMode(){
+        Object[] options = {"Classic", "Strategic"};
+        int option = JOptionPane.showOptionDialog(
+                null,
+                "Please select a game mode",
+                "Select game mode",
+                0,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                null
+        );
+        if (option == JOptionPane.YES_OPTION) {
+            return GameModeOption.CLASSIC;
+        }
+        else {
+            return GameModeOption.STRATEGIC;
+        }
     }
 
     public static int promptNumOfPlayers(){
@@ -101,5 +112,10 @@ public class Prompter {
         REMATCH,
         NEWGAME,
         EXIT
+    }
+
+    public enum GameModeOption {
+        CLASSIC,
+        STRATEGIC,
     }
 }
