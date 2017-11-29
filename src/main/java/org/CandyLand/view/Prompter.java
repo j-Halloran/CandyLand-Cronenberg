@@ -88,6 +88,19 @@ public class Prompter {
                                       "Warning",
                                        JOptionPane.WARNING_MESSAGE);
     }
+  
+  public static String[] promptPlayerNames(int numPlayers) {
+       if (numPlayers < 1)  {
+           return null;
+       }
+       String[] names = new String[numPlayers];
+       for (int i = 0; i < numPlayers; i++) {
+           while (names[i] == null || names[i].length() == 0){
+               names[i] = JOptionPane.showInputDialog("Enter player " + (i + 1) + " name", "Player " + (i + 1));
+           }
+       }
+       return names;
+    }
 
     public enum NewGameOption {
         NEWGAME,

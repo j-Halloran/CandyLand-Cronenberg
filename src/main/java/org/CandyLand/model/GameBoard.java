@@ -4,6 +4,7 @@ import org.CandyLand.SpaceType;
 import org.CandyLand.CardType;
 import org.CandyLand.IllegalNumberOfPlayersException;
 import org.CandyLand.IllegalPlayerNumberException;
+import org.CandyLand.NameCountPlayerCountMismatchException;
 
 import javax.smartcardio.Card;
 import java.util.ArrayList;
@@ -23,14 +24,19 @@ public class GameBoard implements java.io.Serializable {
 
     public int numPlayers;
     private int[] playerPostions;
+    private String[] playerNames;
 
-    public GameBoard(int numPlayers) {
+    public GameBoard(int numPlayers, String[] playerNames) {
         if (numPlayers < 2 || numPlayers > 4) {
             throw new IllegalNumberOfPlayersException();
+        }
+        if (numPlayers != playerNames.length) {
+            throw new NameCountPlayerCountMismatchException();
         }
         fillSpecialLocations();
         initializeBoard();
         this.numPlayers = numPlayers;
+        this.playerNames = playerNames;
         playerPostions = new int[numPlayers];
     }
 
@@ -157,5 +163,16 @@ public class GameBoard implements java.io.Serializable {
         for (int i = 0; i < playerPostions.length; i++) {
             playerPostions[i] = 0;
         }
+    }
+
+    public String getPlayerName(int playerNum) {
+        if (playerNum < 0 || playerNum > playerNames.length) {
+            return null;
+        }
+        return playerNames[playerNum];
+    }
+
+    public String[] getPlayerNames() {
+        return playerNames;
     }
 }

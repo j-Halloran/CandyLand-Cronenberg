@@ -46,9 +46,10 @@ public class CandyLand {
         Prompter.NewGameOption option = Prompter.promptNewGame();
         if (option == Prompter.NewGameOption.NEWGAME) {
             int numPlayers = Prompter.promptNumOfPlayers();
+            String[] playerNames = Prompter.promptPlayerNames(numPlayers);
             timer = new Timer();
             deck = new CardDeck();
-            board = new GameBoard(numPlayers);
+            board = new GameBoard(numPlayers, playerNames);
         }
         else {
             String fileName = Prompter.getFileOpenLocation();
