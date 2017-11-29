@@ -31,6 +31,7 @@ public class CandyLand {
     private static MainFrame mainFrame;
     private static Timer timer = new Timer();
     private static CardDeck deck = new CardDeck();
+    private static String[] playerNames;
     private static final String HASH_EXTENSION = ".hash";
     private static final String SALT = "MSG";
 
@@ -48,7 +49,7 @@ public class CandyLand {
         if (option == Prompter.NewGameOption.NEWGAME) {
             promptGameMode();
             int numPlayers = Prompter.promptNumOfPlayers();
-            String[] playerNames = Prompter.promptPlayerNames(numPlayers);
+            playerNames = Prompter.promptPlayerNames(numPlayers);
             timer = new Timer();
             deck = new CardDeck();
             board = new GameBoard(numPlayers, playerNames);
@@ -79,7 +80,7 @@ public class CandyLand {
         mainFrame.graphicalBoard.setTokenLocations(board.getPlayerPositions());
         mainFrame.cardPanel.setCurrentCard(new GraphicalCard(card));
         if (board.isGameOver()) {
-            Prompter.ContinueOption option = Prompter.promptRematch(playerNum + 1);
+            Prompter.ContinueOption option = Prompter.promptRematch(playerNames[playerNum]);
             timer.reset();
             switch (option) {
                 case REMATCH:

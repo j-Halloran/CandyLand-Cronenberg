@@ -37,10 +37,10 @@ public class Prompter {
         return Integer.parseInt(userNumberPlayersResponse);
     }
 
-    public static ContinueOption promptRematch(int winner) {
+    public static ContinueOption promptRematch(String winner) {
         Object[] endOptions = {"Rematch", "New Game", "Quit"};
         int gameEndOption = JOptionPane.showOptionDialog(new JFrame(),
-                "Player " + winner + " Wins!!!",
+                winner + " Wins!!!",
                 "End of Game Options", 0, JOptionPane.YES_NO_CANCEL_OPTION,
                 null, endOptions, "PHP");
 
