@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
  */
 public class StatusBarPanelTest {
 
-
+    private String[] tempNames = {"Test1","Test2","Test3","Bob"};
     /*
     * US: Turn Indicator test
     *
@@ -21,13 +21,13 @@ public class StatusBarPanelTest {
     */
     @Test
     public void setNumberOfPlayers(){
-        StatusBarPanel sb = new StatusBarPanel(4);
+        StatusBarPanel sb = new StatusBarPanel(tempNames);
         assertEquals(sb.getNumberOfPlayers(), 4);
     }
 
     @Test
     public void cycleTurn(){
-        StatusBarPanel sb = new StatusBarPanel(4);
+        StatusBarPanel sb = new StatusBarPanel(tempNames);
 
         try {
             assertEquals(sb.getCurrentTurn(1), 0);

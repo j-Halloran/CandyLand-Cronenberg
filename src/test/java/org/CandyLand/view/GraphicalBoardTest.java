@@ -17,7 +17,8 @@ public class GraphicalBoardTest {
 
     @Before
     public void preactions() {
-        this.board = new GraphicalBoard(new GameBoard(2));
+        String[] tempNames = {"Test", "Dad"};
+        this.board = new GraphicalBoard(new GameBoard(2, tempNames));
     }
 
 // TODO: THE FOLLOWING TESTS NEED TO BE REFACTORED INTO THE GAMEBOARD CLASS OF THE MODEL
