@@ -33,3 +33,14 @@ TEST 4
 5. Load the game.
 6. Verify that everything noted in 3 is the same.
 7. Play the game to completion.
+
+TEST 5
+1. Select 'New Game' at 1st prompt
+2. Select 'Classic' mode
+3. Select Number of players
+4. Complete game
+    a. select new game (repeat 1-4)
+5. Exit game
+6. Repeat step 1
+7. Select 'Strategic' mode
+* No 'Classic Mode' functionality at this time

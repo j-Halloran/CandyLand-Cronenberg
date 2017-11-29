@@ -26,6 +26,7 @@ import java.util.Arrays;
 public class CandyLand {
 
     private static int playerNum = 0;
+    private static int gameMode = 0;
     private static GameBoard board;
     private static MainFrame mainFrame;
     private static Timer timer = new Timer();
@@ -45,6 +46,7 @@ public class CandyLand {
     public static void promptNewGame() {
         Prompter.NewGameOption option = Prompter.promptNewGame();
         if (option == Prompter.NewGameOption.NEWGAME) {
+            promptGameMode();
             int numPlayers = Prompter.promptNumOfPlayers();
             String[] playerNames = Prompter.promptPlayerNames(numPlayers);
             timer = new Timer();
@@ -60,6 +62,14 @@ public class CandyLand {
                 promptNewGame();
             }
         }
+    }
+
+    public static void promptGameMode(){
+        Prompter.GameModeOption option = Prompter.promptGameMode();
+        if (option == Prompter.GameModeOption.STRATEGIC){
+            // set strategic mode
+        }
+        // else continue with Classic (Default) mode
     }
 
     public static void drawCard() {

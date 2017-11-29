@@ -7,9 +7,30 @@ import java.io.File;
 
 public class Prompter {
 
+    public static GameModeOption promptGameMode(){
+        Object[] options = {"Classic", "Strategic"};
+        int option = JOptionPane.showOptionDialog(
+                null,
+                "Please select a game mode",
+                "Select game mode",
+                0,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                null
+        );
+        if (option == JOptionPane.YES_OPTION) {
+            return GameModeOption.CLASSIC;
+        }
+        else {
+            return GameModeOption.STRATEGIC;
+        }
+    }
+
     public static int promptNumOfPlayers(){
         Object[] options = {"2","3","4"};
-        String userNumberPlayersResponse = (String) JOptionPane.showInputDialog(new JFrame(), "How Many Players (2-4): ","Enter Players",JOptionPane.YES_NO_CANCEL_OPTION,null,options,"2");
+        String userNumberPlayersResponse = (String) JOptionPane.showInputDialog(new JFrame(), "How Many Players (2-4): ",
+                "Enter Players",JOptionPane.YES_NO_CANCEL_OPTION,null,options,"2");
         if(userNumberPlayersResponse==null){
             System.exit(0);
         }
@@ -111,5 +132,10 @@ public class Prompter {
         REMATCH,
         NEWGAME,
         EXIT
+    }
+
+    public enum GameModeOption {
+        CLASSIC,
+        STRATEGIC,
     }
 }
