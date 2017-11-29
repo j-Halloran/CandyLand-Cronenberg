@@ -74,12 +74,19 @@ public class CandyLand {
 
     public static void drawCard() {
         timer.start();
-        CardType card = deck.drawCard();
+        CardType card;
+        if(!board.getPlayerName(playerNum).equals("Dad")){
+           card = deck.drawCard();
+        }
+        //Dad mode card draw
+        else{
+            card = deck.drawDadCard(board, playerNum);
+        }
         board.movePlayer(playerNum, card);
         mainFrame.graphicalBoard.setTokenLocations(board.getPlayerPositions());
         mainFrame.cardPanel.setCurrentCard(new GraphicalCard(card));
         if (board.isGameOver()) {
-            Prompter.ContinueOption option = Prompter.promptRematch(playerNum + 1);
+            Prompter.ContinueOption option = Prompter.promptRematch(board.getPlayerName(playerNum));
             timer.reset();
             switch (option) {
                 case REMATCH:

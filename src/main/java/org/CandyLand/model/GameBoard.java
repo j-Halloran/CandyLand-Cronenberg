@@ -175,4 +175,13 @@ public class GameBoard implements java.io.Serializable {
     public String[] getPlayerNames() {
         return playerNames;
     }
+
+    public int getPotentialLoc(CardType cardToTest, int playerNum){
+        int resetPos = playerPostions[playerNum];
+        movePlayer(playerNum, cardToTest);
+        int potentialLoc = playerPostions[playerNum];
+        //need to undo the move
+        playerPostions[playerNum] = resetPos;
+        return potentialLoc;
+    }
 }
