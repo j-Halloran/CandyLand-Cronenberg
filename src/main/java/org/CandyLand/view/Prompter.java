@@ -82,7 +82,14 @@ public class Prompter {
         }
     }
 
-    public static String[] promptPlayerNames(int numPlayers) {
+    public static void notifyCorruptFile() {
+        JOptionPane.showMessageDialog(null,
+                                      "GAME FILE CORRUPT",
+                                      "Warning",
+                                       JOptionPane.WARNING_MESSAGE);
+    }
+  
+  public static String[] promptPlayerNames(int numPlayers) {
        if (numPlayers < 1)  {
            return null;
        }
