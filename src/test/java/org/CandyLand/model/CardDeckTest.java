@@ -6,6 +6,8 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.*;
 import org.CandyLand.CardType;
 
+import javax.smartcardio.Card;
+
 public class CardDeckTest {
 
     static final int NUMBER_OF_CARDS = 70;
@@ -14,10 +16,13 @@ public class CardDeckTest {
     static final int NUMBER_OF_SKIP_TURN_CARDS = 5;
     static final int MAX_CARDS_EVER_EXPECTED_TO_BE_DRAWN = 1000;
     CardDeck deck;
+    GameBoard board;
 
     @Before
     public void createDeck() {
         deck = new CardDeck();
+        String[] tempNames = {"Dad","test"};
+        board = new GameBoard(2, tempNames);
     }
 
     @Test
@@ -108,5 +113,20 @@ public class CardDeckTest {
         assertTrue(deck.isDeckEmpty());
         deck.drawCard();
         assertFalse(deck.isDeckEmpty());
+    }
+
+    @Test
+    public void dadCardTest1(){
+        CardType card = deck.drawDadCard(board,0);
+        assertTrue(card.equals(CardType.SKIP_TURN));
+    }
+
+    @Test
+    public void dadCardTest2(){
+        CardType card = null;
+        for(int i=0;i<NUMBER_OF_CARDS;i++){
+            card = deck.drawDadCard(board,0);
+        }
+        assertTrue(card.equals(CardType.CHOCOLATE));
     }
 }

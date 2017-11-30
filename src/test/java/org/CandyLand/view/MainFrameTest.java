@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.CandyLand.model.GameBoard;
 
 public class MainFrameTest {
-
+    private String[] tempNames = {"Mom", "Kid"};
 //
 //    @Test
 //    public void rematchTest() {
@@ -46,13 +46,13 @@ public class MainFrameTest {
     */
     @Test
     public void windowExists(){
-        MainFrame mainFrame = new MainFrame(new GameBoard(2));
+        MainFrame mainFrame = new MainFrame(new GameBoard(2,tempNames));
         assertEquals(mainFrame.getFrame().isVisible(), true);
     }
 
     @Test
     public void cardExists(){
-        MainFrame mainFrame = new MainFrame(new GameBoard(2));
+        MainFrame mainFrame = new MainFrame(new GameBoard(2,tempNames));
         assertEquals(mainFrame.getPanel().isVisible(), true);
     }
 

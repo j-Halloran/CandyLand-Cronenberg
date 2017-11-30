@@ -92,6 +92,30 @@ public class CardDeck implements java.io.Serializable {
         return lastDrawn;
     }
 
+    /**
+     *  Iterates over all of the cards in the deck and returns the first occurrence of the card
+     *  type that leaves dad at the lowest space position. Would just iterate over the types of
+     *  cards, but they may not be present in the deck
+     *
+     * @param board - the graphical board that cards will be tested against to find the worst possible outcome for dad
+     * @return A card of the CardType that causes Dad to have the lowest possible next position
+     */
+    public CardType drawDadCard(GameBoard board, int playerNum){
+        if(currentDeck.isEmpty()){
+            shuffleDeck();
+        }
+        int lowPosCardLoc = 0;
+        int lowPos = board.getPotentialLoc(currentDeck.get(0), playerNum);
+        for(int i=0;i<currentDeck.size();i++){
+            int tempPos = board.getPotentialLoc(currentDeck.get(i), playerNum);
+            if(lowPos > tempPos){
+                lowPosCardLoc = i;
+                lowPos = tempPos;
+            }
+        }
+        return currentDeck.remove(lowPosCardLoc);
+    }
+
     public boolean isDeckEmpty(){
         if(currentDeck == null){
             return true;
