@@ -73,6 +73,27 @@ public class Prompter {
         }
     }
 
+    public static String useBoomerangOption(String[] options){
+        String userNumberPlayersResponse = (String) JOptionPane.showInputDialog(new JFrame(), "Who to boomerang? ",
+                "Choose Boomerang",JOptionPane.DEFAULT_OPTION,null,options,"1");
+        if(userNumberPlayersResponse==null){
+            System.exit(0);
+        }
+        return (userNumberPlayersResponse);
+    }
+
+    public static void boomerangTargetAlert(){
+        JOptionPane.showMessageDialog(null, "Invalid Boomerang Target.");
+    }
+
+    public static void noBoomerangsRemainingAlert(){
+        JOptionPane.showMessageDialog(null, "Sorry, no boomerangs available.");
+    }
+
+    public static void boomerangConfirmation(String target){
+        JOptionPane.showMessageDialog(null, "Your boomerang is targeted at " + target +". Draw a card to send them flying." );
+    }
+
     public static String getFileOpenLocation() {
         JFileChooser picker = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("World of Sweets games", "wos");

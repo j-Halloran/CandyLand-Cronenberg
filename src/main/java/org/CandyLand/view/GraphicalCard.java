@@ -17,7 +17,7 @@ public class GraphicalCard extends JButton {
             case UPSIDEDOWN:
                 setBackground(Color.WHITE);
                 setText(new String(Character.toChars(0x1f0a0)));
-                setFont(new Font("TimesRoman", Font.PLAIN, 256));
+                setFont(new Font("TimesRoman", Font.PLAIN, 128));
                 this.addActionListener(e -> {
                     StatusBarPanel.activateNextPlayer();
                     CandyLand.drawCard();
@@ -117,6 +117,16 @@ public class GraphicalCard extends JButton {
                 setText("Go To Chocolate");
                 setFont(new Font("TimesRoman", Font.PLAIN, 24));
                 this.isDouble = false;
+                break;
+            case BOOMERANG:
+                setBackground(Color.WHITE);
+                setForeground(Color.BLACK);
+                setText("USE BOOMERANG");
+                setFont(new Font("TimesRoman",Font.PLAIN,24));
+                this.isDouble = false;
+                this.addActionListener(e -> {
+                    CandyLand.useBoomerang();
+                });
                 break;
         }
         if(isDouble){
