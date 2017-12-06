@@ -6,6 +6,7 @@ import org.CandyLand.view.GraphicalCard;
 import org.CandyLand.model.CardDeck;
 import org.CandyLand.model.GameBoard;
 import org.CandyLand.model.Timer;
+import org.CandyLand.view.StatusBarPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +23,7 @@ import java.security.MessageDigest;
 import java.security.DigestInputStream;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class CandyLand {
 
@@ -33,6 +35,8 @@ public class CandyLand {
     private static CardDeck deck = new CardDeck();
     private static final String HASH_EXTENSION = ".hash";
     private static final String SALT = "MSG";
+    public static boolean AIplayers[];
+    private static HashMap<String, Boolean> ComputerPlayers;
 
     public static void main(String[] args) {
         promptNewGame();
@@ -40,8 +44,49 @@ public class CandyLand {
         mainFrame.graphicalBoard.setTokenLocations(board.getPlayerPositions());
         mainFrame.cardPanel.paintFromDeck(deck);
         timer.start();
+
+
+        if(AIplayers[mainFrame.stats.getCurrentPlayer()]){
+            StatusBarPanel.activateNextPlayer();
+            CandyLand.drawCard();
+        }
+
+
+        spawnAIPlayerThread();
         spawnTimerUpdateThread();
     }
+
+
+    static Thread AIPlayerThread;
+
+    private static void spawnAIPlayerThread() {
+
+
+
+        AIPlayerThread = new Thread() {
+            public void run() {
+                while (true) {
+
+                    if(AIplayers[mainFrame.stats.getCurrentPlayer()]){
+                        StatusBarPanel.activateNextPlayer();
+                        CandyLand.drawCard();
+                    }
+
+
+                    try {
+                        Thread.sleep(500); // snooze for a second
+                    }
+                    catch (InterruptedException e) {
+                        // do nothing
+                    }
+                }
+            }
+        };
+        AIPlayerThread.start();
+
+
+    }
+
 
     public static void promptNewGame() {
         Prompter.NewGameOption option = Prompter.promptNewGame();
@@ -49,6 +94,15 @@ public class CandyLand {
             promptGameMode();
             int numPlayers = Prompter.promptNumOfPlayers();
             String[] playerNames = Prompter.promptPlayerNames(numPlayers);
+
+            AIplayers = new boolean[numPlayers];
+            for (int i = 0; i < numPlayers; i++) {
+                if(Prompter.computerPlayer(playerNames[i])){
+                    AIplayers[i]= true;
+//                    ComputerPlayers.put(playerNames[i],true);
+                }
+            }
+
             timer = new Timer();
             deck = new CardDeck();
             board = new GameBoard(numPlayers, playerNames);

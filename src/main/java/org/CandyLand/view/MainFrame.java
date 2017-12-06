@@ -22,7 +22,7 @@ public class MainFrame extends JComponent {
     private BufferedImage myImage;
     public CardPanel cardPanel;
     public GraphicalBoard graphicalBoard;
-    private StatusBarPanel stats;
+    public StatusBarPanel stats;
     public TimePanel timePanel;
 
     public MainFrame(GameBoard board) {

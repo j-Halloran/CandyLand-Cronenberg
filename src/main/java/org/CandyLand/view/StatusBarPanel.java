@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class StatusBarPanel extends JPanel{
     private static final Color BACKGROUND_COLOR = Color.GRAY;
-    private static PlayerPanel[] players;
+    public static PlayerPanel[] players;
 
     public StatusBarPanel(String[] playerNames){
         int numPlayers = playerNames.length;

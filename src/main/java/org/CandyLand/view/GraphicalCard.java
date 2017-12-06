@@ -10,6 +10,14 @@ import org.CandyLand.CandyLand;
 public class GraphicalCard extends JButton {
     private boolean isDouble;
     private CardType cardType;
+//
+//    private boolean checkAIPlayer(boolean[] AIPlayers){
+//        if(AIPlayers[StatusBarPanel.getCurrentPlayer()]){
+//            return true;
+//        }else{
+//            return false;
+//        }
+//    }
 
     public GraphicalCard(CardType type) {
         setEnabled(false);
@@ -19,10 +27,16 @@ public class GraphicalCard extends JButton {
                 setText(new String(Character.toChars(0x1f0a0)));
                 setFont(new Font("TimesRoman", Font.PLAIN, 256));
                 this.addActionListener(e -> {
+
                     StatusBarPanel.activateNextPlayer();
                     CandyLand.drawCard();
                 });
                 this.isDouble = false;
+                //call method to check whether is ai player, someonwher ein this method
+//                if(checkAIPlayer(AIPlayers)){
+//                    StatusBarPanel.activateNextPlayer();
+//                    CandyLand.drawCard();
+//                }
                 break;
             case EMPTY_DISCARD:
                 setBackground(Color.WHITE);
