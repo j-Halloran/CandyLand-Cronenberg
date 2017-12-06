@@ -12,7 +12,7 @@ public class AIPlayerTest {
           Thread AIPlayerThread;
           boolean[] AIplayers = {false,true,false,true};
           String[] players = {"Mike1","Mike2","Mike3","Mike4"};
-          StatusBarPanel stat = new StatusBarPanel(players);
+          StatusBarPanel stat = new StatusBarPanel(players,false);
         AIPlayerThread = new Thread() {
             public void run() {
 
@@ -38,7 +38,7 @@ public class AIPlayerTest {
         Thread AIPlayerThread;
         boolean[] AIplayers = {true,true,true,true};
         String[] players = {"Mike1","Mike2","Mike3","Mike4"};
-        StatusBarPanel stat = new StatusBarPanel(players);
+        StatusBarPanel stat = new StatusBarPanel(players,false);
         AIPlayerThread = new Thread() {
             public void run() {
 
