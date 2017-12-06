@@ -19,5 +19,6 @@ public enum CardType {
     LICORICE,
     CANDY_CORN,
     CAKE,
-    CHOCOLATE
+    CHOCOLATE,
+    BOOMERANG
 }

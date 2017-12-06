@@ -21,13 +21,13 @@ public class StatusBarPanelTest {
     */
     @Test
     public void setNumberOfPlayers(){
-        StatusBarPanel sb = new StatusBarPanel(tempNames);
+        StatusBarPanel sb = new StatusBarPanel(tempNames,false);
         assertEquals(sb.getNumberOfPlayers(), 4);
     }
 
     @Test
     public void cycleTurn(){
-        StatusBarPanel sb = new StatusBarPanel(tempNames);
+        StatusBarPanel sb = new StatusBarPanel(tempNames,false);
 
         try {
             assertEquals(sb.getCurrentTurn(1), 0);
