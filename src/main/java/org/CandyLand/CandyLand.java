@@ -22,6 +22,7 @@ import java.security.DigestInputStream;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Random;
 
 public class CandyLand {
 
@@ -50,16 +51,25 @@ public class CandyLand {
     }
 
     public static void spawnAIPlayerThread() {
+        Random r = new Random();
         AIPlayerThread = new Thread() {
             public void run() {
                 while (true) {
 
                     if(AIplayers[mainFrame.getStats().getCurrentPlayer()]){
+
                         StatusBarPanel.activateNextPlayer();
+
+                        float chance = r.nextFloat();
+
+                        if (isStrategic && chance <= 0.25f) {
+                            useBoomerangAI();
+                        }
+
                         CandyLand.drawCard();
                     }
                     try {
-                        Thread.sleep(500); // snooze for HALF a second
+                        Thread.sleep(1000); // snooze for an ENTIRE second
                     }
                     catch (InterruptedException e) {
                         // do nothing
@@ -178,6 +188,22 @@ public class CandyLand {
         }
 
     }
+
+    public static void useBoomerangAI(){
+        Random r = new Random();
+        if(board.hasBoomerangs(playerNum) && isStrategic){
+            do {
+                boomerangTarget = r.nextInt(board.getNumPlayers());
+            }while(boomerangTarget != StatusBarPanel.getCurrentPlayer());
+
+            if(boomerangTarget==-1){
+                Prompter.boomerangTargetAlert();
+                return;
+            }
+            Prompter.boomerangConfirmationAI(board.getPlayerName(boomerangTarget));
+        }
+    }
+
 
     public static void shuffleDeck() {
         timer.start();

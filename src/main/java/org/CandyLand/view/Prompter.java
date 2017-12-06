@@ -112,6 +112,10 @@ public class Prompter {
         JOptionPane.showMessageDialog(null, "Your boomerang is targeted at " + target +". Draw a card to send them flying." );
     }
 
+    public static void boomerangConfirmationAI(String target){
+        JOptionPane.showMessageDialog(null, "Computer Player boomerang is targeted at " + target +". Computer Player will draw a card to send them flying." );
+    }
+
     public static String getFileOpenLocation() {
         JFileChooser picker = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("World of Sweets games", "wos");
