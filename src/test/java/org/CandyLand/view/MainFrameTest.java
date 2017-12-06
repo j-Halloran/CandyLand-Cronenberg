@@ -46,13 +46,13 @@ public class MainFrameTest {
     */
     @Test
     public void windowExists(){
-        MainFrame mainFrame = new MainFrame(new GameBoard(2,tempNames));
+        MainFrame mainFrame = new MainFrame(new GameBoard(2,tempNames,false));
         assertEquals(mainFrame.getFrame().isVisible(), true);
     }
 
     @Test
     public void cardExists(){
-        MainFrame mainFrame = new MainFrame(new GameBoard(2,tempNames));
+        MainFrame mainFrame = new MainFrame(new GameBoard(2,tempNames,false));
         assertEquals(mainFrame.getPanel().isVisible(), true);
     }
 

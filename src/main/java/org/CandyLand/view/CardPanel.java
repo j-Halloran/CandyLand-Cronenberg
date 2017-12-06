@@ -13,16 +13,34 @@ public class CardPanel extends JPanel {
     protected GraphicalCard drawPile =
             new GraphicalCard(CardType.UPSIDEDOWN);
     protected GraphicalCard discardPile = new GraphicalCard(CardType.EMPTY_DISCARD);
+    protected GraphicalCard boomerangButton = new GraphicalCard(CardType.BOOMERANG);
+    private static boolean isStrategic = false;
 
-    public CardPanel() {
-        this.setLayout(new GridLayout(2, 1));
-        this.setBackground(BACKGROUND_COLOR);
-        drawPile.setEnabled(true);
-        drawPile.setFocusPainted(false);
-        discardPile.setEnabled(false);
-        discardPile.setFocusPainted(false);
-        this.add(drawPile);
-        this.add(discardPile);
+    public CardPanel(boolean isStrategic) {
+        this.isStrategic = true;
+        if(!isStrategic){
+            this.setLayout(new GridLayout(2, 1));
+            this.setBackground(BACKGROUND_COLOR);
+            drawPile.setEnabled(true);
+            drawPile.setFocusPainted(false);
+            discardPile.setEnabled(false);
+            discardPile.setFocusPainted(false);
+            this.add(drawPile);
+            this.add(discardPile);
+        }
+        else{
+            this.setLayout(new GridLayout(3, 1));
+            this.setBackground(BACKGROUND_COLOR);
+            drawPile.setEnabled(true);
+            drawPile.setFocusPainted(false);
+            boomerangButton.setEnabled(true);
+            boomerangButton.setFocusPainted(false);
+            discardPile.setEnabled(false);
+            discardPile.setFocusPainted(false);
+            this.add(drawPile);
+            this.add(boomerangButton);
+            this.add(discardPile);
+        }
     }
 
     public void setDeckEmpty () {

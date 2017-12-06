@@ -22,7 +22,7 @@ public class CardDeckTest {
     public void createDeck() {
         deck = new CardDeck();
         String[] tempNames = {"Dad","test"};
-        board = new GameBoard(2, tempNames);
+        board = new GameBoard(2, tempNames,false);
     }
 
     @Test
