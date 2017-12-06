@@ -1,8 +1,6 @@
 package org.CandyLand;
 
-import org.CandyLand.view.MainFrame;
-import org.CandyLand.view.Prompter;
-import org.CandyLand.view.GraphicalCard;
+import org.CandyLand.view.*;
 import org.CandyLand.model.CardDeck;
 import org.CandyLand.model.GameBoard;
 import org.CandyLand.model.Timer;
@@ -37,7 +35,9 @@ public class CandyLand {
     private static final String SALT = "MSG";
     public static boolean AIplayers[];
     private static Thread AIPlayerThread;
-
+    private static boolean isStrategic = false;
+    private static int boomerangTarget = -1;
+    public static final int STARTING_BOOMERANGS = 3;
 
     public static void main(String[] args) {
         promptNewGame();
@@ -87,7 +87,7 @@ public class CandyLand {
 
             timer = new Timer();
             deck = new CardDeck();
-            board = new GameBoard(numPlayers, playerNames);
+            board = new GameBoard(numPlayers, playerNames, isStrategic);
         }
         else {
             String fileName = Prompter.getFileOpenLocation();
@@ -103,7 +103,10 @@ public class CandyLand {
     public static void promptGameMode(){
         Prompter.GameModeOption option = Prompter.promptGameMode();
         if (option == Prompter.GameModeOption.STRATEGIC){
-            // set strategic mode
+            isStrategic = true;
+        }
+        else{
+            isStrategic = false;
         }
         // else continue with Classic (Default) mode
     }
@@ -111,14 +114,14 @@ public class CandyLand {
     public static void drawCard() {
         timer.start();
         CardType card;
-        if(!board.getPlayerName(playerNum).equals("Dad")){
+        if(!board.getPlayerName(playerNum).equals("Dad") || boomerangTarget!=-1){
            card = deck.drawCard();
         }
         //Dad mode card draw
         else{
             card = deck.drawDadCard(board, playerNum);
         }
-        board.movePlayer(playerNum, card);
+        board.movePlayer(playerNum, card, boomerangTarget);
         mainFrame.graphicalBoard.setTokenLocations(board.getPlayerPositions());
         mainFrame.cardPanel.setCurrentCard(new GraphicalCard(card));
         if (board.isGameOver()) {
@@ -126,12 +129,14 @@ public class CandyLand {
             timer.reset();
             switch (option) {
                 case REMATCH:
+                    mainFrame.stats.resetBoomerangs();
                     board.resetPlayersToStart();
                     deck.shuffleDeck();
                     mainFrame.graphicalBoard.setTokenLocations(board.getPlayerPositions());
                     timer.start();
                     break;
                 case NEWGAME:
+                    mainFrame.stats.resetBoomerangs();
                     mainFrame.exit();
                     promptNewGame();
                     mainFrame = new MainFrame(board);
@@ -147,7 +152,31 @@ public class CandyLand {
         else if (deck.isDeckEmpty()) {
             mainFrame.cardPanel.setDeckEmpty();
         }
+        if(boomerangTarget != -1){
+            board.useBoomerang(playerNum);
+            StatusBarPanel.useBoomerang();
+        }
+        boomerangTarget = -1;
         playerNum = (playerNum + 1) % board.numPlayers;
+    }
+
+    public static void useBoomerang(){
+        if(board.hasBoomerangs(playerNum) && isStrategic){
+            String targetName = Prompter.useBoomerangOption(board.getOtherPlayerNames(playerNum));
+            if(targetName==null){
+                return;
+            }
+            boomerangTarget = board.getPlayerNumberByName(targetName);
+            if(boomerangTarget==-1){
+                Prompter.boomerangTargetAlert();
+                return;
+            }
+            Prompter.boomerangConfirmation(board.getPlayerName(boomerangTarget));
+        }
+        else{
+            Prompter.noBoomerangsRemainingAlert();
+        }
+
     }
 
     public static void shuffleDeck() {

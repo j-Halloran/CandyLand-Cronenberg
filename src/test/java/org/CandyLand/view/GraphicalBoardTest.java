@@ -18,7 +18,8 @@ public class GraphicalBoardTest {
     @Before
     public void preactions() {
         String[] tempNames = {"Test", "Dad"};
-        this.board = new GraphicalBoard(new GameBoard(2, tempNames));
+        GameBoard gameBoard = new GameBoard(2, tempNames, false);
+        this.board = new GraphicalBoard(gameBoard);
     }
 
 // TODO: THE FOLLOWING TESTS NEED TO BE REFACTORED INTO THE GAMEBOARD CLASS OF THE MODEL
@@ -114,5 +115,17 @@ public class GraphicalBoardTest {
 
     }
 
+    @Test
+    public void strategicMovementTest(){
+        String[] tempNames = {"Test", "Dad"};
+        GameBoard gameBoard = new GameBoard(2, tempNames, true);
+        GraphicalBoard board = new GraphicalBoard(gameBoard);
+
+        gameBoard.movePlayer(0, CardType.SINGLE_RED,-1);
+        assertEquals(gameBoard.getPlayerPositions()[0],1);
+
+        gameBoard.movePlayer(1, CardType.DOUBLE_RED, 0);
+        assertEquals(gameBoard.getPlayerPositions()[0],0);
+    }
 
 }

@@ -8,13 +8,13 @@ public class StatusBarPanel extends JPanel{
     private static final Color BACKGROUND_COLOR = Color.GRAY;
     private static PlayerPanel[] players;
 
-    public StatusBarPanel(String[] playerNames){
+    public StatusBarPanel(String[] playerNames, boolean isStrategic){
         int numPlayers = playerNames.length;
         this.setLayout(new GridLayout(1, numPlayers));
         this.setBackground(BACKGROUND_COLOR);
         players = new PlayerPanel[numPlayers];
         for(int i=0;i<numPlayers;i++){
-            players[i] = new PlayerPanel(playerNames[i], i == 0);
+            players[i] = new PlayerPanel(playerNames[i], i == 0, isStrategic);
             this.add(players[i]); //add a panel for each player (1st is auto-selected as active)
         }
     }
@@ -29,6 +29,14 @@ public class StatusBarPanel extends JPanel{
         }
     }
 
+    public static void useBoomerang(){
+        for(int i =0;i<players.length;i++){
+            if(players[i].isActive()){
+                players[(i+3)%4].useBoomerang(i);
+                break;
+            }
+        }
+    }
     public static int getNumberOfPlayers(){
         return players.length;
     }
@@ -56,4 +64,10 @@ public class StatusBarPanel extends JPanel{
         else return 1;
     }
 
+    public static void resetBoomerangs(){
+        int i =0;
+        for(PlayerPanel panel : players){
+            panel.resetBoomerangs(i++);
+        }
+    }
 }

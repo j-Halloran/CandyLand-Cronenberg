@@ -1,10 +1,6 @@
 package org.CandyLand.model;
 
-import org.CandyLand.SpaceType;
-import org.CandyLand.CardType;
-import org.CandyLand.IllegalNumberOfPlayersException;
-import org.CandyLand.IllegalPlayerNumberException;
-import org.CandyLand.NameCountPlayerCountMismatchException;
+import org.CandyLand.*;
 
 import javax.smartcardio.Card;
 import java.util.ArrayList;
@@ -25,8 +21,14 @@ public class GameBoard implements java.io.Serializable {
     public int numPlayers;
     private int[] playerPostions;
     private String[] playerNames;
+    private int[] numBoomerangs;
 
-    public GameBoard(int numPlayers, String[] playerNames) {
+    private static boolean isStrategic;
+    public static boolean isStrategic() {
+        return isStrategic;
+    }
+
+    public GameBoard(int numPlayers, String[] playerNames, boolean isStrategic) {
         if (numPlayers < 2 || numPlayers > 4) {
             throw new IllegalNumberOfPlayersException();
         }
@@ -37,6 +39,13 @@ public class GameBoard implements java.io.Serializable {
         initializeBoard();
         this.numPlayers = numPlayers;
         this.playerNames = playerNames;
+        this.isStrategic = isStrategic;
+        if(isStrategic){
+            numBoomerangs = new int[numPlayers];
+            for(int i=0;i<numPlayers;i++){
+                numBoomerangs[i] = CandyLand.STARTING_BOOMERANGS;
+            };
+        }
         playerPostions = new int[numPlayers];
     }
 
@@ -75,7 +84,7 @@ public class GameBoard implements java.io.Serializable {
         specialSpaceTypes.put(60,SpaceType.CHOCOLATE);
     }
 
-    public void movePlayer(int playerNum, CardType card) {
+    public void movePlayer(int playerNum, CardType card, int boomerangTarget) {
         if (playerNum < 0 || playerNum >= numPlayers) {
             throw new IllegalPlayerNumberException();
         }
@@ -87,34 +96,45 @@ public class GameBoard implements java.io.Serializable {
             case DOUBLE_BLUE:
             case DOUBLE_GREEN:
             case DOUBLE_ORANGE:
-                movePlayerToNextColoredSpace(playerNum, card);
+                movePlayerToNextColoredSpace(playerNum, card, boomerangTarget);
             case SINGLE_RED:
             case SINGLE_YELLOW:
             case SINGLE_BLUE:
             case SINGLE_GREEN:
             case SINGLE_ORANGE:
-                movePlayerToNextColoredSpace(playerNum, card);
+                movePlayerToNextColoredSpace(playerNum, card, boomerangTarget);
                 break;
             case CAKE:
             case LICORICE:
             case CANDY_CORN:
             case CHOCOLATE:
             case ICE_CREAM:
-                movePlayerToSpecialSpace(playerNum, card);
+                movePlayerToSpecialSpace(playerNum, card, boomerangTarget);
         }
     }
 
-    private void movePlayerToNextColoredSpace(int playerNum, CardType card) {
+    private void movePlayerToNextColoredSpace(int playerNum, CardType card, int boomerangTarget) {
         if (playerNum < 0 || playerNum >= numPlayers) {
             throw new IllegalPlayerNumberException();
         }
         if (playerPostions[playerNum] >= NUMBER_OF_SPACES - 1) {
             return;
         }
-        do {
-            playerPostions[playerNum]++;
-        } while (playerPostions[playerNum] < NUMBER_OF_SPACES - 1
-                 && !cardAndSpaceCompatible(card, spaceTypes[playerPostions[playerNum]]));
+        if(boomerangTarget==-1) {
+            do {
+                playerPostions[playerNum]++;
+            } while (playerPostions[playerNum] < NUMBER_OF_SPACES - 1
+                    && !cardAndSpaceCompatible(card, spaceTypes[playerPostions[playerNum]]));
+        }else{
+            if(playerPostions[boomerangTarget]==0){
+                return;
+            }
+            playerNum = boomerangTarget;
+            do {
+                playerPostions[playerNum]--;
+            } while (playerPostions[playerNum] > 0
+                    && !cardAndSpaceCompatible(card, spaceTypes[playerPostions[playerNum]]));
+        }
     }
 
     public static boolean cardAndSpaceCompatible(CardType card, SpaceType space) {
@@ -127,12 +147,15 @@ public class GameBoard implements java.io.Serializable {
         );
     }
 
-    private void movePlayerToSpecialSpace(int playerNum, CardType card){
+    private void movePlayerToSpecialSpace(int playerNum, CardType card, int boomerangTarget){
         if (playerNum < 0 || playerNum >= numPlayers) {
             throw new IllegalPlayerNumberException();
         }
         if (playerPostions[playerNum] >= NUMBER_OF_SPACES - 1) {
             return;
+        }
+        if(boomerangTarget!=-1){
+            playerNum = boomerangTarget;
         }
         playerPostions[playerNum] = specialLocations.get(card);
     }
@@ -162,6 +185,7 @@ public class GameBoard implements java.io.Serializable {
     public void resetPlayersToStart() {
         for (int i = 0; i < playerPostions.length; i++) {
             playerPostions[i] = 0;
+            numBoomerangs[i] = CandyLand.STARTING_BOOMERANGS;
         }
     }
 
@@ -178,10 +202,38 @@ public class GameBoard implements java.io.Serializable {
 
     public int getPotentialLoc(CardType cardToTest, int playerNum){
         int resetPos = playerPostions[playerNum];
-        movePlayer(playerNum, cardToTest);
+        movePlayer(playerNum, cardToTest, -1);
         int potentialLoc = playerPostions[playerNum];
         //need to undo the move
         playerPostions[playerNum] = resetPos;
         return potentialLoc;
+    }
+
+    public String[] getOtherPlayerNames(int playerNum){
+        String[] results = new String[numPlayers-1];
+        int j=0;
+        for(int i = 0; i< numPlayers;i++){
+            if(i!=playerNum){
+                results[j++] = playerNames[i];
+            }
+        }
+        return results;
+    }
+
+    public int getPlayerNumberByName(String name){
+        for(int i=0;i<numPlayers;i++){
+            if(playerNames[i].equals(name)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public boolean hasBoomerangs(int playerNum){
+        return isStrategic && numBoomerangs[playerNum] > 0;
+    }
+
+    public void useBoomerang(int playerNum){
+        numBoomerangs[playerNum]--;
     }
 }

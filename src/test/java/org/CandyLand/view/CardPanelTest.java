@@ -5,6 +5,8 @@ import org.junit.Before;
 import static org.junit.Assert.*;
 import org.CandyLand.CardType;
 
+import javax.swing.*;
+
 public class CardPanelTest {
 
     CardPanel cardPanel;
@@ -12,7 +14,7 @@ public class CardPanelTest {
 
     @Before
     public void preactions() {
-        cardPanel = new CardPanel();
+        cardPanel = new CardPanel(false);
     }
 
     @Test
@@ -43,15 +45,23 @@ public class CardPanelTest {
 
     @Test
     public void discardCardAreaExists(){
-        CardPanel c = new CardPanel();
+        CardPanel c = new CardPanel(false);
         assertNotNull(c.getDiscardPile());
     }
 
     @Test
     public void discardCard(){
-        CardPanel c = new CardPanel();
+        CardPanel c = new CardPanel(false);
         c.setCurrentCard(new GraphicalCard(CardType.SINGLE_RED));
         assertEquals(c.getDiscardPile().getCardType(), CardType.SINGLE_RED);
+    }
+
+    @Test
+    public void boomerangButton(){
+        CardPanel c = new CardPanel(true);
+        assertEquals(3,c.getComponentCount());
+        c = new CardPanel(false);
+        assertEquals(2,c.getComponentCount());
     }
 
 }

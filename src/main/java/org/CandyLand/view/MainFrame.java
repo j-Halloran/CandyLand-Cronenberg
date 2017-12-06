@@ -22,7 +22,7 @@ public class MainFrame extends JComponent {
     private BufferedImage myImage;
     public CardPanel cardPanel;
     public GraphicalBoard graphicalBoard;
-    private StatusBarPanel stats;
+    public StatusBarPanel stats;
     public TimePanel timePanel;
 
     public MainFrame(GameBoard board) {
@@ -45,8 +45,8 @@ public class MainFrame extends JComponent {
         frame.setLayout(new GridBagLayout());
 
         graphicalBoard = new GraphicalBoard(board);
-        cardPanel = new CardPanel();
-        stats = new StatusBarPanel(board.getPlayerNames());
+        cardPanel = new CardPanel(board.isStrategic());
+        stats = new StatusBarPanel(board.getPlayerNames(),board.isStrategic());
         timePanel = new TimePanel();
         SaveButton saveButton = new SaveButton();
 
