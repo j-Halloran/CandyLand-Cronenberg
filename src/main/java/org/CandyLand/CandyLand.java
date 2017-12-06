@@ -268,6 +268,14 @@ public class CandyLand {
               timer.start();
             }
             gameOut.writeObject(deck);
+            if(AIPlayerThread.isAlive()){
+                AIPlayerThread.suspend();
+                gameOut.writeObject(AIplayers);
+                AIPlayerThread.resume();
+            }
+            else{
+                gameOut.writeObject(AIplayers);
+            }
             gameOut.close();
             success = true;
         } catch (IOException e) {
@@ -340,6 +348,7 @@ public class CandyLand {
             board = (GameBoard)gameIn.readObject();
             timer = (Timer)gameIn.readObject();
             deck = (CardDeck)gameIn.readObject();
+            AIplayers = (boolean[])gameIn.readObject();
             success = true;
         } catch (IOException | ClassNotFoundException e) {
             success = false;
