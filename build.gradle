@@ -50,7 +50,10 @@ task TokenSpaceTest << {
     mainClassName = 'org.CandyLand.view.TokenSpaceTest';
 }
 
-
+task AIPlayerTest << {
+    println 'Running AIPlayerTest'
+    mainClassName = 'org.CandyLand.model.AIPlayerTest';
+}
 
 // In this section you declare where to find the dependencies of your project
 repositories {

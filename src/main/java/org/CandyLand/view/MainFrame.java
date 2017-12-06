@@ -91,6 +91,7 @@ public class MainFrame extends JComponent {
         frame.dispose();
     }
 
+    public StatusBarPanel getStats(){return stats;}
     public JFrame getFrame(){
         return frame;
     }

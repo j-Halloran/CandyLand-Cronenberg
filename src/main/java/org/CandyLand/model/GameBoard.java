@@ -157,6 +157,9 @@ public class GameBoard implements java.io.Serializable {
         if(boomerangTarget!=-1){
             playerNum = boomerangTarget;
         }
+        if(specialLocations==null){
+            fillSpecialLocations();
+        }
         playerPostions[playerNum] = specialLocations.get(card);
     }
 

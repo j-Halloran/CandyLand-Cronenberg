@@ -32,11 +32,12 @@ public class StatusBarPanel extends JPanel{
     public static void useBoomerang(){
         for(int i =0;i<players.length;i++){
             if(players[i].isActive()){
-                players[(i+3)%4].useBoomerang(i);
+                players[(i+(getNumberOfPlayers()-1))%getNumberOfPlayers()].useBoomerang(i);
                 break;
             }
         }
     }
+
     public static int getNumberOfPlayers(){
         return players.length;
     }

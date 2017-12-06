@@ -19,6 +19,7 @@ public class GraphicalCard extends JButton {
                 setText(new String(Character.toChars(0x1f0a0)));
                 setFont(new Font("TimesRoman", Font.PLAIN, 128));
                 this.addActionListener(e -> {
+
                     StatusBarPanel.activateNextPlayer();
                     CandyLand.drawCard();
                 });

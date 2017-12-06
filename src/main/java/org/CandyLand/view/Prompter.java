@@ -7,6 +7,27 @@ import java.io.File;
 
 public class Prompter {
 
+        public static boolean computerPlayer(String player){
+            Object[] options = {"Yes", "No"};
+
+            int option = JOptionPane.showOptionDialog(
+                    null,
+                    "Is "+player+" a Computer Player?",
+                    "Select option",
+                    0,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    null
+            );
+            if (option == JOptionPane.YES_OPTION) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
     public static GameModeOption promptGameMode(){
         Object[] options = {"Classic", "Strategic"};
         int option = JOptionPane.showOptionDialog(
@@ -89,6 +110,10 @@ public class Prompter {
 
     public static void boomerangConfirmation(String target){
         JOptionPane.showMessageDialog(null, "Your boomerang is targeted at " + target +". Draw a card to send them flying." );
+    }
+
+    public static void boomerangConfirmationAI(String target){
+        JOptionPane.showMessageDialog(null, "Computer Player boomerang is targeted at " + target +". Computer Player will draw a card to send them flying." );
     }
 
     public static String getFileOpenLocation() {

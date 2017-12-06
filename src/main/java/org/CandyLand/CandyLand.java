@@ -4,6 +4,7 @@ import org.CandyLand.view.*;
 import org.CandyLand.model.CardDeck;
 import org.CandyLand.model.GameBoard;
 import org.CandyLand.model.Timer;
+import org.CandyLand.view.StatusBarPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +21,8 @@ import java.security.MessageDigest;
 import java.security.DigestInputStream;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Random;
 
 public class CandyLand {
 
@@ -31,6 +34,8 @@ public class CandyLand {
     private static CardDeck deck = new CardDeck();
     private static final String HASH_EXTENSION = ".hash";
     private static final String SALT = "MSG";
+    public static boolean AIplayers[];
+    private static Thread AIPlayerThread;
     private static boolean isStrategic = false;
     private static int boomerangTarget = -1;
     public static final int STARTING_BOOMERANGS = 3;
@@ -41,8 +46,40 @@ public class CandyLand {
         mainFrame.graphicalBoard.setTokenLocations(board.getPlayerPositions());
         mainFrame.cardPanel.paintFromDeck(deck);
         timer.start();
+        spawnAIPlayerThread();
         spawnTimerUpdateThread();
     }
+
+    public static void spawnAIPlayerThread() {
+        Random r = new Random();
+        AIPlayerThread = new Thread() {
+            public void run() {
+                while (true) {
+
+                    if(AIplayers[mainFrame.getStats().getCurrentPlayer()]){
+
+                        StatusBarPanel.activateNextPlayer();
+
+                        float chance = r.nextFloat();
+
+                        if (isStrategic && chance <= 0.25f) {
+                            useBoomerangAI();
+                        }
+
+                        CandyLand.drawCard();
+                    }
+                    try {
+                        Thread.sleep(1000); // snooze for an ENTIRE second
+                    }
+                    catch (InterruptedException e) {
+                        // do nothing
+                    }
+                }
+            }
+        };
+        AIPlayerThread.start();
+    }
+
 
     public static void promptNewGame() {
         Prompter.NewGameOption option = Prompter.promptNewGame();
@@ -50,6 +87,14 @@ public class CandyLand {
             promptGameMode();
             int numPlayers = Prompter.promptNumOfPlayers();
             String[] playerNames = Prompter.promptPlayerNames(numPlayers);
+
+            AIplayers = new boolean[numPlayers];
+            for (int i = 0; i < numPlayers; i++) {
+                if(Prompter.computerPlayer(playerNames[i])){
+                    AIplayers[i]= true;
+                }
+            }
+
             timer = new Timer();
             deck = new CardDeck();
             board = new GameBoard(numPlayers, playerNames, isStrategic);
@@ -144,6 +189,22 @@ public class CandyLand {
 
     }
 
+    public static void useBoomerangAI(){
+        Random r = new Random();
+        if(board.hasBoomerangs(playerNum) && isStrategic){
+            do {
+                boomerangTarget = r.nextInt(board.getNumPlayers());
+            }while(boomerangTarget != StatusBarPanel.getCurrentPlayer());
+
+            if(boomerangTarget==-1){
+                Prompter.boomerangTargetAlert();
+                return;
+            }
+            Prompter.boomerangConfirmationAI(board.getPlayerName(boomerangTarget));
+        }
+    }
+
+
     public static void shuffleDeck() {
         timer.start();
         deck.shuffleDeck();
@@ -163,7 +224,7 @@ public class CandyLand {
                     mainFrame.timePanel.getTimeButton().addActionListener(new TimerButtonListener());
 
                     try {
-                        Thread.sleep(500); // snooze for a second
+                        Thread.sleep(500); // snooze for HALF a second
                     }
                     catch (InterruptedException e) {
                         // do nothing
@@ -207,6 +268,14 @@ public class CandyLand {
               timer.start();
             }
             gameOut.writeObject(deck);
+            if(AIPlayerThread.isAlive()){
+                AIPlayerThread.suspend();
+                gameOut.writeObject(AIplayers);
+                AIPlayerThread.resume();
+            }
+            else{
+                gameOut.writeObject(AIplayers);
+            }
             gameOut.close();
             success = true;
         } catch (IOException e) {
@@ -279,6 +348,7 @@ public class CandyLand {
             board = (GameBoard)gameIn.readObject();
             timer = (Timer)gameIn.readObject();
             deck = (CardDeck)gameIn.readObject();
+            AIplayers = (boolean[])gameIn.readObject();
             success = true;
         } catch (IOException | ClassNotFoundException e) {
             success = false;
