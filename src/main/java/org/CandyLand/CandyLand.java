@@ -36,7 +36,6 @@ public class CandyLand {
     private static final String HASH_EXTENSION = ".hash";
     private static final String SALT = "MSG";
     public static boolean AIplayers[];
-    private static HashMap<String, Boolean> ComputerPlayers;
 
     public static void main(String[] args) {
         promptNewGame();
@@ -44,14 +43,6 @@ public class CandyLand {
         mainFrame.graphicalBoard.setTokenLocations(board.getPlayerPositions());
         mainFrame.cardPanel.paintFromDeck(deck);
         timer.start();
-
-
-        if(AIplayers[mainFrame.stats.getCurrentPlayer()]){
-            StatusBarPanel.activateNextPlayer();
-            CandyLand.drawCard();
-        }
-
-
         spawnAIPlayerThread();
         spawnTimerUpdateThread();
     }
