@@ -1,10 +1,6 @@
 package org.CandyLand.model;
 
-import org.CandyLand.SpaceType;
-import org.CandyLand.CardType;
-import org.CandyLand.IllegalNumberOfPlayersException;
-import org.CandyLand.IllegalPlayerNumberException;
-import org.CandyLand.NameCountPlayerCountMismatchException;
+import org.CandyLand.*;
 
 import javax.smartcardio.Card;
 import java.util.ArrayList;
@@ -47,7 +43,7 @@ public class GameBoard implements java.io.Serializable {
         if(isStrategic){
             numBoomerangs = new int[numPlayers];
             for(int i=0;i<numPlayers;i++){
-                numBoomerangs[i] = 3;
+                numBoomerangs[i] = CandyLand.STARTING_BOOMERANGS;
             };
         }
         playerPostions = new int[numPlayers];
@@ -189,7 +185,7 @@ public class GameBoard implements java.io.Serializable {
     public void resetPlayersToStart() {
         for (int i = 0; i < playerPostions.length; i++) {
             playerPostions[i] = 0;
-            numBoomerangs[i] = 3;
+            numBoomerangs[i] = CandyLand.STARTING_BOOMERANGS;
         }
     }
 
@@ -234,13 +230,7 @@ public class GameBoard implements java.io.Serializable {
     }
 
     public boolean hasBoomerangs(int playerNum){
-        if(!isStrategic){
-            return false;
-        }
-        if(numBoomerangs[playerNum]==0) {
-            return false;
-        }
-        return true;
+        return isStrategic && numBoomerangs[playerNum] > 0;
     }
 
     public void useBoomerang(int playerNum){

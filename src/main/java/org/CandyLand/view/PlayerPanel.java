@@ -1,5 +1,7 @@
 package org.CandyLand.view;
 
+import org.CandyLand.CandyLand;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,7 +11,7 @@ public class PlayerPanel extends JPanel {
     private static final Color INACTIVE_BACKGROUND = Color.GRAY;
     private static boolean isActive;
     private static int playersCreated = 0;
-    private static int[] boomerangsRemaining = {3,3,3,3};
+    private static int[] boomerangsRemaining = {CandyLand.STARTING_BOOMERANGS,CandyLand.STARTING_BOOMERANGS,CandyLand.STARTING_BOOMERANGS,CandyLand.STARTING_BOOMERANGS};
     private String playerName;
 
     public PlayerPanel(String playerName, boolean active, boolean isStrategic){
@@ -50,7 +52,7 @@ public class PlayerPanel extends JPanel {
     public void resetBoomerangs(int playerNum){
         playersCreated = 0;
         for(int i=0;i<4;i++){
-            boomerangsRemaining[i] = 3;
+            boomerangsRemaining[i] = CandyLand.STARTING_BOOMERANGS;
         }
         for(Component jc: this.getComponents()){
             if(jc instanceof JLabel){
