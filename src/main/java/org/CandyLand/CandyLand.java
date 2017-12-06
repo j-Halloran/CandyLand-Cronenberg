@@ -49,7 +49,7 @@ public class CandyLand {
         spawnTimerUpdateThread();
     }
 
-    private static void spawnAIPlayerThread() {
+    public static void spawnAIPlayerThread() {
         AIPlayerThread = new Thread() {
             public void run() {
                 while (true) {

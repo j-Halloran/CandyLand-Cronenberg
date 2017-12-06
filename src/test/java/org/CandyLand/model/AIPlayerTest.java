@@ -1,67 +1,64 @@
 package org.CandyLand.model;
 
+import org.CandyLand.view.StatusBarPanel;
 import org.junit.Test;
-import org.junit.Before;
 import static org.junit.Assert.*;
 
 public class AIPlayerTest {
 
-    Timer timer;
-
-    @Before
-    public void createTimer() {
-        timer = new Timer();
-    }
 
     @Test
-    public void timerStartTest() {
-        timer.start();
-        try {
-            Thread.sleep(2000); // 2 seconds oughta do it.
-        }
-        catch (InterruptedException e) {
-            fail("thread was interrupted");
-        }
-        assertTrue(timer.getSeconds() > 0);
+    public void threadGetNextPlayer() {
+          Thread AIPlayerThread;
+          boolean[] AIplayers = {false,true,false,true};
+          String[] players = {"Mike1","Mike2","Mike3","Mike4"};
+          StatusBarPanel stat = new StatusBarPanel(players);
+        AIPlayerThread = new Thread() {
+            public void run() {
+
+                    if(AIplayers[stat.getCurrentPlayer()]){
+                        StatusBarPanel.activateNextPlayer();
+                        assertTrue(stat.getCurrentPlayer() == 1);
+                    }
+                    try {
+                        Thread.sleep(500); // snooze for HALF a second
+                    }
+                    catch (InterruptedException e) {
+                        // do nothing
+                    }
+
+            }
+        };
+        AIPlayerThread.start();
     }
 
-    @Test
-    public void timerStopTest() {
-        timer.start();
-        try {
-            Thread.sleep(2000); // 2 seconds oughta do it.
-        }
-        catch (InterruptedException e) {
-            fail("thread was interrupted");
-        }
-        timer.stop();
-        long seconds = timer.getSeconds();
-        try {
-            Thread.sleep(2000); // 2 seconds oughta do it.
-        }
-        catch (InterruptedException e) {
-            fail("thread was interrupted");
-        }
-        assertEquals(seconds, timer.getSeconds());
-    }
 
     @Test
-    public void resetTest() {
-        timer.start();
-        try {
-            Thread.sleep(2000); // 2 seconds oughta do it.
-        }
-        catch (InterruptedException e) {
-            fail("thread was interrupted");
-        }
-        timer.reset();
-        assertEquals(0, timer.getSeconds());
-        try {
-            Thread.sleep(2000); // 2 seconds oughta do it.
-        }
-        catch (InterruptedException e) {
-            fail("thread was interrupted");
-        }
-        assertEquals(0, timer.getSeconds());
+    public void threadCycleCorrectly() {
+        Thread AIPlayerThread;
+        boolean[] AIplayers = {true,true,true,true};
+        String[] players = {"Mike1","Mike2","Mike3","Mike4"};
+        StatusBarPanel stat = new StatusBarPanel(players);
+        AIPlayerThread = new Thread() {
+            public void run() {
+
+                for (int i = 0; i < 4; i++) {
+
+                    if (AIplayers[stat.getCurrentPlayer()]) {
+                        StatusBarPanel.activateNextPlayer();
+                        assertTrue(stat.getCurrentPlayer() == i+1);
+                    }
+                    try {
+                        Thread.sleep(500); // snooze for HALF a second
+                    } catch (InterruptedException e) {
+                        // do nothing
+                    }
+
+                }
+            }
+        };
+        AIPlayerThread.start();
     }
+
+
 }
