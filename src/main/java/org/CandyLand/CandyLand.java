@@ -58,7 +58,7 @@ public class CandyLand {
             public void run() {
                 while (true) {
 
-                    if(AIplayers[mainFrame.stats.getCurrentPlayer()]){
+                    if(AIplayers[mainFrame.getStats().getCurrentPlayer()]){
                         StatusBarPanel.activateNextPlayer();
                         CandyLand.drawCard();
                     }

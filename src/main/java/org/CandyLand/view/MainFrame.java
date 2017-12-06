@@ -22,7 +22,7 @@ public class MainFrame extends JComponent {
     private BufferedImage myImage;
     public CardPanel cardPanel;
     public GraphicalBoard graphicalBoard;
-    public StatusBarPanel stats;
+    private StatusBarPanel stats;
     public TimePanel timePanel;
 
     public MainFrame(GameBoard board) {
@@ -91,6 +91,7 @@ public class MainFrame extends JComponent {
         frame.dispose();
     }
 
+    public StatusBarPanel getStats(){return stats;}
     public JFrame getFrame(){
         return frame;
     }
