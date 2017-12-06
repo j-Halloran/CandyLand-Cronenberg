@@ -76,9 +76,6 @@ public class Prompter {
     public static String useBoomerangOption(String[] options){
         String userNumberPlayersResponse = (String) JOptionPane.showInputDialog(new JFrame(), "Who to boomerang? ",
                 "Choose Boomerang",JOptionPane.DEFAULT_OPTION,null,options,"1");
-        if(userNumberPlayersResponse==null){
-            System.exit(0);
-        }
         return (userNumberPlayersResponse);
     }
 

@@ -33,6 +33,7 @@ public class CandyLand {
     private static final String SALT = "MSG";
     private static boolean isStrategic = false;
     private static int boomerangTarget = -1;
+    public static final int STARTING_BOOMERANGS = 3;
 
     public static void main(String[] args) {
         promptNewGame();
@@ -126,7 +127,11 @@ public class CandyLand {
 
     public static void useBoomerang(){
         if(board.hasBoomerangs(playerNum) && isStrategic){
-            boomerangTarget = board.getPlayerNumberByName(Prompter.useBoomerangOption(board.getOtherPlayerNames(playerNum)));
+            String targetName = Prompter.useBoomerangOption(board.getOtherPlayerNames(playerNum));
+            if(targetName==null){
+                return;
+            }
+            boomerangTarget = board.getPlayerNumberByName(targetName);
             if(boomerangTarget==-1){
                 Prompter.boomerangTargetAlert();
                 return;
