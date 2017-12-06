@@ -27,6 +27,9 @@ public class GameBoard implements java.io.Serializable {
     public static boolean isStrategic() {
         return isStrategic;
     }
+    public void setIsStrategic(boolean isStrategic){
+        this.isStrategic = isStrategic;
+    }
 
     public GameBoard(int numPlayers, String[] playerNames, boolean isStrategic) {
         if (numPlayers < 2 || numPlayers > 4) {
