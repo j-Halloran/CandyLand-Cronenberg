@@ -36,6 +36,8 @@ public class CandyLand {
     private static final String HASH_EXTENSION = ".hash";
     private static final String SALT = "MSG";
     public static boolean AIplayers[];
+    private static Thread AIPlayerThread;
+
 
     public static void main(String[] args) {
         promptNewGame();
@@ -47,13 +49,7 @@ public class CandyLand {
         spawnTimerUpdateThread();
     }
 
-
-    static Thread AIPlayerThread;
-
     private static void spawnAIPlayerThread() {
-
-
-
         AIPlayerThread = new Thread() {
             public void run() {
                 while (true) {
@@ -62,10 +58,8 @@ public class CandyLand {
                         StatusBarPanel.activateNextPlayer();
                         CandyLand.drawCard();
                     }
-
-
                     try {
-                        Thread.sleep(500); // snooze for a second
+                        Thread.sleep(500); // snooze for HALF a second
                     }
                     catch (InterruptedException e) {
                         // do nothing
@@ -74,8 +68,6 @@ public class CandyLand {
             }
         };
         AIPlayerThread.start();
-
-
     }
 
 
@@ -90,7 +82,6 @@ public class CandyLand {
             for (int i = 0; i < numPlayers; i++) {
                 if(Prompter.computerPlayer(playerNames[i])){
                     AIplayers[i]= true;
-//                    ComputerPlayers.put(playerNames[i],true);
                 }
             }
 
@@ -178,7 +169,7 @@ public class CandyLand {
                     mainFrame.timePanel.getTimeButton().addActionListener(new TimerButtonListener());
 
                     try {
-                        Thread.sleep(500); // snooze for a second
+                        Thread.sleep(500); // snooze for HALF a second
                     }
                     catch (InterruptedException e) {
                         // do nothing
