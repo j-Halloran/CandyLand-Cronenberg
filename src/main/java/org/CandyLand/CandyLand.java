@@ -39,10 +39,11 @@ public class CandyLand {
     private static boolean isStrategic = false;
     private static int boomerangTarget = -1;
     public static final int STARTING_BOOMERANGS = 3;
+    public static PlayerPanel[] loadPanel = null;
 
     public static void main(String[] args) {
         promptNewGame();
-        mainFrame = new MainFrame(board);
+        mainFrame = new MainFrame(board,loadPanel);
         mainFrame.graphicalBoard.setTokenLocations(board.getPlayerPositions());
         mainFrame.cardPanel.paintFromDeck(deck);
         timer.start();
@@ -149,7 +150,7 @@ public class CandyLand {
                     mainFrame.stats.resetBoomerangs();
                     mainFrame.exit();
                     promptNewGame();
-                    mainFrame = new MainFrame(board);
+                    mainFrame = new MainFrame(board,null);
                     mainFrame.graphicalBoard.setTokenLocations(board.getPlayerPositions());
                     mainFrame.cardPanel.paintFromDeck(deck);
                     timer.start();
@@ -276,6 +277,9 @@ public class CandyLand {
             else{
                 gameOut.writeObject(AIplayers);
             }
+            gameOut.writeObject(isStrategic);
+            gameOut.writeObject(StatusBarPanel.getPlayers());
+            gameOut.writeObject(playerNum);
             gameOut.close();
             success = true;
         } catch (IOException e) {
@@ -349,6 +353,10 @@ public class CandyLand {
             timer = (Timer)gameIn.readObject();
             deck = (CardDeck)gameIn.readObject();
             AIplayers = (boolean[])gameIn.readObject();
+            isStrategic = (boolean)gameIn.readObject();
+            loadPanel = (PlayerPanel[])gameIn.readObject();
+            board.setIsStrategic(isStrategic);
+            playerNum = (int)gameIn.readObject();
             success = true;
         } catch (IOException | ClassNotFoundException e) {
             success = false;

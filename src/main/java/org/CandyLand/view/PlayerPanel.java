@@ -4,8 +4,9 @@ import org.CandyLand.CandyLand;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
 
-public class PlayerPanel extends JPanel {
+public class PlayerPanel extends JPanel implements Serializable{
 
     private static final Color ACTIVE_BACKGROUND = Color.WHITE;
     private static final Color INACTIVE_BACKGROUND = Color.GRAY;

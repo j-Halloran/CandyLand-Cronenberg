@@ -25,7 +25,7 @@ public class MainFrame extends JComponent {
     public StatusBarPanel stats;
     public TimePanel timePanel;
 
-    public MainFrame(GameBoard board) {
+    public MainFrame(GameBoard board, PlayerPanel[] loadPanel) {
         // set Background Image of MainFrame
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         URL url = classloader.getResource("CLbg2.jpg");
@@ -46,7 +46,12 @@ public class MainFrame extends JComponent {
 
         graphicalBoard = new GraphicalBoard(board);
         cardPanel = new CardPanel(board.isStrategic());
-        stats = new StatusBarPanel(board.getPlayerNames(),board.isStrategic());
+        if(loadPanel==null){
+            stats = new StatusBarPanel(board.getPlayerNames(),board.isStrategic());
+        }
+        else{
+            stats = new StatusBarPanel(loadPanel);
+        }
         timePanel = new TimePanel();
         SaveButton saveButton = new SaveButton();
 

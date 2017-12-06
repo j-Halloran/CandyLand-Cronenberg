@@ -2,9 +2,10 @@ package org.CandyLand.view;
 
 import java.awt.*;
 import java.io.IOException;
+import java.io.Serializable;
 import javax.swing.*;
 
-public class StatusBarPanel extends JPanel{
+public class StatusBarPanel extends JPanel implements Serializable{
     private static final Color BACKGROUND_COLOR = Color.GRAY;
     private static PlayerPanel[] players;
 
@@ -16,6 +17,14 @@ public class StatusBarPanel extends JPanel{
         for(int i=0;i<numPlayers;i++){
             players[i] = new PlayerPanel(playerNames[i], i == 0, isStrategic);
             this.add(players[i]); //add a panel for each player (1st is auto-selected as active)
+        }
+    }
+
+    public StatusBarPanel(PlayerPanel[] players){
+        this.players = players;
+        this.setLayout(new GridLayout(1,players.length));
+        for(PlayerPanel player: players){
+            this.add(player);
         }
     }
 
@@ -70,5 +79,9 @@ public class StatusBarPanel extends JPanel{
         for(PlayerPanel panel : players){
             panel.resetBoomerangs(i++);
         }
+    }
+
+    public static PlayerPanel[] getPlayers(){
+        return players;
     }
 }
